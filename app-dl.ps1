@@ -138,6 +138,6 @@ if ($extract -eq "y" -or $extract -eq "Y"){
     Start-Sleep -Seconds 2
   }
   catch {
-    Write-Host "Failed to extract package. Error: $($_.Exception.Message)"; Pause
+    Write-Host "Error: $($_.Exception.Message)"; Pause
 }}
 }
