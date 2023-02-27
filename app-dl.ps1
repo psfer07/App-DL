@@ -124,7 +124,7 @@ $out_file = (Split-Path $url -Leaf) -split "/" | Select-Object -Last 1
 Write-Main "App to download: $program..."; Pause
 Invoke-WebRequest -URI $url -OutFile "$path\$out_file"
 if ($?) {
-    Write-Secondary "File downloaded successfully"
+    Write-Secondary "File successfully downloaded"
 } else {
     Write-Warning "An error occurred while downloading the file"
 }
