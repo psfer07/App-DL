@@ -1,7 +1,3 @@
-#Initialize variables
-
-
-Clear-Host
 function Write-Main() {
   [CmdletBinding()]
   param (
@@ -36,10 +32,16 @@ function Write-Point() {
   Write-Host "══╣ " -NoNewline -ForegroundColor Green -BackgroundColor Black
   Write-Host "$Text" -ForegroundColor White -BackgroundColor Black
 }
+#Initialize variables
+
 $json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
 $nameArray = $json.psobject.Properties.Name
 $propMapping = @{}
 $filteredApps = @()
+$help = Write-Host "(type 'h' for help)" -NoNewline
+
+Clear-Host
+
 foreach ($i in 0..($nameArray.Count - 1)) {
   $name = $nameArray[$i]
   $app = $json.$name
@@ -50,7 +52,6 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; URL = $url; Exe = $exe;Size = $size}
 }
 
-$help = Write-Host "(type 'h' for help)" -NoNewline
 
 Write-Main "Aviable apps"
 foreach ($i in 0..($filteredApps.Count - 1)) {
