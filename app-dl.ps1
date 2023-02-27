@@ -32,7 +32,10 @@ function Write-Point() {
   Write-Host "══╣ " -NoNewline -ForegroundColor Green -BackgroundColor Black
   Write-Host "$Text" -ForegroundColor White -BackgroundColor Black
 }
-#Initialize variables
+
+########################
+# Initialize variables #
+########################
 
 $json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
 $nameArray = $json.psobject.Properties.Name
