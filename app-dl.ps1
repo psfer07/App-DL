@@ -129,7 +129,7 @@ if ($?) {
     Write-Warning "An error occurred while downloading the file"
 }
 
-# Extraction or installation of the app depending on its extension
+# Extracts the content from the package
 if ($out_file -like "*.zip"){$extract = Read-Host "Do you want to unzip the package?(y/n)"
 if ($extract -eq "y" -or $extract -eq "Y"){
   try {
@@ -141,8 +141,3 @@ if ($extract -eq "y" -or $extract -eq "Y"){
     Write-Host "Failed to extract package. Error: $($_.Exception.Message)"; Pause
 }}
 }
-<# On developing
-  elseif ($out_file -like "*.exe"){
-  Write-Main "Opening $program's installer..."
-  Start-Process "$path\$out_file"
-}#>
