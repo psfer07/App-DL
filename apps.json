@@ -1,0 +1,35 @@
+{
+    "Bleachbit": {
+        "URL": "https://download.bleachbit.org/BleachBit-4.4.2-portable.zip",
+        "exe": "bleachbit.exe",
+        "folder": "Bleachbit-Portable",
+        "size": "12MB"
+        },
+
+    "Bulk Crap Uninstaller": {
+        "URL": "https://github.com/Klocman/Bulk-Crap-Uninstaller/releases/download/v5.4/BCUninstaller_5.4_portable.zip",
+        "size": "142MB",
+        "exe": "BCUninstaller.exe"
+},
+    "Dism++": {
+        "URL": "https://github.com/Chuyu-Team/Dism-Multi-language/releases/download/v10.1.1002.1/Dism++10.1.1002.1.zip",
+        "size": "3.6MB",
+        "exe": "Dism++x64.exe"
+    },
+    "DNSJumper": {
+        "URL": "https://www.sordum.org/files/download/dns-jumper/DnsJumper.zip",
+        "size": "360KB",
+        "exe": "DnsJumper.exe"
+    },
+    "This Is Windows 11": {
+        "URL": "https://github.com/builtbybel/ThisIsWin11/releases/download/1.4.1/TIW11.zip",
+        "size": "160KB",
+        "exe": "ThisIsWin11.exe"
+    },
+    "7-zip": {
+        "URL": "https://www.7-zip.org/a/7z2201-x64.exe",
+        "size": "1,5MB",
+        "installer": "7z2201-x64.exe",
+        "exe": "7zFM.exe"
+    }
+}
