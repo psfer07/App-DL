@@ -31,5 +31,10 @@
         "size": "1,5MB",
         "installer": "7z2201-x64.exe",
         "exe": "7zFM.exe"
+    },
+    "ShotCut": {
+        "URL": "https://github.com/mltframework/shotcut/releases/download/v20.09.27/shotcut-win64-200927.zip",
+        "size": "116MB",
+        "exe": "shotcut.exe"
     }
 }
