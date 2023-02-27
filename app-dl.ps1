@@ -81,8 +81,7 @@ $program = $nameArray[$pkg_number - 1]
 Clear-Host
 Write-Main "$program selected"
 
-# Prints off all the aviable paths to ssave the package
-Write-Point "0. Goes back to change the app"
+# Prints off all the aviable paths to save the package
 Write-Point "1. Saves it inside of Desktop"
 Write-Point "2. Saves it inside of Documents"
 Write-Point "3. Saves it inside of Downloads"
@@ -92,7 +91,6 @@ Write-Point "6. Save it inside of the user profile"
 $path = Read-Host "`nChoose a number $help"
 
 switch ($path) {
-  0         {  ;break}
   1         { $path = "$Env:USERPROFILE\Desktop"; break }
   2         { $path = "$Env:USERPROFILE\Documents"; break }
   3         { $path = "$Env:USERPROFILE\Downloads"; break }
@@ -108,7 +106,7 @@ if (Test-Path "$path\$program") {
   Write-Host `n
   Write-Point "1. Restart App-dl"
   Write-Point "2. Leave powershell"
-  $restart = Read-Host "This program or the zip file of it is currently allocated in this path, so select the corresponding number if you want to start again or leaving this session"
+  $restart = Read-Host "This program is currently allocated in this path, so select the corresponding number if you want to start again or leaving this session"
 if ($restart -eq 1) { Start-Process powershell.exe "-WindowStyle Maximized -File `"$PSCommandPath`""; break}
 elseif ($launch -ne 1) {
   Write-Main "Closing this terminal..."
@@ -143,7 +141,8 @@ if ($extract -eq "y" -or $extract -eq "Y"){
     Write-Host "Failed to extract package. Error: $($_.Exception.Message)"; Pause
 }}
 }
-elseif ($out_file -like "*.exe"){
+<# On developing
+  elseif ($out_file -like "*.exe"){
   Write-Main "Opening $program's installer..."
   Start-Process "$path\$out_file"
-}
+}#>
