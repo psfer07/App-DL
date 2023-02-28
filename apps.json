@@ -6,7 +6,7 @@
         "size": "12MB"
         },
 
-    "Bulk Crap Uninstaller": {
+    "BCUninstaller": {
         "URL": "https://github.com/Klocman/Bulk-Crap-Uninstaller/releases/download/v5.4/BCUninstaller_5.4_portable.zip",
         "size": "142MB",
         "exe": "BCUninstaller.exe"
@@ -21,12 +21,12 @@
         "size": "360KB",
         "exe": "DnsJumper.exe"
     },
-    "This Is Windows 11": {
+    "TIW_11": {
         "URL": "https://github.com/builtbybel/ThisIsWin11/releases/download/1.4.1/TIW11.zip",
         "size": "160KB",
         "exe": "ThisIsWin11.exe"
     },
-    "7-zip": {
+    "7-Zip": {
         "URL": "https://www.7-zip.org/a/7z2201-x64.exe",
         "size": "1,5MB",
         "installer": "7z2201-x64.exe",

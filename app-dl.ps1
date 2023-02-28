@@ -50,7 +50,7 @@ function Write-Warning() {
 }
 
 #Initialize variables
-$json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
+$json = Invoke-WebRequest ("https://github.com/psfer07/App-DL/blob/main/apps.json") -Raw | ConvertFrom-Json
 $nameArray = $json.psobject.Properties.Name
 $propMapping = @{}
 $filteredApps = @()
@@ -69,28 +69,32 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 }
 
 #List every app valid in the JSON file
-Write-Main "Aviable apps"
+Clear-Host
+Write-Main "Available apps"
 foreach ($i in 0..($filteredApps.Count - 1)) {
-  $app = $filteredApps[$i]
-  $n = $i + 1
-  Write-Secondary "$n. $($app.Name) - Size: $($app.Size)"
+    $app = $filteredApps[$i]
+    $n = $i + 1
+    Write-Secondary "$n. $($app.Name) - Size: $($app.Size)"
 }
-$pkg_number = Read-Host `n"Write the number of the app you want to get"
-$program = $nameArray[$pkg_number - 1]
-
+$pkg_n = Read-Host `n"Write the number of the app you want to get"
+$program = $filteredApps[$pkg_n - 1].Name
+$exe = $filteredApps[$pkg_n - 1].Exe
+$program | Out-Null
 Clear-Host
 Write-Main "$program selected"
 
-# Prints off all the aviable paths to save the package
+# Prints out all the aviable paths to save the package
 Write-Point "1. Saves it inside of Desktop"
 Write-Point "2. Saves it inside of Documents"
 Write-Point "3. Saves it inside of Downloads"
 Write-Point "4. Save it inside of C:"
 Write-Point "5. Saves it inside of Program Files"
-Write-Point "6. Save it inside of the user profile"
+Write-Point "6. Save it inside of the user profile`n"
+Write-Point "0. Goes back to change the app"
 $path = Read-Host "`nChoose a number $help"
 
 switch ($path) {
+  0         {  ;break}
   1         { $path = "$Env:USERPROFILE\Desktop"; break }
   2         { $path = "$Env:USERPROFILE\Documents"; break }
   3         { $path = "$Env:USERPROFILE\Downloads"; break }
@@ -106,13 +110,13 @@ if (Test-Path "$path\$program") {
   Write-Host `n
   Write-Point "1. Restart App-dl"
   Write-Point "2. Leave powershell"
-  $restart = Read-Host "This program is currently allocated in this path, so select the corresponding number if you want to start again or leaving this session"
-if ($restart -eq 1) { Start-Process powershell.exe "-WindowStyle Maximized -File `"$PSCommandPath`""; break}
-elseif ($launch -ne 1) {
-  Write-Main "Closing this terminal..."
-  Start-Sleep -Milliseconds 500
-  exit
-}}
+  $restart = Read-Host "This program or the zip file of it is currently allocated in this path, so select the corresponding number if you want to start again or leaving this session"
+  switch ($restart) {
+    1   { Start-Process powershell.exe "-WindowStyle Maximized -File `"$PSCommandPath`""; Start-Sleep -Milliseconds 500; exit }
+    2   { Write-Main "Closing this terminal..."; Start-Sleep -Milliseconds 500; exit }
+    default { Write-Warning "Non-valid number"}
+  }
+}
 
 # Assign specific variables to download and save the package
 $selectedApp = $filteredApps | Where-Object {$_.Name -eq $program}
@@ -129,15 +133,24 @@ if ($?) {
     Write-Warning "An error occurred while downloading the file"
 }
 
-# Extracts the content from the package
+# Extracts or launches the app installer depending on its extension
 if ($out_file -like "*.zip"){$extract = Read-Host "Do you want to unzip the package?(y/n)"
 if ($extract -eq "y" -or $extract -eq "Y"){
   try {
     Expand-Archive -Path "$path\$out_file" -DestinationPath "$path\$program" -Force
     Write-Main "Package succesfully extracted..."
-    Start-Sleep -Seconds 2
   }
-  catch {
-    Write-Host "Unable to extract. Error: $($_.Exception.Message)"; Pause
-}}
+  catch { Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"; Pause }
+}
+
+$open = Read-Host "Open the app?(y/n)"
+if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$exe" }
+}
+
+
+if ($out_file -like "*.exe"){$install = Read-Host "Do you want to install $program?(y/n)"}
+if ($install -eq "y" -or $install -eq "y"){
+  Write-Main "Opening $program's installer and leaving session..."; Clear-Host
+  Start-Process -FilePath "$path\$out_file" -ArgumentList /S /D="$path\$program"
+
 }
