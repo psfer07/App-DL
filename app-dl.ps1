@@ -50,7 +50,7 @@ function Write-Warning() {
 }
 
 #Initialize variables
-$json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/main/apps.json"
+$json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/Powershell-App-DL/main/apps.json"
 $nameArray = $json.psobject.Properties.Name
 $propMapping = @{}
 $filteredApps = @()
