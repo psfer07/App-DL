@@ -5,7 +5,6 @@
         "folder": "Bleachbit-Portable",
         "size": "12MB"
         },
-
     "BCUninstaller": {
         "URL": "https://github.com/Klocman/Bulk-Crap-Uninstaller/releases/download/v5.4/BCUninstaller_5.4_portable.zip",
         "size": "142MB",
@@ -29,7 +28,6 @@
     "7-Zip": {
         "URL": "https://www.7-zip.org/a/7z2201-x64.exe",
         "size": "1,5MB",
-        "installer": "7z2201-x64.exe",
         "exe": "7zFM.exe"
     },
     "ShotCut": {
