@@ -151,6 +151,6 @@ if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$e
 if ($out_file -like "*.exe"){$install = Read-Host "Do you want to install $program?(y/n)"}
 if ($install -eq "y" -or $install -eq "y"){
   Write-Main "Opening $program's installer and leaving session..."; Clear-Host
-  Start-Process -FilePath "$path\$out_file" -ArgumentList /S /D="$path\$program"
+  Start-Process -Wait -FilePath "$path\$out_file" -ArgumentList /D="$path\$program"
 
 }
