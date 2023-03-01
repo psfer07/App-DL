@@ -2,13 +2,14 @@
 
 This is a simple app installer which works accessing to a JSON file. Still working in bugs, utilities and performance.
 
-All you need to do is typing or copying this command: `irm bit.ly/psappdl | iex` 
+All you need to do is typing or copying this command in your powershell terminal. It will redirect you to the app.
 
-```perl
+```powershell
 irm bit.li/psappdl | iex
 ```
 
-in your powershell terminal. It will redirect you to the app.
+
+This program is a simple package manager
 
 
 ## Changelog
