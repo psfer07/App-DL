@@ -4,7 +4,7 @@ This is a simple app installer which works accessing to a JSON file. Still worki
 
 All you need to do is typing or copying this command: `irm bit.ly/psappdl | iex` 
 
-```powershell
+```perl
 irm bit.li/psappdl | iex
 ```
 
