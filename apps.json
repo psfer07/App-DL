@@ -29,10 +29,5 @@
         "URL": "https://www.7-zip.org/a/7z2201-x64.exe",
         "size": "1,5MB",
         "exe": "7zFM.exe"
-    },
-    "ShotCut": {
-        "URL": "https://github.com/mltframework/shotcut/releases/download/v20.09.27/shotcut-win64-200927.zip",
-        "size": "116MB",
-        "exe": "shotcut.exe"
     }
 }
