@@ -15,8 +15,8 @@ This program is a simple package manager which downloads packaged portable apps 
 ## Changelog
 
 
-### App-DL v1.0.0
+### App-DL v1.0.0 (First release)
 
 ---
 
-* First release
+* 
