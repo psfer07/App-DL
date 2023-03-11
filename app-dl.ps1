@@ -94,7 +94,7 @@ Write-Point "0. Goes back to change the app"
 $path = Read-Host "`nChoose a number $help"
 
 switch ($path) {
-  0         { Start-Process powershell.exe "-WindowStyle Maximized -File `"$PSCommandPath`""; Start-Sleep -Milliseconds 500; exit}
+  0         { Start-Process powershell.exe "-WindowStyle Maximized -File `"$PSCommandPath`""; Start-Sleep -Milliseconds 500; exit }
   1         { $path = "$Env:USERPROFILE\Desktop"; break }
   2         { $path = "$Env:USERPROFILE\Documents"; break }
   3         { $path = "$Env:USERPROFILE\Downloads"; break }
