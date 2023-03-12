@@ -29,5 +29,16 @@
         "URL": "https://www.7-zip.org/a/7z2201-x64.exe",
         "size": "1,5MB",
         "exe": "7zFM.exe"
+    },
+    
+    "ShutUp10++": {
+        "URL": "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
+        "size": "1,7MB",
+        "exe": "OOSU10.exe"
+    },
+    "McAfee-Stinger": {
+        "URL": "https://download2.portableapps.com/portableapps/McAfeeStingerPortable/McAfeeStingerPortable_12.2.0.560_English_online.paf.exe",
+        "size": "38MB",
+        "exe": "McAfeeStingerPortable_12.2.0.560_English_online.paf.exe"
     }
 }
