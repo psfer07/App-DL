@@ -11,7 +11,7 @@ function Write-Main() {
 
   $center = for ($i = 1; $i -le $loop; $i++){ ("=") }
 
-  Write-Host "`n<$center>" -ForegroundColor Blue
+  Write-Host "`n<$center>" -ForegroundColor Blue -BackgroundColor Black
   Write-Host "   $Text" -ForegroundColor White -BackgroundColor Black
   Write-Host "<$center>" -ForegroundColor Blue -BackgroundColor Black
 }
