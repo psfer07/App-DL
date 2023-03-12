@@ -15,7 +15,7 @@ irm bit.ly/psappdl | iex
 
 ---
 
-* Donwloads the app that the user selects
+* Downloads the app that the user selects
 * Gives 6 paths to download
   * Desktop
   * Documents
