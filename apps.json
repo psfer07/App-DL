@@ -37,8 +37,8 @@
         "exe": "OOSU10.exe"
     },
     "McAfee-Stinger": {
-        "URL": "https://download2.portableapps.com/portableapps/McAfeeStingerPortable/McAfeeStingerPortable_12.2.0.560_English_online.paf.exe",
+        "URL": "https://downloadcenter.trellix.com/products/mcafee-avert/Stinger/stinger64.exe",
         "size": "38MB",
-        "exe": "McAfeeStingerPortable_12.2.0.560_English_online.paf.exe"
+        "exe": "stinger64.exe"
     }
 }
