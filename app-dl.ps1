@@ -5,7 +5,6 @@ function Write-Main() {
       [String] $Text = "Blank"
   )
 
-
   $loop = $Text.Length
 
   $center = for ($i = 1; $i -le $loop; $i++){ ("=") }
