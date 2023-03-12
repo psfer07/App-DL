@@ -1,5 +1,3 @@
-$branch = "main"
-
 Clear-Host
 function Write-Main() {
   [CmdletBinding()]
@@ -51,7 +49,7 @@ function Write-Warning() {
 }
 
 #Initialize variables
-$json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
+$json = Invoke-RestMethod ".\apps.json"
 $nameArray = $json.psobject.Properties.Name
 $propMapping = @{}
 $filteredApps = @()
