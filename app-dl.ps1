@@ -75,15 +75,14 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 Clear-Host
 Write-Main "Available apps"
 foreach ($i in 0..($filteredApps.Count - 1)) {
-    $app = $filteredApps[$i]
-    $n = $i + 1
-    Write-Main "$n. $($app.Name) - Size: $($app.Size)"
-    Write-Secondary "Description"
+  $app = $filteredApps[$i]
+  $n = $i + 1
+  Write-Main "$n. $($app.Name) - Size: $($app.Size)"
+  Write-Secondary -Text $app.syn
 }
 $pkg_n = Read-Host `n"Write the number of the app you want to get"
 $program = $filteredApps[$pkg_n - 1].Name
 $exe = $filteredApps[$pkg_n - 1].Exe
-$program | Out-Null
 Clear-Host
 Write-Main "$program selected"
 
@@ -95,7 +94,7 @@ Write-Point "4. Save it inside of C:"
 Write-Point "5. Saves it inside of Program Files"
 Write-Point "6. Save it inside of the user profile`n"
 Write-Point "0. Goes back to change the app"
-$path = Read-Host "`nChoose a number $help"
+$path = Read-Host "`nChoose a number"
 
 switch ($path) {
   0         { Start-Process powershell.exe "-WindowStyle Maximized -File `"$PSCommandPath`""; Start-Sleep -Milliseconds 500; exit }
@@ -154,7 +153,13 @@ if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$e
 
 if ($out_file -like "*.exe"){$install = Read-Host "Do you want to install $program?(y/n)"}
 if ($install -eq "y" -or $install -eq "y"){
-  Write-Main "Opening $program's installer and leaving session..."; Clear-Host
-  Start-Process -Wait -FilePath "$path\$out_file" -ArgumentList /D="$path\$program"
-
+  if ($null -ne $cmd) {
+    Write-Main "There is a preset for running $program automaticaly, say if you want to start it (y/n)"
+    $runcmd = Read-Host
+    if ($runcmd -eq 'y' -or $runcmd -eq 'Y'){
+      Clear-Host; Clear-Host # For being positive about receving no format errors, that could appear sometimes
+      Write-Main "Running $program with '"$cmd"' presets"
+      Start-Process -FilePath "$path\$program\$exe" -ArgumentList "$cmd"
+    }
+  }
 }
