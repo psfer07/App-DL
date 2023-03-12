@@ -65,8 +65,10 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $url = $app.URL
   $exe = $app.exe
   $size = $app.size
+  $cmd = $app.cmd
+  $syn = $app.syn
   $propMapping.Add($name, $url)
-  $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; URL = $url; Exe = $exe;Size = $size}
+  $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; URL = $url; Exe = $exe; Size = $size; Cmd = $cmd; Syn = $syn}
 }
 
 #List every app valid in the JSON file
@@ -75,7 +77,8 @@ Write-Main "Available apps"
 foreach ($i in 0..($filteredApps.Count - 1)) {
     $app = $filteredApps[$i]
     $n = $i + 1
-    Write-Secondary "$n. $($app.Name) - Size: $($app.Size)"
+    Write-Main "$n. $($app.Name) - Size: $($app.Size)"
+    Write-Secondary "Description"
 }
 $pkg_n = Read-Host `n"Write the number of the app you want to get"
 $program = $filteredApps[$pkg_n - 1].Name

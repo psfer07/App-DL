@@ -29,5 +29,19 @@
         "URL": "https://www.7-zip.org/a/7z2201-x64.exe",
         "size": "1,5MB",
         "exe": "7zFM.exe"
+    },
+    "ShutUp10++": {
+        "URL": "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
+        "size": "1,7MB",
+        "exe": "OOSU10.exe",
+        "cmd": "",
+        "syn": ""
+    },
+    "McAfee-Stinger": {
+        "URL": "https://downloadcenter.trellix.com/products/mcafee-avert/Stinger/stinger64.exe",
+        "size": "38MB",
+        "exe": "stinger64.exe",
+        "cmd": "",
+        "syn": "False positive and advanced rootkit remover"
     }
 }
