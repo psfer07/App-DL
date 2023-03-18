@@ -78,7 +78,7 @@ foreach ($i in 0..($filteredApps.Count - 1)) {
   $app = $filteredApps[$i]
   $n = $i + 1
   Write-Main "$n. $($app.Name) - Size: $($app.Size)"
-  Write-Secondary -Text $app.syn
+  Write-Point $app.syn
 }
 $pkg_n = Read-Host `n"Write the number of the app you want to get"
 $program = $filteredApps[$pkg_n - 1].Name
