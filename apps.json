@@ -41,7 +41,7 @@
         "URL": "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
         "size": "1,7MB",
         "exe": "OOSU10.exe",
-        "cmd": ["Invoke-Expression ((New-Object System.Net.WebClient).DownloadString(\"https://raw.githubusercontent.com/psfer07/App-DL/main/ooshutup10.cfg\")) -o $path\\$program\\ooshutup10.cfg"],
+        "cmd": "Invoke-Expression ((New-Object System.Net.WebClient).DownloadString(\"https://raw.githubusercontent.com/psfer07/App-DL/main/ooshutup10.cfg\")) -o $path\\$program\\ooshutup10.cfg",
         "cmd_syn": "running it with recommended settings",
         "syn": "Pretty good Windows optimizer and privacy protector"
     },
