@@ -50,6 +50,7 @@ Clear-Host
 foreach ($i in 0..($nameArray.Count - 1)) {
   $name = $nameArray[$i]
   $app = $json.$name
+  $folder = $app.folder
   $url = $app.URL
   $exe = $app.exe
   $size = $app.size
@@ -57,7 +58,7 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $syn = $app.syn
   $cmd_syn = $app.cmd_syn
   $propMapping.Add($name, $url)
-  $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; URL = $url; Exe = $exe; Size = $size; Cmd = $cmd; Syn = $syn; Cmd_syn = $cmd_syn}
+  $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Cmd = $cmd; Syn = $syn; Cmd_syn = $cmd_syn}
 }
 
 #List every app valid in the JSON file
@@ -74,6 +75,7 @@ $pkg_n = Read-Host `n"Write the number of the app you want to get"
 #Assign the corresponding variables to the selected app
 $program =    $filteredApps[$pkg_n - 1].Name
 $exe =        $filteredApps[$pkg_n - 1].Exe
+$folder =     $filteredApps[$pkg_n - 1].folder
 $url =        $filteredApps[$pkg_n - 1].URL
 $cmd_syn =    $filteredApps[$pkg_n - 1].Cmd_syn
 $cmd =        $filteredApps[$pkg_n - 1].Cmd
@@ -126,7 +128,7 @@ if ($extract -eq "y" -or $extract -eq "Y"){
 }
 
 $open = Read-Host "Open the app?(y/n)"
-if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$exe" }
+if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$folder\$exe" }
 }
 
 if ($out_file -like "*.exe"){
