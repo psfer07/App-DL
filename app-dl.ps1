@@ -49,6 +49,19 @@ function Write-Warning() {
   Write-Host "   $Text" -ForegroundColor White -BackgroundColor Black
   Write-Host "<$center>" -ForegroundColor Red -BackgroundColor Black
 }
+function Use-Path{
+  if (Test-Path "$path\$out_file") {
+    Write-Host `n
+    Write-Point "1. Restart App-dl"
+    Write-Point "2. Leave powershell"
+    $restart = Read-Host "It seems that the package is currently allocated in this path, so write 'r' to restart the app or  'e' for exiting"
+    switch ($restart) {
+      "r"   { Start-Process powershell.exe "-WindowStyle Maximized -File `"$PSCommandPath`""; Start-Sleep -Milliseconds 500; exit }
+      "e"   { Write-Main "Closing this terminal..."; Start-Sleep -Milliseconds 500; exit }
+      default { Write-Warning "Non-valid number"}
+    }
+  }
+}
 
 #Initialize variables
 $json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
@@ -110,19 +123,9 @@ switch ($path) {
 Write-Main "Selected path: $path"
 
 #Checks if the program is installed or uncompressed in the selected folder
-if (Test-Path "$path\$program") {
-  Write-Host `n
-  Write-Point "1. Restart App-dl"
-  Write-Point "2. Leave powershell"
-  $restart = Read-Host "This program or the zip file of it is currently allocated in this path, so select the corresponding number if you want to start again or leaving this session"
-  switch ($restart) {
-    1   { Start-Process powershell.exe "-WindowStyle Maximized -File `"$PSCommandPath`""; Start-Sleep -Milliseconds 500; exit }
-    2   { Write-Main "Closing this terminal..."; Start-Sleep -Milliseconds 500; exit }
-    default { Write-Warning "Non-valid number"}
-  }
-}
+Use-Path
 
-# Assign specific variables to download and save the package
+# Assign specific variables to downloading and saving the package
 $selectedApp = $filteredApps | Where-Object {$_.Name -eq $program}
 $url = $selectedApp.URL
 $out_file = (Split-Path $url -Leaf) -split "/" | Select-Object -Last 1
@@ -153,12 +156,12 @@ if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$e
 
 if ($out_file -like "*.exe"){
   if ($null -ne $app.Cmd) {
-    Write-Main "There is a preset for running $program automaticaly, say if you want to start it (y/n)"
+    Write-Main "There is a preset for running $program $($app.Cmd_syn). Do you want to start it? (y/n)"
     $runcmd = Read-Host
     if ($runcmd -eq 'y' -or $runcmd -eq 'Y'){
       Clear-Host
-      Write-Main "Running $program "$app.Cmd_syn""
-      Start-Process -FilePath "$path\$out_file" -ArgumentList $app.Cmd
+      Write-Main "Running $program $($app.Cmd_syn)"
+      Start-Process -FilePath "$path\$out_file" -ArgumentList $($app.Cmd)
     }
     if ($runcmd -eq 'n' -or $runcmd -eq 'N'){
       Clear-Host
