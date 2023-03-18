@@ -133,7 +133,7 @@ if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$f
 
 if ($out_file -like "*.exe"){
   if ($null -ne $cmd) {
-    Write-Main "There is a preset for running $program $($cmd_syn). Do you want to start it? (y/n)"
+    Write-Main "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"
     $runcmd = Read-Host
     if ($runcmd -eq 'y' -or $runcmd -eq 'Y'){
       Clear-Host
