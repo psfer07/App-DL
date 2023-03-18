@@ -11,7 +11,7 @@ function Write-Main() {
 
   $center = for ($i = 1; $i -le $loop; $i++){ ("=") }
 
-  Write-Host "`n<$center>" -ForegroundColor Blue -BackgroundColor Black
+  Write-Host "`n`n<$center>" -ForegroundColor Blue -BackgroundColor Black
   Write-Host "   $Text" -ForegroundColor White -BackgroundColor Black
   Write-Host "<$center>" -ForegroundColor Blue -BackgroundColor Black
 }
@@ -133,8 +133,8 @@ Invoke-WebRequest -URI $url -OutFile "$path\$out_file"
 if ($?) {
     Write-Secondary "File downloaded successfully"
 } else {
-    Write-Warning "An error occurred while downloading the file"
-}
+    Write-Warning "An error occurred while downloading the file: $_.Exception"
+  }
 
 # Extracts or launches the app installer depending on its extension
 if ($out_file -like "*.zip"){$extract = Read-Host "Do you want to unzip the package?(y/n)"
@@ -150,16 +150,20 @@ $open = Read-Host "Open the app?(y/n)"
 if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$exe" }
 }
 
-
-if ($out_file -like "*.exe"){$install = Read-Host "Do you want to install $program?(y/n)"}
-if ($install -eq "y" -or $install -eq "y"){
+if ($out_file -like "*.exe"){
   if ($null -ne $cmd) {
     Write-Main "There is a preset for running $program automaticaly, say if you want to start it (y/n)"
     $runcmd = Read-Host
     if ($runcmd -eq 'y' -or $runcmd -eq 'Y'){
+      if ($cmd) {$cmd = Invoke-Expression $cmd}
       Clear-Host; Clear-Host # For being positive about receving no format errors, that could appear sometimes
-      Write-Main "Running $program with '"$cmd"' presets"
-      Start-Process -FilePath "$path\$program\$exe" -ArgumentList "$cmd"
+      Write-Main "Running $program with "$cmd" presets"
+      Start-Process -FilePath "$path\$program\$exe" -ArgumentList $cmd
+    }
+    if ($runcmd -eq 'n' -or $runcmd -eq 'N'){
+      Clear-Host; Clear-Host # For being positive about receving no format errors, that could appear sometimes
+      Write-Main "Running $program directly"
+      Start-Process -FilePath "$path\$program\$exe"
     }
   }
 }
