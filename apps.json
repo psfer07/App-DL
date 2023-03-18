@@ -57,5 +57,14 @@
         "folder": "ungoogled-chromium_111.0.5563.65-1.1_windows",
         "exe": "chrome.exe",
         "syn": "Full-debloated version of Google Chrome"
+    },
+    "Brave": {
+        "URL": "https://github.com/portapps/brave-portable/releases/download/1.47.171-85/brave-portable-win64-1.47.171-85-setup.exe",
+        "size": "120MB",
+        "folder": "brave-portable",
+        "cmd": "/SP- /VERYSILENT /DIR=\"$path\" /NORESTART",
+        "cmd_syn": "installing it silently in the specified folder",
+        "exe": "brave-portable.exe",
+        "syn": "A portable version of the Brave browser"
     }
 }
