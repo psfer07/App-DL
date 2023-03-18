@@ -66,5 +66,16 @@
         "cmd_syn": "installing it silently in the specified folder",
         "exe": "brave-portable.exe",
         "syn": "A portable version of the Brave browser"
+    },
+    "OpenVPN": {
+        "URL": "https://github.com/portapps/openvpn-portable/releases/download/2.4.9-I601-8/openvpn-portable-win64-2.4.9-I601-8-setup.exe",
+        "size": "10MB",
+        "folder": "openvpn-portable",
+        "cmd": "/DIR=\"$path\" /NORESTART",
+        "cmd_syn": "installing it in the specified folder",
+        "exe": "openvpn-portable.exe",
+        "syn": "A portable VPN"
     }
+
+    
 }
