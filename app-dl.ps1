@@ -151,19 +151,18 @@ if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$e
 }
 
 if ($out_file -like "*.exe"){
-  if ($null -ne $cmd) {
+  if ($null -ne $app.cmd) {
     Write-Main "There is a preset for running $program automaticaly, say if you want to start it (y/n)"
     $runcmd = Read-Host
     if ($runcmd -eq 'y' -or $runcmd -eq 'Y'){
-      if ($cmd) {$cmd = Invoke-Expression $cmd}
-      Clear-Host; Clear-Host # For being positive about receving no format errors, that could appear sometimes
-      Write-Main "Running $program with "$cmd" presets"
-      Start-Process -FilePath "$path\$program\$exe" -ArgumentList $cmd
+      Clear-Host
+      Write-Main "Running $program "$app.cmd_syn""
+      Start-Process -FilePath "$path\$out_file" -ArgumentList $app.cmd
     }
     if ($runcmd -eq 'n' -or $runcmd -eq 'N'){
-      Clear-Host; Clear-Host # For being positive about receving no format errors, that could appear sometimes
+      Clear-Host
       Write-Main "Running $program directly"
-      Start-Process -FilePath "$path\$program\$exe"
+      Start-Process -FilePath "$path\$out_file"
     }
   }
 }

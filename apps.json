@@ -50,7 +50,7 @@
         "size": "38MB",
         "exe": "stinger64.exe",
         "cmd": "--ADL --ROOTKIT --WMI",
-        "cmd_syn": "letting the user to start the scan with all presets enabled",
+        "cmd_syn": "doing a full scan of all local drives",
         "syn": "Advanced rootkit and threat remover"
     }
 }
