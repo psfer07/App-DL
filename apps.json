@@ -34,7 +34,7 @@
         "size": "1,5MB",
         "exe": "7zFM.exe",
         "cmd": "/S /D=\"$path\"",
-        "cmd_syn": "Installs it in the specified folder silently",
+        "cmd_syn": "installing it in the specified folder silently",
         "syn": "Well known file archiver with the high compression algorithms"
     },
     "ShutUp10++": {
@@ -42,7 +42,7 @@
         "size": "1,7MB",
         "exe": "OOSU10.exe",
         "cmd": ["Invoke-Expression ((New-Object System.Net.WebClient).DownloadString(\"https://raw.githubusercontent.com/psfer07/App-DL/main/ooshutup10.cfg\")) -o $path\\$program\\ooshutup10.cfg"],
-        "cmd_syn": "Runs it with recommended settings",
+        "cmd_syn": "running it with recommended settings",
         "syn": "Pretty good Windows optimizer and privacy protector"
     },
     "McAfee-Stinger": {
@@ -50,7 +50,7 @@
         "size": "38MB",
         "exe": "stinger64.exe",
         "cmd": "--ADL --ROOTKIT --WMI",
-        "cmd_syn": "Lets the user to start the scan with all presets enabled",
+        "cmd_syn": "letting the user to start the scan with all presets enabled",
         "syn": "Advanced rootkit and threat remover"
     }
 }
