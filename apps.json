@@ -49,7 +49,7 @@
         "URL": "https://downloadcenter.trellix.com/products/mcafee-avert/Stinger/stinger64.exe",
         "size": "38MB",
         "exe": "stinger64.exe",
-        "cmd": "--ADL --ROOTKIT --WMI",
+        "cmd": "--GO --ADL --ROOTKIT --WMI",
         "cmd_syn": "doing a full scan of all local drives",
         "syn": "Advanced rootkit and threat remover"
     }
