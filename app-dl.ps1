@@ -67,8 +67,9 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $size = $app.size
   $cmd = $app.cmd
   $syn = $app.syn
+  $cmd_syn = $app.cmd_syn
   $propMapping.Add($name, $url)
-  $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; URL = $url; Exe = $exe; Size = $size; Cmd = $cmd; Syn = $syn}
+  $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; URL = $url; Exe = $exe; Size = $size; Cmd = $cmd; Syn = $syn; Cmd_syn = $cmd_syn}
 }
 
 #List every app valid in the JSON file
@@ -151,13 +152,13 @@ if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$e
 }
 
 if ($out_file -like "*.exe"){
-  if ($null -ne $app.cmd) {
+  if ($null -ne $app.Cmd) {
     Write-Main "There is a preset for running $program automaticaly, say if you want to start it (y/n)"
     $runcmd = Read-Host
     if ($runcmd -eq 'y' -or $runcmd -eq 'Y'){
       Clear-Host
-      Write-Main "Running $program "$app.cmd_syn""
-      Start-Process -FilePath "$path\$out_file" -ArgumentList $app.cmd
+      Write-Main "Running $program "$app.Cmd_syn""
+      Start-Process -FilePath "$path\$out_file" -ArgumentList $app.Cmd
     }
     if ($runcmd -eq 'n' -or $runcmd -eq 'N'){
       Clear-Host
