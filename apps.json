@@ -62,8 +62,6 @@
         "URL": "https://github.com/portapps/brave-portable/releases/download/1.47.171-85/brave-portable-win64-1.47.171-85-setup.exe",
         "size": "120MB",
         "folder": "brave-portable",
-        "cmd": "/DIR=\"$path\\$program\" /NORESTART",
-        "cmd_syn": "installing it silently in the specified folder",
         "exe": "brave-portable.exe",
         "syn": "A portable version of the Brave browser"
     },
@@ -71,8 +69,6 @@
         "URL": "https://github.com/portapps/openvpn-portable/releases/download/2.4.9-I601-8/openvpn-portable-win64-2.4.9-I601-8-setup.exe",
         "size": "10MB",
         "folder": "openvpn-portable",
-        "cmd": "/GROUP=$path\\$program /NORESTART",
-        "cmd_syn": "installing it in the specified folder",
         "exe": "openvpn-portable.exe",
         "syn": "A portable VPN"
     }
