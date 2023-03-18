@@ -1,48 +1,25 @@
 $branch = "dev"
 
 Clear-Host
-function Write-Main() {
-  [CmdletBinding()]
-  param (
-      [String] $Text = "Blank"
-  )
-
+function Write-Main($Text) {
   $loop = $Text.Length
-
   $center = for ($i = 1; $i -le $loop; $i++){ ("=") }
 
   Write-Host "`n`n<$center>" -ForegroundColor Blue -BackgroundColor Black
   Write-Host "   $Text" -ForegroundColor White -BackgroundColor Black
   Write-Host "<$center>" -ForegroundColor Blue -BackgroundColor Black
 }
-function Write-Secondary() {
-  [CmdletBinding()]
-  param (
-      [String] $Text = "Blank"
-  )
-
+function Write-Secondary($Text) {
   Write-Host "`n<==========[" -NoNewline -ForegroundColor Green -BackgroundColor Black
   Write-Host " $Text " -NoNewline -ForegroundColor White -BackgroundColor Black
   Write-Host "]==========>`n" -ForegroundColor Green -BackgroundColor Black
 }
-function Write-Point() {
-  [CmdletBinding()]
-  param (
-      [String] $Text = "Blank"
-  )
-
+function Write-Point($Text) {
   Write-Host "==[ " -NoNewline -ForegroundColor Green -BackgroundColor Black
   Write-Host "$Text" -ForegroundColor White -BackgroundColor Black
 }
-function Write-Warning() {
-  [CmdletBinding()]
-  param (
-      [String] $Text = "Blank"
-  )
-
-
+function Write-Warning($Text) {
   $loop = $Text.Length
-
   $center = for ($i = 1; $i -le $loop; $i++){ ("=") }
 
   Write-Host "`n<$center>" -ForegroundColor Red
