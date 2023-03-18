@@ -27,7 +27,6 @@ function Write-Warning($Text) {
   Write-Host "<$center>" -ForegroundColor Red
 }
 function Use-Path{
-  if (Test-Path "$path\$out_file") {
     Clear-Host
     Write-Warning "It seems that $program is currently allocated in this path"
     $restart = Read-Host "Write 'r' to restart the app and start again or 'e' to exiting"
@@ -36,7 +35,6 @@ function Use-Path{
       "e"   { Write-Main "Closing this terminal..."; Start-Sleep -Milliseconds 500; exit }
       default { Write-Warning "Non-valid character, exiting..."; Start-Sleep -Milliseconds 500; exit }
     }
-  }
 }
 
 #Initialize variables
@@ -98,14 +96,15 @@ switch ($path) {
 }
 Write-Main "Selected path: $path"
 
-#Checks if the program is installed or uncompressed in the selected folder
-Use-Path
 
 # Assign specific variables to downloading and saving the package
 $selectedApp = $filteredApps | Where-Object {$_.Name -eq $program}
 $url = $selectedApp.URL
 $out_file = (Split-Path $url -Leaf) -split "/" | Select-Object -Last 1
 
+
+#Checks if the program is installed or uncompressed in the selected folder
+if (Test-Path "$path\$out_file") {Use-Path}
 
 # Downloads the app package
 Write-Main "App to download: $program..."; Pause
