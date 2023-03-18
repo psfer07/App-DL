@@ -51,7 +51,7 @@
         "cmd_syn": "doing a full scan of all local drives",
         "syn": "Advanced rootkit and threat remover"
     },
-    "Ungoogled Chromium": {
+    "Ungoogled-Chromium": {
         "URL": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/111.0.5563.65-1.1/ungoogled-chromium_111.0.5563.65-1.1_windows_x64.zip",
         "size": "113MB",
         "folder": "ungoogled-chromium_111.0.5563.65-1.1_windows",
