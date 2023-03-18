@@ -70,6 +70,8 @@ foreach ($i in 0..($filteredApps.Count - 1)) {
   Write-Point $app.syn
 }
 $pkg_n = Read-Host `n"Write the number of the app you want to get"
+
+#Assign the corresponding variables to the selected app
 $program =    $filteredApps[$pkg_n - 1].Name
 $exe =        $filteredApps[$pkg_n - 1].Exe
 $url =        $filteredApps[$pkg_n - 1].URL
