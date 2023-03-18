@@ -29,6 +29,12 @@
         "exe": "ThisIsWin11.exe",
         "syn": "Useful app to customize and optimize almost every configuration in your PC"
     },
+    "ShutUp10++": {
+        "URL": "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
+        "size": "1,7MB",
+        "exe": "OOSU10.exe",
+        "syn": "Pretty good Windows optimizer and privacy protector"
+    },
     "7-Zip": {
         "URL": "https://www.7-zip.org/a/7z2201-x64.exe",
         "size": "1,5MB",
@@ -36,14 +42,6 @@
         "cmd": "/D=\"$path\"",
         "cmd_syn": "installing it in the specified folder",
         "syn": "Well known file archiver with the high compression algorithms"
-    },
-    "ShutUp10++": {
-        "URL": "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
-        "size": "1,7MB",
-        "exe": "OOSU10.exe",
-        "cmd": "Invoke-Expression ((New-Object System.Net.WebClient).DownloadString(\"https://raw.githubusercontent.com/psfer07/App-DL/main/ooshutup10.cfg\")) -o $path\\$program\\ooshutup10.cfg",
-        "cmd_syn": "running it with recommended settings",
-        "syn": "Pretty good Windows optimizer and privacy protector"
     },
     "McAfee-Stinger": {
         "URL": "https://downloadcenter.trellix.com/products/mcafee-avert/Stinger/stinger64.exe",
