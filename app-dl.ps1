@@ -69,8 +69,12 @@ foreach ($i in 0..($filteredApps.Count - 1)) {
   Write-Point $app.syn
 }
 $pkg_n = Read-Host `n"Write the number of the app you want to get"
-$program = $filteredApps[$pkg_n - 1].Name
-$exe = $filteredApps[$pkg_n - 1].Exe
+$program =    $filteredApps[$pkg_n - 1].Name
+$exe =        $filteredApps[$pkg_n - 1].Exe
+$url =        $filteredApps[$pkg_n - 1].URL
+$cmd_syn =    $filteredApps[$pkg_n - 1].Cmd_syn
+$cmd =        $filteredApps[$pkg_n - 1].Cmd
+$out_file =   (Split-Path $url -Leaf) -split "/" | Select-Object -Last 1
 Clear-Host
 Write-Main "$program selected"
 
@@ -95,13 +99,6 @@ switch ($path) {
   default   { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $path = $Env:USERPROFILE }
 }
 Write-Main "Selected path: $path"
-
-
-# Assign specific variables to downloading and saving the package
-$selectedApp = $filteredApps | Where-Object {$_.Name -eq $program}
-$url = $selectedApp.URL
-$out_file = (Split-Path $url -Leaf) -split "/" | Select-Object -Last 1
-
 
 #Checks if the program is installed or uncompressed in the selected folder
 if (Test-Path "$path\$out_file") {Use-Path}
@@ -130,13 +127,13 @@ if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$e
 }
 
 if ($out_file -like "*.exe"){
-  if ($null -ne $app.Cmd) {
-    Write-Main "There is a preset for running $program $($app.Cmd_syn). Do you want to start it? (y/n)"
+  if ($null -ne $cmd) {
+    Write-Main "There is a preset for running $program $($cmd_syn). Do you want to start it? (y/n)"
     $runcmd = Read-Host
     if ($runcmd -eq 'y' -or $runcmd -eq 'Y'){
       Clear-Host
-      Write-Main "Running $program $($app.Cmd_syn)"
-      Start-Process -FilePath "$path\$out_file" -ArgumentList $($app.Cmd)
+      Write-Main "Running $program $($cmd_syn)"
+      Start-Process -FilePath "$path\$out_file" -ArgumentList $($cmd)
     }
     if ($runcmd -eq 'n' -or $runcmd -eq 'N'){
       Clear-Host
