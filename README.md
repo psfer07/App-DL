@@ -24,7 +24,6 @@ irm bit.ly/psappdl | iex
 * Added recommended parameters for some apps and their corresponding description
 * Added new portable apps to the library
 
-# ---
 
 ### App-DL v1.0 (First release)
 
