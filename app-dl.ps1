@@ -32,7 +32,7 @@ function Use-Path{
     $restart = Read-Host "Write 'r' to restart the app and start again, 'o' to open the existing app or 'e' to exiting"
     switch ($restart) {
       "r"   { Start-Process powershell.exe "-File `"$PSCommandPath`""; Start-Sleep -Milliseconds 200; exit }
-      "o"   { Write-Main "Opening $program..."; Start-Process -FilePath "$path\$out_file"; Start-Sleep -Milliseconds 200; exit }
+      "o"   { Write-Main "Opening $program..."; if ($out_file -like "*.zip"){ if (Test-Path -eq "$path\$out_file"){ Write-Main "Zip file detected"; Write-Secondary "$program is saved as a zip file, so uncompressing..."; Start-Sleep -Milliseconds 200; Expand-Archive -Path "$path\$out_file" -DestinationPath "$path\$program" -Force; Write-Main "Package succesfully extracted..."; Start-Sleep -Milliseconds 500; exit }elseif (Test-Path -eq "$path\$program\$folder"){Start-Process -FilePath "$path\$program\$folder\$exe"}}; if ($out_file -like "*.exe"){ Start-Process -FilePath "$path\$out_file"; Start-Sleep -Milliseconds 200; exit} }
       "e"   { Write-Main "Closing this terminal..."; Start-Sleep -Milliseconds 500; exit }
       default { Write-Warning "Non-valid character, exiting..."; Start-Sleep -Milliseconds 500; exit }
     }
