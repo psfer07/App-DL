@@ -5,37 +5,36 @@ function Write-Main($Text) {
   $loop = $Text.Length
   $center = for ($i = 1; $i -le $loop; $i++){ ("=") }
 
-  Write-Host "`n`n<$center>" -ForegroundColor Blue -BackgroundColor Black
-  Write-Host "   $Text" -ForegroundColor White -BackgroundColor Black
-  Write-Host "<$center>" -ForegroundColor Blue -BackgroundColor Black
+  Write-Host "`n`n`n<$center>" -ForegroundColor Blue
+  Write-Host "   $Text" -ForegroundColor White
+  Write-Host "<$center>" -ForegroundColor Blue
 }
 function Write-Secondary($Text) {
-  Write-Host "`n<==========[" -NoNewline -ForegroundColor Green -BackgroundColor Black
-  Write-Host " $Text " -NoNewline -ForegroundColor White -BackgroundColor Black
-  Write-Host "]==========>`n" -ForegroundColor Green -BackgroundColor Black
+  Write-Host "`n<==========[" -NoNewline -ForegroundColor Green
+  Write-Host " $Text " -NoNewline -ForegroundColor White
+  Write-Host "]==========>`n" -ForegroundColor Green
 }
 function Write-Point($Text) {
-  Write-Host "==[ " -NoNewline -ForegroundColor Green -BackgroundColor Black
-  Write-Host "$Text" -ForegroundColor White -BackgroundColor Black
+  Write-Host "==[ " -NoNewline -ForegroundColor Green
+  Write-Host "$Text" -ForegroundColor White
 }
 function Write-Warning($Text) {
   $loop = $Text.Length
   $center = for ($i = 1; $i -le $loop; $i++){ ("=") }
 
   Write-Host "`n<$center>" -ForegroundColor Red
-  Write-Host "   $Text" -ForegroundColor White -BackgroundColor Black
-  Write-Host "<$center>" -ForegroundColor Red -BackgroundColor Black
+  Write-Host "   $Text" -ForegroundColor White
+  Write-Host "<$center>" -ForegroundColor Red
 }
 function Use-Path{
   if (Test-Path "$path\$out_file") {
-    Write-Host `n
-    Write-Point "1. Restart App-dl"
-    Write-Point "2. Leave powershell"
-    $restart = Read-Host "It seems that the package is currently allocated in this path, so write 'r' to restart the app or  'e' for exiting"
+    Clear-Host
+    Write-Warning "It seems that $program is currently allocated in this path"
+    $restart = Read-Host "Write 'r' to restart the app and start again or 'e' to exiting"
     switch ($restart) {
-      "r"   { Start-Process powershell.exe "-WindowStyle Maximized -File `"$PSCommandPath`""; Start-Sleep -Milliseconds 500; exit }
+      "r"   { Start-Process powershell.exe "-File `"$PSCommandPath`""; Start-Sleep -Milliseconds 200; exit }
       "e"   { Write-Main "Closing this terminal..."; Start-Sleep -Milliseconds 500; exit }
-      default { Write-Warning "Non-valid number"}
+      default { Write-Warning "Non-valid character, exiting..."; Start-Sleep -Milliseconds 500; exit }
     }
   }
 }
