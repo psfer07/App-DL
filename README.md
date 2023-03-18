@@ -11,7 +11,16 @@ irm bit.ly/psappdl | iex
 
 ## Changelog
 
-### App-DL v1.0.0 (First release)
+### App-DL v1.1
+
+---
+
+* Improved performance and many bugs are fixed
+* 
+
+#---
+
+### App-DL v1.0 (First release)
 
 ---
 
