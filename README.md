@@ -8,7 +8,6 @@ All you need to do is typing or copying this command in your powershell terminal
 irm bit.ly/psappdl | iex
 ```
 
-
 ## Changelog
 
 ### App-DL v1.1
@@ -17,13 +16,17 @@ irm bit.ly/psappdl | iex
 
 * Improved performance and many bugs are fixed
 * Now it checks if even the package or the app are stored in the selected directory
-  * Added the "open" option, which allows the user to skip the downloading steps if the app or the package is allocated in the specified path
 
+  * Added the "open" option, which allows the user to skip the downloading steps if the app or the package is allocated in the specified path
   * Fixed the "restart" and "exit" options, which didn't appear
-* Added app descriptions
+* Added self-explanatory descriptions for the apps
 * Added recommended parameters for some apps and their corresponding description
 * Added new portable apps to the library
+* Functions Write-Main, Write-Secondary, Write-Point and Write-Warning are fixed when the app restarts
 
+![1679232823640](image/README/1679232823640.png "App selection")
+
+![1679232767060](image/README/1679232767060.png)
 
 ### App-DL v1.0 (First release)
 
@@ -31,6 +34,7 @@ irm bit.ly/psappdl | iex
 
 * Downloads the app that the user selects
 * Gives 6 paths to download
+
   * Desktop
   * Documents
   * Downloads
@@ -39,3 +43,7 @@ irm bit.ly/psappdl | iex
   * User path (C:\\users\\**\\)
 * Extracts the package or installs it, whatever is a zip or an exe file.
 * Looks for the executable to open it if desired
+
+  ![1679231456807](image/README/1679231456807.png "App selection")
+
+  ![1679232109146](image/README/1679232109146.png "Asks to install it")
