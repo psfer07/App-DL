@@ -1,51 +1,37 @@
 Clear-Host
-function Write-Main() {
-  [CmdletBinding()]
-  param (
-      [String] $Text = "Blank"
-  )
-
+function Write-Main($Text) {
+  $border = "============================================"
+  Write-Host "`n`n<$border>" -ForegroundColor Blue
+  Write-Host "   $Text" -ForegroundColor White
+  Write-Host "<$border>" -ForegroundColor Blue
+}
+function Write-Secondary($Text) {
+  Write-Host "`n<==========[" -NoNewline -ForegroundColor Green
+  Write-Host " $Text " -NoNewline -ForegroundColor White
+  Write-Host "]==========>`n" -ForegroundColor Green
+}
+function Write-Point($Text) {
+  Write-Host "==[ " -NoNewline -ForegroundColor Green
+  Write-Host "$Text" -ForegroundColor White
+}
+function Write-Warning($Text) {
   $loop = $Text.Length
-
-  $center = for ($i = 1; $i -le $loop; $i++){ ("=") }
-
-  Write-Host "`n<$center>" -ForegroundColor Blue
-  Write-Host "   $Text" -ForegroundColor White -BackgroundColor Black
-  Write-Host "<$center>" -ForegroundColor Blue -BackgroundColor Black
-}
-function Write-Secondary() {
-  [CmdletBinding()]
-  param (
-      [String] $Text = "Blank"
-  )
-
-  Write-Host "`n<==========[" -NoNewline -ForegroundColor Green -BackgroundColor Black
-  Write-Host " $Text " -NoNewline -ForegroundColor White -BackgroundColor Black
-  Write-Host "]==========>`n" -ForegroundColor Green -BackgroundColor Black
-}
-function Write-Point() {
-  [CmdletBinding()]
-  param (
-      [String] $Text = "Blank"
-  )
-
-  Write-Host "==[ " -NoNewline -ForegroundColor Green -BackgroundColor Black
-  Write-Host "$Text" -ForegroundColor White -BackgroundColor Black
-}
-function Write-Warning() {
-  [CmdletBinding()]
-  param (
-      [String] $Text = "Blank"
-  )
-
-
-  $loop = $Text.Length
-
   $center = for ($i = 1; $i -le $loop; $i++){ ("=") }
 
   Write-Host "`n<$center>" -ForegroundColor Red
-  Write-Host "   $Text" -ForegroundColor White -BackgroundColor Black
-  Write-Host "<$center>" -ForegroundColor Red -BackgroundColor Black
+  Write-Host "   $Text" -ForegroundColor White
+  Write-Host "<$center>" -ForegroundColor Red
+}
+function Use-Path{
+    Clear-Host
+    Write-Warning "It seems that $program is currently allocated in this path"
+    $restart = Read-Host "Write 'r' to restart the app and start again, 'o' to open the existing app or 'e' to exiting"
+    switch ($restart) {
+      "r"   { Start-Process powershell.exe "-File `"$PSCommandPath`""; Start-Sleep -Milliseconds 200; exit }
+      "o"   { Write-Main "Opening $program..."; if ($out_file -like "*.zip"){ if (Test-Path -eq "$path\$out_file"){ Write-Main "Zip file detected"; Write-Secondary "$program is saved as a zip file, so uncompressing..."; Start-Sleep -Milliseconds 200; Expand-Archive -Path "$path\$out_file" -DestinationPath "$path\$program" -Force; Write-Main "Package succesfully extracted..."; Start-Sleep -Milliseconds 500; exit }elseif (Test-Path -eq "$path\$program\$folder"){Start-Process -FilePath "$path\$program\$folder\$exe"}}; if ($out_file -like "*.exe"){if ($null -ne $cmd) {Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"; $runcmd = Read-Host; if ($runcmd -eq 'y' -or $runcmd -eq 'Y'){; Clear-Host; Write-Main "Running $program $($cmd_syn)"; Start-Process -FilePath "$path\$out_file" -ArgumentList $($cmd); Start-Sleep -Milliseconds 200; exit}}if ($runcmd -eq 'n' -or $runcmd -eq 'N'){Clear-Host; Write-Main "Running $program directly"; Start-Process -FilePath "$path\$out_file"; Start-Sleep -Milliseconds 200; exit}}}
+      "e"   { Write-Main "Closing this terminal..."; Start-Sleep -Milliseconds 500; exit }
+      default { Write-Warning "Non-valid character, exiting..."; Start-Sleep -Milliseconds 500; exit }
+    }
 }
 
 #Initialize variables
@@ -60,25 +46,36 @@ Clear-Host
 foreach ($i in 0..($nameArray.Count - 1)) {
   $name = $nameArray[$i]
   $app = $json.$name
+  $folder = $app.folder
   $url = $app.URL
   $exe = $app.exe
   $size = $app.size
+  $cmd = $app.cmd
+  $syn = $app.syn
+  $cmd_syn = $app.cmd_syn
   $propMapping.Add($name, $url)
-  $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; URL = $url; Exe = $exe;Size = $size}
+  $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Cmd = $cmd; Syn = $syn; Cmd_syn = $cmd_syn}
 }
 
 #List every app valid in the JSON file
 Clear-Host
 Write-Main "Available apps"
 foreach ($i in 0..($filteredApps.Count - 1)) {
-    $app = $filteredApps[$i]
-    $n = $i + 1
-    Write-Secondary "$n. $($app.Name) - Size: $($app.Size)"
+  $app = $filteredApps[$i]
+  $n = $i + 1
+  Write-Main "$n. $($app.Name) - Size: $($app.Size)"
+  Write-Point $app.syn
 }
 $pkg_n = Read-Host `n"Write the number of the app you want to get"
-$program = $filteredApps[$pkg_n - 1].Name
-$exe = $filteredApps[$pkg_n - 1].Exe
-$program | Out-Null
+
+#Assign the corresponding variables to the selected app
+$program =    $filteredApps[$pkg_n - 1].Name
+$exe =        $filteredApps[$pkg_n - 1].Exe
+$folder =     $filteredApps[$pkg_n - 1].folder
+$url =        $filteredApps[$pkg_n - 1].URL
+$cmd_syn =    $filteredApps[$pkg_n - 1].Cmd_syn
+$cmd =        $filteredApps[$pkg_n - 1].Cmd
+$out_file =   (Split-Path $url -Leaf) -split "/" | Select-Object -Last 1
 Clear-Host
 Write-Main "$program selected"
 
@@ -90,7 +87,7 @@ Write-Point "4. Save it inside of C:"
 Write-Point "5. Saves it inside of Program Files"
 Write-Point "6. Save it inside of the user profile`n"
 Write-Point "0. Goes back to change the app"
-$path = Read-Host "`nChoose a number $help"
+$path = Read-Host "`nChoose a number"
 
 switch ($path) {
   0         { Start-Process powershell.exe "-WindowStyle Maximized -File `"$PSCommandPath`""; Start-Sleep -Milliseconds 500; exit }
@@ -105,23 +102,7 @@ switch ($path) {
 Write-Main "Selected path: $path"
 
 #Checks if the program is installed or uncompressed in the selected folder
-if (Test-Path "$path\$program") {
-  Write-Host `n
-  Write-Point "1. Restart App-dl"
-  Write-Point "2. Leave powershell"
-  $restart = Read-Host "This program or the zip file of it is currently allocated in this path, so select the corresponding number if you want to start again or leaving this session"
-  switch ($restart) {
-    1   { Start-Process powershell.exe "-WindowStyle Maximized -File `"$PSCommandPath`""; Start-Sleep -Milliseconds 500; exit }
-    2   { Write-Main "Closing this terminal..."; Start-Sleep -Milliseconds 500; exit }
-    default { Write-Warning "Non-valid number"}
-  }
-}
-
-# Assign specific variables to download and save the package
-$selectedApp = $filteredApps | Where-Object {$_.Name -eq $program}
-$url = $selectedApp.URL
-$out_file = (Split-Path $url -Leaf) -split "/" | Select-Object -Last 1
-
+if (Test-Path "$path\$out_file") {Use-Path}
 
 # Downloads the app package
 Write-Main "App to download: $program..."; Pause
@@ -129,8 +110,8 @@ Invoke-WebRequest -URI $url -OutFile "$path\$out_file"
 if ($?) {
     Write-Secondary "File downloaded successfully"
 } else {
-    Write-Warning "An error occurred while downloading the file"
-}
+    Write-Warning "An error occurred while downloading the file: $_.Exception"
+  }
 
 # Extracts or launches the app installer depending on its extension
 if ($out_file -like "*.zip"){$extract = Read-Host "Do you want to unzip the package?(y/n)"
@@ -143,13 +124,22 @@ if ($extract -eq "y" -or $extract -eq "Y"){
 }
 
 $open = Read-Host "Open the app?(y/n)"
-if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$exe" }
+if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$folder\$exe" }
 }
 
-
-if ($out_file -like "*.exe"){$install = Read-Host "Do you want to install $program?(y/n)"}
-if ($install -eq "y" -or $install -eq "y"){
-  Write-Main "Opening $program's installer and leaving session..."; Clear-Host
-  Start-Process -Wait -FilePath "$path\$out_file" -ArgumentList /D="$path\$program"
-
+if ($out_file -like "*.exe"){
+  if ($null -ne $cmd) {
+    Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"
+    $runcmd = Read-Host
+    if ($runcmd -eq 'y' -or $runcmd -eq 'Y'){
+      Clear-Host
+      Write-Main "Running $program $($cmd_syn)"
+      Start-Process -FilePath "$path\$out_file" -ArgumentList $($cmd)
+    }
+    if ($runcmd -eq 'n' -or $runcmd -eq 'N'){
+      Clear-Host
+      Write-Main "Running $program directly"
+      Start-Process -FilePath "$path\$out_file"
+    }
+  }
 }
