@@ -35,7 +35,7 @@ function Use-Path{
 }
 
 #Initialize variables
-$json = Invoke-RestMethod ".\apps.json"
+$json = ConvertFrom-Json ".\apps.json" -Raw | Get-Content $json
 $nameArray = $json.psobject.Properties.Name
 $propMapping = @{}
 $filteredApps = @()
