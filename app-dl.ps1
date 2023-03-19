@@ -2,12 +2,10 @@ $branch = "dev"
 
 Clear-Host
 function Write-Main($Text) {
-  $loop = $Text.Length
-  $center = for ($i = 1; $i -le $loop; $i++){ ("=") }
-
-  Write-Host "`n`n`n<$center>" -ForegroundColor Blue
+  $border = "============================================"
+  Write-Host "`n`n<$border>" -ForegroundColor Blue
   Write-Host "   $Text" -ForegroundColor White
-  Write-Host "<$center>" -ForegroundColor Blue
+  Write-Host "<$border>" -ForegroundColor Blue
 }
 function Write-Secondary($Text) {
   Write-Host "`n<==========[" -NoNewline -ForegroundColor Green
@@ -32,7 +30,7 @@ function Use-Path{
     $restart = Read-Host "Write 'r' to restart the app and start again, 'o' to open the existing app or 'e' to exiting"
     switch ($restart) {
       "r"   { Start-Process powershell.exe "-File `"$PSCommandPath`""; Start-Sleep -Milliseconds 200; exit }
-      "o"   { Write-Main "Opening $program..."; if ($out_file -like "*.zip"){ if (Test-Path -eq "$path\$out_file"){ Write-Main "Zip file detected"; Write-Secondary "$program is saved as a zip file, so uncompressing..."; Start-Sleep -Milliseconds 200; Expand-Archive -Path "$path\$out_file" -DestinationPath "$path\$program" -Force; Write-Main "Package succesfully extracted..."; Start-Sleep -Milliseconds 500; exit }elseif (Test-Path -eq "$path\$program\$folder"){Start-Process -FilePath "$path\$program\$folder\$exe"}}; if ($out_file -like "*.exe"){if ($null -ne $cmd) {Write-Main "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"; $runcmd = Read-Host; if ($runcmd -eq 'y' -or $runcmd -eq 'Y'){; Clear-Host; Write-Main "Running $program $($cmd_syn)"; Start-Process -FilePath "$path\$out_file" -ArgumentList $($cmd); Start-Sleep -Milliseconds 200; exit}}if ($runcmd -eq 'n' -or $runcmd -eq 'N'){Clear-Host; Write-Main "Running $program directly"; Start-Process -FilePath "$path\$out_file"; Start-Sleep -Milliseconds 200; exit}}}
+      "o"   { Write-Main "Opening $program..."; if ($out_file -like "*.zip"){ if (Test-Path -eq "$path\$out_file"){ Write-Main "Zip file detected"; Write-Secondary "$program is saved as a zip file, so uncompressing..."; Start-Sleep -Milliseconds 200; Expand-Archive -Path "$path\$out_file" -DestinationPath "$path\$program" -Force; Write-Main "Package succesfully extracted..."; Start-Sleep -Milliseconds 500; exit }elseif (Test-Path -eq "$path\$program\$folder"){Start-Process -FilePath "$path\$program\$folder\$exe"}}; if ($out_file -like "*.exe"){if ($null -ne $cmd) {Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"; $runcmd = Read-Host; if ($runcmd -eq 'y' -or $runcmd -eq 'Y'){; Clear-Host; Write-Main "Running $program $($cmd_syn)"; Start-Process -FilePath "$path\$out_file" -ArgumentList $($cmd); Start-Sleep -Milliseconds 200; exit}}if ($runcmd -eq 'n' -or $runcmd -eq 'N'){Clear-Host; Write-Main "Running $program directly"; Start-Process -FilePath "$path\$out_file"; Start-Sleep -Milliseconds 200; exit}}}
       "e"   { Write-Main "Closing this terminal..."; Start-Sleep -Milliseconds 500; exit }
       default { Write-Warning "Non-valid character, exiting..."; Start-Sleep -Milliseconds 500; exit }
     }
@@ -133,7 +131,7 @@ if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$path\$program\$f
 
 if ($out_file -like "*.exe"){
   if ($null -ne $cmd) {
-    Write-Main "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"
+    Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"
     $runcmd = Read-Host
     if ($runcmd -eq 'y' -or $runcmd -eq 'Y'){
       Clear-Host
