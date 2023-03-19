@@ -35,7 +35,7 @@ function Use-Path{
 }
 
 #Initialize variables
-$json = ConvertFrom-Json ".\apps.json" -Raw | Get-Content $json
+$json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
 $nameArray = $json.psobject.Properties.Name
 $propMapping = @{}
 $filteredApps = @()
