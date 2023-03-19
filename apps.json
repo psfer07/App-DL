@@ -39,7 +39,7 @@
         "URL": "https://www.7-zip.org/a/7z2201-x64.exe",
         "size": "1,5MB",
         "exe": "7zFM.exe",
-        "cmd": "/D=\"$path\"",
+        "cmd": "/D=$path",
         "cmd_syn": "installing it in the specified folder",
         "syn": "Well known file archiver with the high compression algorithms"
     },
