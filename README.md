@@ -28,6 +28,10 @@ irm bit.ly/psappdl | iex
 
 ![1679232767060](image/README/1679232767060.png)
 
+Known bugs:
+
+* When you run 7-zip with the recommended parameters, the path assigned is shown as $path\, and not as the actual path, but the user can browse to the wanted folder
+
 ### App-DL v1.0 (First release)
 
 ---
