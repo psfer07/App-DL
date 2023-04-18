@@ -10,6 +10,14 @@ irm bit.ly/psappdl | iex
 
 ## Changelog
 
+### App-DL v1.2
+
+---
+
+* Fixed known bugs
+* Added accurate file sizes for each program
+* Improved small parts of the code for better performance
+
 ### App-DL v1.1
 
 ---

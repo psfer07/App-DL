@@ -1,6 +1,7 @@
 $branch = "dev"
 
 Clear-Host
+
 function Write-Main($Text) {
   $border = "============================================"
   Write-Host "`n`n<$border>" -ForegroundColor Blue
@@ -17,12 +18,10 @@ function Write-Point($Text) {
   Write-Host "$Text" -ForegroundColor White
 }
 function Write-Warning($Text) {
-  $loop = $Text.Length
-  $center = for ($i = 1; $i -le $loop; $i++){ ("=") }
-
-  Write-Host "`n<$center>" -ForegroundColor Red
+  $border = "============================================"
+  Write-Host "`n`n<$border>" -ForegroundColor Red
   Write-Host "   $Text" -ForegroundColor White
-  Write-Host "<$center>" -ForegroundColor Red
+  Write-Host "<$border>" -ForegroundColor Red
 }
 function Use-Path{
     Clear-Host
@@ -35,6 +34,14 @@ function Use-Path{
       default { Write-Warning "Non-valid character, exiting..."; Start-Sleep -Milliseconds 500; exit }
     }
 }
+function Get-FileSize() {
+  param ([int]$size)
+  if ($size -gt 1GB) {[string]::Format("{0:0.00} TB", $size / 1GB)}
+  elseif ($size -gt 1MB) {[string]::Format("{0:0.00} MB", $size / 1MB)}
+  elseif ($size -gt 1KB) {[string]::Format("{0:0.00} KB", $size / 1KB)}
+  elseif ($size -gt 0) {[string]::Format("{0:0.00} B", $size)}
+  }
+
 
 #Initialize variables
 $json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
@@ -42,7 +49,6 @@ $nameArray = $json.psobject.Properties.Name
 $propMapping = @{}
 $filteredApps = @()
 
-Clear-Host
 
 #Assigns the JSON's properties into Powershell objects
 foreach ($i in 0..($nameArray.Count - 1)) {
@@ -50,8 +56,8 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $app = $json.$name
   $folder = $app.folder
   $url = $app.URL
+  $size = Get-FileSize((Invoke-RestMethod $url).length)
   $exe = $app.exe
-  $size = $app.size
   $cmd = $app.cmd
   $syn = $app.syn
   $cmd_syn = $app.cmd_syn
@@ -65,7 +71,7 @@ Write-Main "Available apps"
 foreach ($i in 0..($filteredApps.Count - 1)) {
   $app = $filteredApps[$i]
   $n = $i + 1
-  Write-Main "$n. $($app.Name) - Size: $($app.Size)"
+  Write-Main "$n. $($app.Name) - Size: $($app.size)"
   Write-Point $app.syn
 }
 $pkg_n = Read-Host `n"Write the number of the app you want to get"
@@ -77,7 +83,7 @@ $folder =     $filteredApps[$pkg_n - 1].folder
 $url =        $filteredApps[$pkg_n - 1].URL
 $cmd_syn =    $filteredApps[$pkg_n - 1].Cmd_syn
 $cmd =        $filteredApps[$pkg_n - 1].Cmd
-$out_file =   (Split-Path $url -Leaf) -split "/" | Select-Object -Last 1
+$out_file =   Split-Path $url -Leaf
 Clear-Host
 Write-Main "$program selected"
 
