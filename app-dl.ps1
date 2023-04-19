@@ -41,6 +41,11 @@ function Get-FileSize() {
   elseif ($size -gt 1KB) {[string]::Format("{0:0.00} KB", $size / 1KB)}
   elseif ($size -gt 0) {[string]::Format("{0:0.00} B", $size)}
   }
+function Restart {
+    Start-Process powershell.exe "-File `"$PSCommandPath`""
+    Start-Sleep 1
+    Exit
+}
 
 
 #Initialize variables
@@ -56,7 +61,6 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $app = $json.$name
   $folder = $app.folder
   $url = $app.URL
-  $size = Get-FileSize((Invoke-RestMethod $url).length)
   $exe = $app.exe
   $cmd = $app.cmd
   $syn = $app.syn
@@ -65,26 +69,43 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Cmd = $cmd; Syn = $syn; Cmd_syn = $cmd_syn}
 }
 
-#List every app valid in the JSON file
+
+#List every valid app in the JSON file
 Clear-Host
 Write-Main "Available apps"
 foreach ($i in 0..($filteredApps.Count - 1)) {
   $app = $filteredApps[$i]
   $n = $i + 1
-  Write-Main "$n. $($app.Name) - Size: $($app.size)"
+  Write-Main "$n. $($app.Name)"
   Write-Point $app.syn
 }
-$pkg_n = Read-Host `n"Write the number of the app you want to get"
+Write-Host "`nType a '.' before the number to display all the program properties ('.3' would list all properties from the third app)"
+$pkg = Read-Host "Write the number of the app you want to get"
 
 #Assign the corresponding variables to the selected app
 $program =    $filteredApps[$pkg_n - 1].Name
+$url =        $filteredApps[$pkg_n - 1].URL
+$size = Get-FileSize((Invoke-RestMethod $url).length)
 $exe =        $filteredApps[$pkg_n - 1].Exe
 $folder =     $filteredApps[$pkg_n - 1].folder
-$url =        $filteredApps[$pkg_n - 1].URL
 $cmd_syn =    $filteredApps[$pkg_n - 1].Cmd_syn
 $cmd =        $filteredApps[$pkg_n - 1].Cmd
 $out_file =   Split-Path $url -Leaf
-Clear-Host
+
+  # Properties listing
+if ($pkg.Substring(0,1)  -eq '.') {
+  Clear-Host
+  Write-Main "$program properties";`n`n
+  Write-Main "Program selected: $program";`n
+  Write-Secondary "Size"
+  Write-Point "$($app.Size)";`n
+  Write-Secondary
+
+  [int]$pkg_n = $pkg.TrimStart('.')
+  Pause
+}
+
+[int]$pkg_n = $pkg.TrimStart('.')
 Write-Main "$program selected"
 
 # Prints out all the aviable paths to save the package
@@ -98,7 +119,7 @@ Write-Point "0. Goes back to change the app"
 $path = Read-Host "`nChoose a number"
 
 switch ($path) {
-  0         { Start-Process powershell.exe "-WindowStyle Maximized -File `"$PSCommandPath`""; Start-Sleep -Milliseconds 500; exit }
+  0         { Restart }
   1         { $path = "$Env:USERPROFILE\Desktop"; break }
   2         { $path = "$Env:USERPROFILE\Documents"; break }
   3         { $path = "$Env:USERPROFILE\Downloads"; break }
@@ -113,7 +134,10 @@ Write-Main "Selected path: $path"
 if (Test-Path "$path\$out_file") {Use-Path}
 
 # Downloads the app package
-Write-Main "App to download: $program..."; Pause
+Write-Main "App to download: $program... Confirmation (press enter or (C)ancel)"
+$download = Read-Host ""
+if ($download -eq 'C'){Restart}
+elseif ($download -ne 'C') {Pause}
 Invoke-WebRequest -URI $url -OutFile "$path\$out_file"
 if ($?) {
     Write-Secondary "File downloaded successfully"
