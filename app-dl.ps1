@@ -14,7 +14,7 @@ function Write-Secondary($Text) {
   Write-Host "]==========>`n" -ForegroundColor Green
 }
 function Write-Point($Text) {
-  Write-Host "==[ " -NoNewline -ForegroundColor Green
+  Write-Host "··> " -NoNewline -ForegroundColor Green
   Write-Host "$Text" -ForegroundColor White
 }
 function Write-Warning($Text) {
@@ -127,13 +127,12 @@ $folder =     $filteredApps[$pkg_n - 1].folder
 $url =        $filteredApps[$pkg_n - 1].URL
 $cmd_syn =    $filteredApps[$pkg_n - 1].Cmd_syn
 $cmd =        $filteredApps[$pkg_n - 1].Cmd
-$output =   Split-Path $url -split "/" -Leaf
+$output =   Split-Path $url -Leaf                                                                #!
 
 #$size = Get-FileSize((Invoke-RestMethod $url).length)
 
-Clear-Host
+#Clear-Host
 Write-Main "$program selected"
-
 
 # Prints out all the aviable paths to save the package
 Write-Point "1. Saves it inside of Desktop"
