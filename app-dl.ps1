@@ -1,6 +1,6 @@
 [string]$branch = "dev"
 
-Clear-Host
+#Clear-Host
 
 function Write-Main($Text) {
   $border = "============================================"
@@ -24,7 +24,7 @@ function Write-Warning($Text) {
   Write-Host "<$border>" -ForegroundColor Red
 }
 function Use-Path{
-    Clear-Host
+    #Clear-Host
     Write-Warning "It seems that $program is currently allocated in this path"
     $restart = Read-Host "Write 'r' to restart the app and start again, 'o' to open the existing app or 'e' to exiting"
     switch ($restart) {
@@ -52,7 +52,7 @@ function Use-Path{
               $runcmd = Read-Host
               if ($runcmd -eq 'y','Y')
               {
-                Clear-Host
+                #Clear-Host
                 Write-Main "Running $program $($cmd_syn)"
                 Start-Process -FilePath "$p\$output" -ArgumentList $($cmd)
                 Start-Sleep -Milliseconds 200
@@ -61,7 +61,7 @@ function Use-Path{
             }
             if ($runcmd -ne 'y','Y')
             {
-              Clear-Host
+              #Clear-Host
               Write-Main "Running $program directly"
               Start-Process -FilePath "$p\$output"
               Start-Sleep -Milliseconds 200
@@ -84,6 +84,14 @@ function Restart {
     Start-Process powershell.exe "-File `"$PSCommandPath`""
     Start-Sleep 1
     Exit
+}
+function Show-Apps {
+  Write-Main "Available apps"
+foreach ($i in 0..($filteredApps.Count - 1)) {
+  $app = $filteredApps[$i]
+  $n = $i + 1
+  Write-Point "$n. $($app.Name)"
+}
 }
 
 
@@ -110,29 +118,32 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 
 
 #List every valid app in the JSON file
-Clear-Host
-Write-Main "Available apps"
-foreach ($i in 0..($filteredApps.Count - 1)) {
-  $app = $filteredApps[$i]
-  $n = $i + 1
-  Write-Point "$n. $($app.Name)"
-}
+#Clear-Host
+Show-Apps
 Write-Host "`nType a dot and a space before the number to display all the program properties, for example: '. 1'"
-$pkg_n = Read-Host `n"Write the number of the app you want to get"
+$pkg = Read-Host `n"Write the number of the app you want to get"
+$n = Split-Path $pkg -Leaf
 
 #Assign the corresponding variables to the selected app
-$program =    $filteredApps[$pkg_n - 1].Name
-$exe =        $filteredApps[$pkg_n - 1].Exe
-$folder =     $filteredApps[$pkg_n - 1].folder
-$url =        $filteredApps[$pkg_n - 1].URL
-$cmd_syn =    $filteredApps[$pkg_n - 1].Cmd_syn
-$cmd =        $filteredApps[$pkg_n - 1].Cmd
-$output =   Split-Path $url -Leaf                                                                #!
-
-#$size = Get-FileSize((Invoke-RestMethod $url).length)
+$program =    $filteredApps[$n - 1].Name
+$exe =        $filteredApps[$n - 1].Exe
+$folder =     $filteredApps[$n - 1].folder
+$url =        $filteredApps[$n - 1].URL
+$cmd_syn =    $filteredApps[$n - 1].Cmd_syn
+$cmd =        $filteredApps[$n - 1].Cmd
+$output =     Split-Path $url -Leaf
+$size =       Get-FileSize((Invoke-RestMethod $url).length)
 
 #Clear-Host
 Write-Main "$program selected"
+
+# If user uses the dot, displays the program's details
+if ($pkg -like ". ") {
+  Write-Secondary "Package name $outfile";`n
+  Write-Secondary "$program's size: $size"
+  Write-Secondary ""
+}
+
 
 # Prints out all the aviable paths to save the package
 Write-Point "1. Saves it inside of Desktop"
@@ -154,7 +165,7 @@ switch ($p) {
   6         { $p = $Env:HOMEPATH; break }
   default   { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE }
 }
-Clear-Host
+#Clear-Host
 Write-Main "Selected path: $p"
 
 #Checks if the program is installed or uncompressed in the selected folder
@@ -195,12 +206,12 @@ if ($output -like "*.exe"){
     Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"
     $runcmd = Read-Host
     if ($runcmd -eq 'y','Y'){
-      Clear-Host
+      #Clear-Host
       Write-Main "Running $program $($cmd_syn)"
       Start-Process -FilePath "$p\$output" -ArgumentList $($cmd)
     }
     if ($runcmd -eq 'n','N'){
-      Clear-Host
+      #Clear-Host
       Write-Main "Running $program directly"
       Start-Process -FilePath "$p\$output"
     }
