@@ -117,9 +117,9 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 }
 
 
-#List every valid app in the JSON file
 #Clear-Host
 Show-Apps
+
 Write-Host "`nType a dot and a space before the number to display all the program properties, for example: '. 1'"
 $pkg = Read-Host `n"Write the number of the app you want to get"
 $n = Split-Path $pkg -Leaf
@@ -152,6 +152,7 @@ Write-Point "3. Saves it inside of Downloads"
 Write-Point "4. Save it inside of C:"
 Write-Point "5. Saves it inside of Program Files"
 Write-Point "6. Save it inside of the user profile`n"
+Write-Point "X. Introduce a custom path"
 Write-Point "0. Goes back to change the app"
 [string]$p = Read-Host "`nChoose a number"
 
@@ -163,6 +164,7 @@ switch ($p) {
   4         { $p = $Env:SystemDrive; break }
   5         { $p = $Env:ProgramFiles; break }
   6         { $p = $Env:HOMEPATH; break }
+  'x'    { $p = Read-Host "Set the whole custom path" }
   default   { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE }
 }
 #Clear-Host
