@@ -157,16 +157,20 @@ Write-Point "0. Goes back to change the app"
 [string]$p = Read-Host "`nChoose a number"
 
 switch ($p) {
-  0         { Restart }
+  0         { Restart; break }
   1         { $p = "$Env:USERPROFILE\Desktop"; break }
   2         { $p = "$Env:USERPROFILE\Documents"; break }
   3         { $p = "$Env:USERPROFILE\Downloads"; break }
   4         { $p = $Env:SystemDrive; break }
   5         { $p = $Env:ProgramFiles; break }
   6         { $p = $Env:HOMEPATH; break }
-  'x'    { $p = Read-Host "Set the whole custom path" }
-  default   { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE }
+  'x'       { $p = Read-Host "Set the whole custom path"; break }
+  'X'       { $p = Read-Host "Set the whole custom path"; break }
+  default   { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE; break }
 }
+
+
+
 #Clear-Host
 Write-Main "Selected path: $p"
 
