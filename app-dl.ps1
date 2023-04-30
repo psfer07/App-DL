@@ -14,7 +14,7 @@ function Write-Secondary($Text) {
   Write-Host "]==========>`n" -ForegroundColor Green
 }
 function Write-Point($Text) {
-  Write-Host "··> " -NoNewline -ForegroundColor Green
+  Write-Host "==> " -NoNewline -ForegroundColor Green
   Write-Host "$Text" -ForegroundColor White
 }
 function Write-Warning($Text) {
@@ -120,30 +120,40 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 #Clear-Host
 Show-Apps
 
-Write-Host "`nType a dot and a space before the number to display all the program properties, for example: '. 1'"
-$pkg = Read-Host `n"Write the number of the app you want to get"
-$n = Split-Path $pkg -Leaf
+Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
+# Prompt the user to enter the number of the app they want to get
+$pkg = Read-Host "`nWrite the number of the app you want to get"
 
-#Assign the corresponding variables to the selected app
-$program =    $filteredApps[$n - 1].Name
-$exe =        $filteredApps[$n - 1].Exe
-$folder =     $filteredApps[$n - 1].folder
-$url =        $filteredApps[$n - 1].URL
-$cmd_syn =    $filteredApps[$n - 1].Cmd_syn
-$cmd =        $filteredApps[$n - 1].Cmd
+# Remove the period and display details for the selected app
+$pkg_n = [int]($pkg -replace "\.")
+
+# Assign the corresponding variables to the selected app
+$program =    $filteredApps[$pkg_n - 1].Name
+$exe =        $filteredApps[$pkg_n - 1].Exe
+$folder =     $filteredApps[$pkg_n - 1].folder
+$url =        $filteredApps[$pkg_n - 1].URL
+$cmd_syn =    $filteredApps[$pkg_n - 1].Cmd_syn
+$cmd =        $filteredApps[$pkg_n - 1].Cmd
 $output =     Split-Path $url -Leaf
-$size =       Get-FileSize((Invoke-RestMethod $url).length)
+$size =       $filteredApps[$pkg_n - 1].Size
 
-#Clear-Host
-Write-Main "$program selected"
 
-# If user uses the dot, displays the program's details
-if ($pkg -like ". ") {
-  Write-Secondary "Package name $outfile";`n
+# Check if the user input contains a period
+if ($pkg -like ".*") {
+  $program = $filteredApps[$pkg_n - 1].Name
+  $size = (Invoke-RestMethod $filteredApps[$pkg_n - 1].URL).length | Get-FileSize
+  Write-Secondary "Package name $program"
+  Write-Host `n
   Write-Secondary "$program's size: $size"
-  Write-Secondary ""
+  Write-Secondary "Executable: $exe"
+  if ($filteredApps[$pkg_n - 1].Cmd_syn) {Write-Secondary $filteredApps[$pkg_n - 1].Cmd_syn}
+  if ($filteredApps[$pkg_n - 1].Cmd) {Write-Secondary "Parameters are: $($filteredApps[$pkg_n - 1].Cmd)"}
+  Pause
+  Show-Apps
 }
 
+# Display the name of the selected program
+Write-Main "$program selected"
 
 # Prints out all the aviable paths to save the package
 Write-Point "1. Saves it inside of Desktop"
@@ -156,6 +166,7 @@ Write-Point "X. Introduce a custom path"
 Write-Point "0. Goes back to change the app"
 [string]$p = Read-Host "`nChoose a number"
 
+# Switch for apply the path
 switch ($p) {
   0         { Restart; break }
   1         { $p = "$Env:USERPROFILE\Desktop"; break }
@@ -170,12 +181,12 @@ switch ($p) {
 }
 
 
-
 #Clear-Host
 Write-Main "Selected path: $p"
 
 #Checks if the program is installed or uncompressed in the selected folder
 if (Test-Path "$p\$output") {Use-Path}
+if (Test-Path "$p\$program\$folder\$exe") {Use-Path}
 
 # Downloads the app package
 Write-Main "App to download: $program..."
