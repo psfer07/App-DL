@@ -1,6 +1,5 @@
-[string]$branch = "dev"
-
 #Clear-Host
+[string]$branch = "dev"
 
 function Write-Main($Text) {
   $border = "============================================"
@@ -79,7 +78,7 @@ function Get-FileSize() {
   elseif ($size -gt 1MB) {[string]::Format("{0:0.00} MB", $size / 1MB)}
   elseif ($size -gt 1KB) {[string]::Format("{0:0.00} KB", $size / 1KB)}
   elseif ($size -gt 0) {[string]::Format("{0:0.00} B", $size)}
-  }
+}
 function Restart {
     Start-Process powershell.exe "-File `"$PSCommandPath`""
     Start-Sleep 1
@@ -93,6 +92,14 @@ foreach ($i in 0..($filteredApps.Count - 1)) {
   Write-Point "$n. $($app.Name)"
 }
 }
+function Show-Details {
+    Write-Main "$program selected"
+    Write-Point "$program is $syn"
+    Write-Point "Size: $size"
+    Write-Point "Executable: $exe"
+    if ($cmd_syn) {Write-Point $cmd_syn}
+    if ($cmd) {Write-Point "Parameters are: $cmd)"}
+}
 
 
 #Initialize variables
@@ -104,14 +111,7 @@ $filteredApps = @()
 
 #Assigns the JSON's properties into Powershell objects
 foreach ($i in 0..($nameArray.Count - 1)) {
-  $name = $nameArray[$i]
-  $app = $json.$name
-  $folder = $app.folder
-  $url = $app.URL
-  $exe = $app.exe
-  $cmd = $app.cmd
-  $syn = $app.syn
-  $cmd_syn = $app.cmd_syn
+  $name,$app,$folder,$url,$exe,$syn,$cmd,$cmd_syn = $nameArray[$i],$json.$name,$app.folder,$app.URL,$app.exe,$app.syn,$app.cmd,$app.cmd_syn
   $propMapping.Add($name, $url)
   $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Cmd = $cmd; Syn = $syn; Cmd_syn = $cmd_syn}
 }
@@ -132,24 +132,23 @@ $program =    $filteredApps[$pkg_n - 1].Name
 $exe =        $filteredApps[$pkg_n - 1].Exe
 $folder =     $filteredApps[$pkg_n - 1].folder
 $url =        $filteredApps[$pkg_n - 1].URL
-$cmd_syn =    $filteredApps[$pkg_n - 1].Cmd_syn
 $cmd =        $filteredApps[$pkg_n - 1].Cmd
+$cmd_syn =    $filteredApps[$pkg_n - 1].Cmd_syn
 $output =     Split-Path $url -Leaf
-$size =       $filteredApps[$pkg_n - 1].Size
 
 
 # Check if the user input contains a period
 if ($pkg -like ".*") {
   $program = $filteredApps[$pkg_n - 1].Name
-  $size = (Invoke-RestMethod $filteredApps[$pkg_n - 1].URL).length | Get-FileSize
-  Write-Secondary "Package name $program"
-  Write-Host `n
-  Write-Secondary "$program's size: $size"
-  Write-Secondary "Executable: $exe"
-  if ($filteredApps[$pkg_n - 1].Cmd_syn) {Write-Secondary $filteredApps[$pkg_n - 1].Cmd_syn}
-  if ($filteredApps[$pkg_n - 1].Cmd) {Write-Secondary "Parameters are: $($filteredApps[$pkg_n - 1].Cmd)"}
+  $response = Invoke-WebRequest -Method Get -Uri $url -UseBasicParsing
+  $size = Get-FileSize $($response.Content.Length)
+  #Clear-Host
+  Show-Details
   Pause
   Show-Apps
+  Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
+  # Prompt the user to enter the number of the app they want to get
+  $pkg = Read-Host "`nWrite the number of the app you want to get"
 }
 
 # Display the name of the selected program
@@ -168,7 +167,15 @@ Write-Point "0. Goes back to change the app"
 
 # Switch for apply the path
 switch ($p) {
-  0         { Restart; break }
+  0         {
+    #Clear-Host
+    Show-Apps
+    Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
+    # Prompt the user to enter the number of the app they want to get
+    $pkg = Read-Host "`nWrite the number of the app you want to get"
+    #Clear-Host
+    Show-Details
+  }
   1         { $p = "$Env:USERPROFILE\Desktop"; break }
   2         { $p = "$Env:USERPROFILE\Documents"; break }
   3         { $p = "$Env:USERPROFILE\Downloads"; break }
@@ -190,8 +197,8 @@ if (Test-Path "$p\$program\$folder\$exe") {Use-Path}
 
 # Downloads the app package
 Write-Main "App to download: $program..."
-$download = Read-Host "Confirmation (press enter or (C)ancel)"
-if ($download -eq 'C' -or 'c'){Restart}
+$download = Read-Host "Confirmation (press enter or (R)estart menu)"
+if ($download -eq 'R' -or 'c'){Restart}
 Invoke-WebRequest -URI $url -OutFile "$p\$output"
 if ($?) {
     Write-Secondary "File downloaded successfully"
@@ -215,7 +222,7 @@ if ($extract -ne 'y','Y'){
 }
 
 $open = Read-Host "Open the app?(y/n)"
-if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$p\$program\$folder\$exe" }
+if ($open -eq 'y','Y'){ Start-Process -FilePath "$p\$program\$folder\$exe" }
 }
 
 # Checks if the package is an exe
@@ -228,7 +235,7 @@ if ($output -like "*.exe"){
       Write-Main "Running $program $($cmd_syn)"
       Start-Process -FilePath "$p\$output" -ArgumentList $($cmd)
     }
-    if ($runcmd -eq 'n','N'){
+    if ($runcmd -ne 'y','Y'){
       #Clear-Host
       Write-Main "Running $program directly"
       Start-Process -FilePath "$p\$output"
