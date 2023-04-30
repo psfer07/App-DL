@@ -94,3 +94,11 @@ function Show-Details {
   if ($cmd_syn) { Write-Point $cmd_syn }
   if ($cmd) { Write-Point "Parameters are: $cmd)" }
 }
+function Get-App {
+  do {
+    Show-Apps
+    Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
+    $pkg = Read-Host "`nWrite the number of the app you want to get"
+  } while (-not $pkg.StartsWith("."))
+  
+}
