@@ -1,14 +1,15 @@
-{    "Bleachbit": {
+{
+    "Bleachbit": {
         "URL": "https://download.bleachbit.org/BleachBit-4.4.2-portable.zip",
         "exe": "bleachbit.exe",
         "folder": "Bleachbit-Portable",
         "syn": "a very well-known app and system cleaner with bunch of posible configurations"
-        },
+    },
     "BCUninstaller": {
         "URL": "https://github.com/Klocman/Bulk-Crap-Uninstaller/releases/download/v5.4/BCUninstaller_5.4_portable.zip",
         "exe": "BCUninstaller.exe",
         "syn": "an advanced app uninstaller that research in your system for any program leftover"
-},
+    },
     "Dism++": {
         "URL": "https://github.com/Chuyu-Team/Dism-Multi-language/releases/download/v10.1.1002.1/Dism++10.1.1002.1.zip",
         "exe": "Dism++x64.exe",
