@@ -96,6 +96,7 @@ function Show-Details {
 }
 function Get-App {
   do {
+    Clear-Host
     Show-Apps
     Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
     $pkg = Read-Host "`nWrite the number of the app you want to get"
