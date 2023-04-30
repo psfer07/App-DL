@@ -1,5 +1,3 @@
-[string]$branch = 'dev'
-
 function Write-Main($Text) {
   $border = '============================================'
   Write-Host "`n`n<$border>" -ForegroundColor Blue
