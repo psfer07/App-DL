@@ -1,6 +1,6 @@
 # App-DL
 
-This program is a simple package manager which downloads packaged portable apps from official repositories.
+This program is a simple package manager which downloads packaged portable apps from verified repositories.
 
 All you need to do is typing or copying this command in your powershell terminal. It will redirect you to the app.
 
