@@ -58,5 +58,9 @@
         "folder": "openvpn-portable",
         "exe": "openvpn-portable.exe",
         "syn": "A portable VPN"
+    },
+    "PortableApps": {
+        "URL": "https://download2.portableapps.com/portableapps/PortableApps.comPlatform/PortableApps.com_Platform_Setup_25.0.paf.exe",
+        "syn": "Suite for portable apps"
     }
 }
