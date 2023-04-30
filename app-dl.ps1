@@ -191,7 +191,7 @@ if (Test-Path "$p\$program\$folder\$exe") {Use-Path}
 # Downloads the app package
 Write-Main "App to download: $program..."
 $download = Read-Host "Confirmation (press enter or (C)ancel)"
-if ($download -eq 'C'){Restart}
+if ($download -eq 'C' -or 'c'){Restart}
 Invoke-WebRequest -URI $url -OutFile "$p\$output"
 if ($?) {
     Write-Secondary "File downloaded successfully"
@@ -199,7 +199,7 @@ if ($?) {
     Write-Warning "An error occurred while downloading the file: $_.Exception"
   }
 
-# Extracts or launches the app installer depending on its extension
+# Checks if the package is a zip
 if ($output -like "*.zip"){$extract = Read-Host "Do you want to unzip the package?(y/n)"
 if ($extract -eq 'y','Y'){
   try {
@@ -218,6 +218,7 @@ $open = Read-Host "Open the app?(y/n)"
 if ($open -eq "y" -or $open -eq "y"){ Start-Process -FilePath "$p\$program\$folder\$exe" }
 }
 
+# Checks if the package is an exe
 if ($output -like "*.exe"){
   if ($null -ne $cmd) {
     Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"
