@@ -1,6 +1,6 @@
 [string]$branch = 'dev'
 [string]$module = "$Env:TEMP\modules.psm1"
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $module | Out-Null
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $module
 
 # Initialize variables
 Import-Module $module -DisableNameChecking

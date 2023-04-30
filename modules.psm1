@@ -20,7 +20,7 @@ function Write-Warning($Text) {
   Write-Host "<$border>" -ForegroundColor Red
 }
 function Use-Path {
-  #Clear-Host
+  Clear-Host
   Write-Warning 'It seems that $program is currently allocated in this path'
   $restart = Read-Host 'Write "r" to restart the app and start again, "o" to open the existing app or e to exiting'
   switch ($restart) {
@@ -46,7 +46,7 @@ function Use-Path {
           Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"
           $runcmd = Read-Host
           if ($runcmd -eq 'y', 'Y') {
-            #Clear-Host
+            Clear-Host
             Write-Main "Running $program $($cmd_syn)"
             Start-Process -FilePath "$p\$o" -ArgumentList $($cmd)
             Start-Sleep -Milliseconds 200
@@ -54,7 +54,7 @@ function Use-Path {
           }
         }
         if ($runcmd -ne 'y', 'Y') {
-          #Clear-Host
+          Clear-Host
           Write-Main "Running $program directly"
           Start-Process -FilePath "$p\$o"
           Start-Sleep -Milliseconds 200
