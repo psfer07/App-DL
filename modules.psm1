@@ -72,13 +72,13 @@ function Revoke-Path {
 }
 function Open-File {
   Write-Main "Launching $program..."
-  if ($o -like "*.zip") {
-    $s = "$p\$o"
-    if (Test-Path -Literalpath $s) {
+  if ($o -match 'zip') {
+    $o = "$p\$o"
+    if (Test-Path -Literalpath $o) {
       Write-Main 'Zip file detected'
       Write-Secondary "$program is saved as a zip file, so uncompressing..."
       Start-Sleep -Milliseconds 200
-      Expand-Archive -Literalpath $s -DestinationPath "$p\$program" -Force
+      Expand-Archive -Literalpath $o -DestinationPath "$p\$program" -Force
       if ($?) {
         Write-Main 'Package succesfully extracted...'
     } else {
@@ -91,7 +91,7 @@ function Open-File {
       Start-Process -FilePath "$p\$program\$folder\$exe"
     }
   }
-  if ($o -like "*.exe") {
+  if ($o -match 'exe') {
     if ($null -ne $cmd) {
       Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
       $runcmd = Read-Host
