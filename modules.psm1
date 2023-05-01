@@ -95,8 +95,4 @@ function Set-Program {
     $n = $i + 1
     Write-Point "$n. $($app.Name)"
   }
-  if ($pkg -like ".*") {
-    Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
-    $pkg = Read-Host "`nWrite the number of the app you want to get"
-}
 }
