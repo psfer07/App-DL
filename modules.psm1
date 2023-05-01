@@ -72,7 +72,7 @@ function Get-FileSize {
     [long]$sizeInBytes
   )
   
-  $sizes = "B", "KB", "MB", "GB", "TB"
+  $sizes = "B", "KB", "MB", "GB"
   $index = 0
   
   while ($sizeInBytes -ge 1024 -and $index -lt ($sizes.Count - 1)) {
@@ -85,14 +85,6 @@ function Restart-Menu {
   Start-Process powershell.exe "-File `"$PSCommandPath`""
   Start-Sleep 1
   Exit
-}
-function Show-Details {
-  Write-Main "$program selected"
-  Write-Point "$program is $syn"
-  Write-Point "Size: $size"
-  if ($exe) { Write-Point "Executable: $exe" }
-  if ($cmd_syn) { Write-Point $cmd_syn }
-  if ($cmd) { Write-Point "Parameters are: $cmd)" }
 }
 function Show-Apps {
   Clear-Host
@@ -110,13 +102,18 @@ function Select-App {
   }
   
 }
-function Redo-AppSelection {
+function Show-Details {
   if ($pkg -like ".*") {
     $response = Invoke-WebRequest -Uri $url -Method Head
     $size = Get-FileSize ([long]$response.Headers.'Content-Length'[0])
   
     Clear-Host
-    Show-Details
+    Write-Main "$program selected"
+    Write-Point "$program is $syn"
+    Write-Point "Size: $size"
+    if ($exe) { Write-Point "Executable: $exe" }
+    if ($cmd_syn) { Write-Point $cmd_syn }
+    if ($cmd) { Write-Point "Parameters are: $cmd)" }
     Pause
     Show-Apps
     Select-App
