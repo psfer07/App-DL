@@ -11,17 +11,7 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn }
 }
 
-Clear-Host
-Write-Main 'Available apps'
-foreach ($i in 0..($filteredApps.Count - 1)) {
-  $app = $filteredApps[$i]
-  $n = $i + 1
-  Write-Point "$n. $($app.Name)"
-}
-if ($pkg -like ".*") {
-  Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
-  $pkg = Read-Host "`nWrite the number of the app you want to get"
-}
+Set-Program
 
 $pkg_n = [int]($pkg -replace "\.")
 $program = $filteredApps[$pkg_n - 1].Name
@@ -44,18 +34,9 @@ if ($pkg -like ".*") {
   if ($cmd_syn) { Write-Point $cmd_syn }
   if ($cmd) { Write-Point "Parameters are: $cmd)" }
   Pause
-  Clear-Host
-  Write-Main 'Available apps'
-  foreach ($i in 0..($filteredApps.Count - 1)) {
-    $app = $filteredApps[$i]
-    $n = $i + 1
-    Write-Point "$n. $($app.Name)"
-  }
-  if ($pkg -like ".*") {
-    Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
-    $pkg = Read-Host "`nWrite the number of the app you want to get"
-  }
+  Set-Program
 }
+
 
 
 Write-Point '1. Saves it inside of Desktop'
@@ -93,10 +74,11 @@ if ($d -eq 'R' -or $d -eq 'r') { Restart-Menu }
 
 Invoke-WebRequest -URI $url -OutFile "$p\$output"
 if ($?) {
-    Write-Secondary "File downloaded successfully"
-} else {
-    Write-Warning "An error occurred while downloading the file: $_.Exception"
-  }
+  Write-Secondary "File downloaded successfully"
+}
+else {
+  Write-Warning "An error occurred while downloading the file: $_.Exception"
+}
 
 # Checks the package extension for extracting or installing it
 if ($o -like "*.zip") {
