@@ -124,7 +124,7 @@ function Open-File {
 }
 function Restart-Menu {
   #Salir de la app / Volver al inicio
-  Start-Process powershell.exe "-File `"$PSCommandPath`""
+  Start-Process powershell.exe -File $PSCommandPath
   Start-Sleep 1
   Exit
 }
