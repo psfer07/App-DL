@@ -48,7 +48,7 @@ function Select-App {
   }
 
 }
-function Redo- {
+function Redo-AppSelection {
   if ($pkg -like ".*") {
     $response = Invoke-WebRequest -Uri $url -Method Head
     $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
