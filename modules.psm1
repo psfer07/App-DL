@@ -48,6 +48,17 @@ function Redo-AppSelection {
   Pause
   Select-App
 }
+function Show-Details {
+  $response = Invoke-WebRequest -Uri $url -Method Head
+  $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
+  Clear-Host
+  Write-Point "$program is $syn"
+  Write-Point "Size: $size"
+  if ($exe) { Write-Point "Executable: $exe" }
+  if ($cmd_syn) { Write-Point $cmd_syn }
+  if ($cmd) { Write-Point "Parameters are: $cmd)" }
+  Pause
+}
 function Show-Paths {
   Write-Point '1. Saves it inside of Desktop'
   Write-Point '2. Saves it inside of Documents'
