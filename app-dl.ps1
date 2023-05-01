@@ -63,10 +63,12 @@ if ($open -eq 'y' -or $open -eq 'Y') { $open = $true }
 
 $dl = Read-Host 'Confirmation (press enter or any key to go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
-try {
-  Invoke-WebRequest -URI $url -OutFile "$p\$o"
-  Write-Secondary 'File downloaded successfully'
+Invoke-WebRequest -URI $url -OutFile "$p\$o"
+if ($?) {
+  Write-Secondary "File downloaded successfully"
 }
-catch { Write-Warning "Failed to download package. Error: $($_.Exception.Message)" }
+else {
+  Write-Warning "An error occurred while downloading the file: $($_.Exception.Message)"
+}
 
 if ($open = $true) { Open-File }
