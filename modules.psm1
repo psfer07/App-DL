@@ -51,7 +51,6 @@ function Redo-AppSelection {
 function Show-Details {
   $response = Invoke-WebRequest -Uri $url -Method Head
   $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
-  Clear-Host
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
   if ($exe) { Write-Point "Executable: $exe" }

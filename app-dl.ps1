@@ -29,6 +29,7 @@ $o = Split-Path $url -Leaf
 
 
 if ($pkg -like ".*") {
+  Clear-Host
   Show-Details
   Select-App
   $pkg = Read-Host "`nWrite the number of the app you want to get"
