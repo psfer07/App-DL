@@ -42,11 +42,7 @@ function Select-App {
     $n = $i + 1
     Write-Point "$n. $($app.Name)"
   }
-  if ($pkg -like ".*") {
     Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
-    $pkg = Read-Host "`nWrite the number of the app you want to get"
-  }
-
 }
 function Redo-AppSelection {
   if ($pkg -like ".*") {
@@ -65,6 +61,7 @@ function Redo-AppSelection {
   }
 }
 function Select-Path {
+  Clear-Host
   Write-Point '1. Saves it inside of Desktop'
   Write-Point '2. Saves it inside of Documents'
   Write-Point '3. Saves it inside of Downloads'
