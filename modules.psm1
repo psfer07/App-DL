@@ -19,21 +19,14 @@ function Write-Warning($Text) {
   Write-Host "   $Text" -ForegroundColor White
   Write-Host "<$border>" -ForegroundColor Red
 }
-function Read-FileSize {
-  param (
-    [Parameter(Mandatory = $true, Position = 0)]
-    [long]$sizeInBytes
-  )
-  
-  $sizes = "B", "KB", "MB", "GB"
-  $index = 0
-  
-  while ($sizeInBytes -ge 1024 -and $index -lt ($sizes.Count - 1)) {
-    $sizeInBytes = $sizeInBytes / 1024
-    $index++
+function Read-FileSize() {
+  Param ([int]$size)
+  if ($size -gt 1GB) {[string]::Format("{0:0.00} GB", $size / 1GB)}
+  elseIf ($size -gt 1MB) {[string]::Format("{0:0.00} MB", $size / 1MB)}
+  elseIf ($size -gt 1KB) {[string]::Format("{0:0.00} kB", $size / 1KB)}
+  elseIf ($size -gt 0) {[string]::Format("{0:0.00} B", $size)}
+  else {""}
   }
-  return "{0:N2} {1}" -f $sizeInBytes, $sizes[$index]
-}
 function Select-App {
   Clear-Host
   Write-Main 'Available apps'
@@ -42,23 +35,27 @@ function Select-App {
     $n = $i + 1
     Write-Point "$n. $($app.Name)"
   }
-    Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
+  Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
 }
 function Redo-AppSelection {
-  if ($pkg -like ".*") {
-    $response = Invoke-WebRequest -Uri $url -Method Head
-    $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
+  $response = Invoke-WebRequest -Uri $url -Method Head
+  $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
   
+  Clear-Host
+  Write-Point "$program is $syn"
+  Write-Point "Size: $size"
+  if ($exe) { Write-Point "Executable: $exe" }
+  if ($cmd_syn) { Write-Point $cmd_syn }
+  if ($cmd) { Write-Point "Parameters are: $cmd)" }
+  Pause
     Clear-Host
-    Write-Main "$program selected"
-    Write-Point "$program is $syn"
-    Write-Point "Size: $size"
-    if ($exe) { Write-Point "Executable: $exe" }
-    if ($cmd_syn) { Write-Point $cmd_syn }
-    if ($cmd) { Write-Point "Parameters are: $cmd)" }
-    Pause
-    Select-App
+  Write-Main 'Available apps'
+  foreach ($i in 0..($filteredApps.Count - 1)) {
+    $app = $filteredApps[$i]
+    $n = $i + 1
+    Write-Point "$n. $($app.Name)"
   }
+  Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
 }
 function Select-Path {
   Clear-Host
@@ -85,21 +82,27 @@ function Select-Path {
     default { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE; break }
   }
 }
+function Read-Ext {
+
+}
 function Revoke-Path {
   Clear-Host
   Write-Warning 'It seems that $program is currently allocated in this path'
-  $restart = Read-Host 'Write "r" to restart the app and start again, "o" to open the existing app or e to exiting'
+  $restart = Read-Host 'Write "r" to restart the app and start again, "o" to launch the existing app or e to exiting'
   switch ($restart) {
-    'r' { Restart }
+    'r' { Restart-Menu }
     'o' {
-      Write-Main "Opening $program..."
+      Write-Main "Launching $program..."
       if ($o -like "*.zip") {
         if (Test-Path -eq "$p\$o") {
           Write-Main 'Zip file detected'
           Write-Secondary "$program is saved as a zip file, so uncompressing..."
           Start-Sleep -Milliseconds 200
-          Expand-Archive -Path "$p\$o" -DestinationPath "$p\$program" -Force
-          Write-Main 'Package succesfully extracted...'
+          try {
+            Expand-Archive -Path "$p\$o" -DestinationPath "$p\$program" -Force
+            Write-Main 'Package succesfully extracted...'
+          }
+          catch { Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"; Pause }
           Start-Sleep -Milliseconds 500
           Exit
         }
@@ -109,9 +112,9 @@ function Revoke-Path {
       }
       if ($o -like "*.exe") {
         if ($null -ne $cmd) {
-          Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"
+          Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
           $runcmd = Read-Host
-          if ($runcmd -eq 'y', 'Y') {
+          if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
             Clear-Host
             Write-Main "Running $program $($cmd_syn)"
             Start-Process -FilePath "$p\$o" -ArgumentList $($cmd)
@@ -119,7 +122,7 @@ function Revoke-Path {
             Exit
           }
         }
-        if ($runcmd -ne 'y', 'Y') {
+        if ($runcmd -ne 'y' -or $runcmd -ne 'Y') {
           Clear-Host
           Write-Main "Running $program directly"
           Start-Process -FilePath "$p\$o"
