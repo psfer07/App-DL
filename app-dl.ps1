@@ -28,11 +28,10 @@ $cmd_syn = $selectedApp.Cmd_syn
 $o = Split-Path $url -Leaf
 
 
-Write-Main "$program selected"
 if ($pkg -like ".*") {
   $response = Invoke-WebRequest -Uri $url -Method Head
   $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
-  
+  Clear-Host
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
   if ($exe) { Write-Point "Executable: $exe" }
@@ -44,11 +43,22 @@ if ($pkg -like ".*") {
 }
 
 Write-Main "$program selected"
+Show-Paths
+[string]$p = Read-Host "`nChoose a number"
+switch ($p) {
+  0 {  }
+  1 { $p = "$Env:USERPROFILE\Desktop"; break }
+  2 { $p = "$Env:USERPROFILE\Documents"; break }
+  3 { $p = "$Env:USERPROFILE\Downloads"; break }
+  4 { $p = $Env:SystemDrive; break }
+  5 { $p = $Env:ProgramFiles; break }
+  6 { $p = $Env:HOMEPATH; break }
+  'x' { $p = Read-Host 'Set the whole custom path'; break }
+  'X' { $p = Read-Host 'Set the whole custom path'; break }
+  default { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE; break }
+}
 
-Clear-Host
 Write-Main "Selected path: $p"
-
-
 if (Test-Path "$p\$o") { Revoke-Path }
 if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
 
