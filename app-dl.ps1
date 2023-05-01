@@ -60,9 +60,8 @@ Write-Main "App to download: $program..."
 Write-Secondary "Do you want to open it when finished? (y/n)"
 $open = Read-Host
 if ($open -eq 'y' -or $open -eq 'Y') { $open = $true} else { $open = $false }
-
-#$dl = Read-Host 'Confirmation (press enter or any key to go to the (R)estart menu)'
-#if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
+$dl = Read-Host 'Confirmation (press enter or any key to go to the (R)estart menu)'
+if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
 
 Invoke-WebRequest -URI $url -OutFile "$p\$o"
 if ($?) {

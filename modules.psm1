@@ -72,7 +72,7 @@ function Read-Ext {
 
 }
 function Revoke-Path {
-  
+
   Write-Warning 'It seems that $program is currently allocated in this path'
   $restart = Read-Host 'Write "r" to restart the app and start again, "o" to launch the existing app or e to exiting'
   switch ($restart) {
@@ -124,7 +124,7 @@ function Open-File {
 }
 function Restart-Menu {
   #Salir de la app / Volver al inicio
-  powershell.exe -command "-File $PSCommandPath"
+  Start-Process -FilePath $PSCommandPath
   Start-Sleep 1
   Exit
 }
