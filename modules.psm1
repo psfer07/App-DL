@@ -74,11 +74,14 @@ function Read-Ext {
 function Revoke-Path {
 
   Write-Warning 'It seems that $program is currently allocated in this path'
-  $restart = Read-Host 'Write "r" to restart the app and start again, "o" to launch the existing app or e to exiting'
+  $restart = Read-Host "You can (r)estart, (o)pen $program or (e)xit the app"
   switch ($restart) {
     'r' { Restart-Menu }
+    'R' { Restart-Menu }
     'o' { Open-File }
+    'O' { Open-File }
     'e' { Write-Main 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
+    'E' { Write-Main 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
     default { Write-Warning 'Non-valid character, exiting...'; Start-Sleep -Milliseconds 500; exit }
   }
 }
