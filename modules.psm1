@@ -28,7 +28,6 @@ function Read-FileSize() {
   else {""}
   }
 function Select-App {
-  Clear-Host
   Write-Main 'Available apps'
   foreach ($i in 0..($filteredApps.Count - 1)) {
     $app = $filteredApps[$i]
@@ -41,24 +40,15 @@ function Redo-AppSelection {
   $response = Invoke-WebRequest -Uri $url -Method Head
   $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
   
-  Clear-Host
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
   if ($exe) { Write-Point "Executable: $exe" }
   if ($cmd_syn) { Write-Point $cmd_syn }
   if ($cmd) { Write-Point "Parameters are: $cmd)" }
   Pause
-    Clear-Host
-  Write-Main 'Available apps'
-  foreach ($i in 0..($filteredApps.Count - 1)) {
-    $app = $filteredApps[$i]
-    $n = $i + 1
-    Write-Point "$n. $($app.Name)"
-  }
-  Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
+  Select-App
 }
 function Select-Path {
-  Clear-Host
   Write-Point '1. Saves it inside of Desktop'
   Write-Point '2. Saves it inside of Documents'
   Write-Point '3. Saves it inside of Downloads'
@@ -86,7 +76,7 @@ function Read-Ext {
 
 }
 function Revoke-Path {
-  Clear-Host
+  
   Write-Warning 'It seems that $program is currently allocated in this path'
   $restart = Read-Host 'Write "r" to restart the app and start again, "o" to launch the existing app or e to exiting'
   switch ($restart) {
@@ -120,7 +110,7 @@ function Open-File {
       Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
       $runcmd = Read-Host
       if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
-        Clear-Host
+        
         Write-Main "Running $program $($cmd_syn)"
         Start-Process -FilePath "$p\$o" -ArgumentList $($cmd)
         Start-Sleep -Milliseconds 200
@@ -128,7 +118,7 @@ function Open-File {
       }
     }
     if ($runcmd -ne 'y' -or $runcmd -ne 'Y') {
-      Clear-Host
+      
       Write-Main "Running $program directly"
       Start-Process -FilePath "$p\$o"
       Start-Sleep -Milliseconds 200
