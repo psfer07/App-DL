@@ -87,9 +87,9 @@ function Open-File {
       Start-Sleep -Milliseconds 500
       Exit
     }
-    elseif (Test-Path -Path "$p\$program\$folder") {
+    elseif (Test-Path -Path "$p\$program\$folder\$exe") {
       Start-Process -FilePath "$p\$program\$folder\$exe"
-    }
+    }    
   }
   if ($o -match 'exe') {
     if ($null -ne $cmd) {
