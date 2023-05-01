@@ -14,9 +14,12 @@ irm bit.ly/psappdl | iex
 
 ---
 
-* Fixed known bugs
+* Added app details (writing a period before the number for displaying them)
 * Added accurate file sizes for each program
-* Improved parts of code for better performance
+* Reworked UI design
+* Fixed known bugs
+* Improved stability
+* Improved performance
 
 ### App-DL v1.1
 
