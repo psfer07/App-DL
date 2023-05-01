@@ -91,48 +91,49 @@ function Revoke-Path {
   $restart = Read-Host 'Write "r" to restart the app and start again, "o" to launch the existing app or e to exiting'
   switch ($restart) {
     'r' { Restart-Menu }
-    'o' {
-      Write-Main "Launching $program..."
-      if ($o -like "*.zip") {
-        if (Test-Path -eq "$p\$o") {
-          Write-Main 'Zip file detected'
-          Write-Secondary "$program is saved as a zip file, so uncompressing..."
-          Start-Sleep -Milliseconds 200
-          try {
-            Expand-Archive -Path "$p\$o" -DestinationPath "$p\$program" -Force
-            Write-Main 'Package succesfully extracted...'
-          }
-          catch { Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"; Pause }
-          Start-Sleep -Milliseconds 500
-          Exit
-        }
-        elseif (Test-Path -eq "$p\$program\$folder") {
-          Start-Process -FilePath "$p\$program\$folder\$exe"
-        }
-      }
-      if ($o -like "*.exe") {
-        if ($null -ne $cmd) {
-          Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
-          $runcmd = Read-Host
-          if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
-            Clear-Host
-            Write-Main "Running $program $($cmd_syn)"
-            Start-Process -FilePath "$p\$o" -ArgumentList $($cmd)
-            Start-Sleep -Milliseconds 200
-            Exit
-          }
-        }
-        if ($runcmd -ne 'y' -or $runcmd -ne 'Y') {
-          Clear-Host
-          Write-Main "Running $program directly"
-          Start-Process -FilePath "$p\$o"
-          Start-Sleep -Milliseconds 200
-          Exit
-        }
-      }
-    }
+    'o' { Open-File }
     'e' { Write-Main 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
     default { Write-Warning 'Non-valid character, exiting...'; Start-Sleep -Milliseconds 500; exit }
+  }
+}
+function Open-File {
+  Write-Main "Launching $program..."
+  if ($o -like "*.zip") {
+    if (Test-Path -eq "$p\$o") {
+      Write-Main 'Zip file detected'
+      Write-Secondary "$program is saved as a zip file, so uncompressing..."
+      Start-Sleep -Milliseconds 200
+      try {
+        Expand-Archive -Path "$p\$o" -DestinationPath "$p\$program" -Force
+        Write-Main 'Package succesfully extracted...'
+      }
+      catch { Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"; Pause }
+      Start-Sleep -Milliseconds 500
+      Exit
+    }
+    elseif (Test-Path -eq "$p\$program\$folder") {
+      Start-Process -FilePath "$p\$program\$folder\$exe"
+    }
+  }
+  if ($o -like "*.exe") {
+    if ($null -ne $cmd) {
+      Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
+      $runcmd = Read-Host
+      if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
+        Clear-Host
+        Write-Main "Running $program $($cmd_syn)"
+        Start-Process -FilePath "$p\$o" -ArgumentList $($cmd)
+        Start-Sleep -Milliseconds 200
+        Exit
+      }
+    }
+    if ($runcmd -ne 'y' -or $runcmd -ne 'Y') {
+      Clear-Host
+      Write-Main "Running $program directly"
+      Start-Process -FilePath "$p\$o"
+      Start-Sleep -Milliseconds 200
+      Exit
+    }
   }
 }
 function Restart-Menu {
