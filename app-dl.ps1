@@ -26,29 +26,7 @@ $o = Split-Path $url -Leaf
 App-Loop
 Write-Main "$program selected"
 
-# Saving path selection
-Write-Point '1. Saves it inside of Desktop'
-Write-Point '2. Saves it inside of Documents'
-Write-Point '3. Saves it inside of Downloads'
-Write-Point '4. Save it inside of C:'
-Write-Point '5. Saves it inside of Program Files'
-Write-Point "6. Save it inside of the user profile`n"
-Write-Point 'X. Introduce a custom path'
-Write-Point '0. Goes back to change the app'
-[string]$p = Read-Host "`nChoose a number"
-
-switch ($p) {
-  0 {  }
-  1 { $p = "$Env:USERPROFILE\Desktop"; break }
-  2 { $p = "$Env:USERPROFILE\Documents"; break }
-  3 { $p = "$Env:USERPROFILE\Downloads"; break }
-  4 { $p = $Env:SystemDrive; break }
-  5 { $p = $Env:ProgramFiles; break }
-  6 { $p = $Env:HOMEPATH; break }
-  'x' { $p = Read-Host 'Set the whole custom path'; break }
-  'X' { $p = Read-Host 'Set the whole custom path'; break }
-  default { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE; break }
-}
+Select-Path
 Clear-Host
 Write-Main "Selected path: $p"
 
