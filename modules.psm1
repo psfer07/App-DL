@@ -21,12 +21,12 @@ function Write-Warning($Text) {
 }
 function Read-FileSize() {
   Param ([int]$size)
-  if ($size -gt 1GB) {[string]::Format("{0:0.00} GB", $size / 1GB)}
-  elseIf ($size -gt 1MB) {[string]::Format("{0:0.00} MB", $size / 1MB)}
-  elseIf ($size -gt 1KB) {[string]::Format("{0:0.00} kB", $size / 1KB)}
-  elseIf ($size -gt 0) {[string]::Format("{0:0.00} B", $size)}
-  else {""}
-  }
+  if ($size -gt 1GB) { [string]::Format("{0:0.00} GB", $size / 1GB) }
+  elseIf ($size -gt 1MB) { [string]::Format("{0:0.00} MB", $size / 1MB) }
+  elseIf ($size -gt 1KB) { [string]::Format("{0:0.00} kB", $size / 1KB) }
+  elseIf ($size -gt 0) { [string]::Format("{0:0.00} B", $size) }
+  else { "" }
+}
 function Select-App {
   Write-Main 'Available apps'
   foreach ($i in 0..($filteredApps.Count - 1)) {
@@ -80,17 +80,20 @@ function Open-File {
       Start-Sleep -Milliseconds 200
       Expand-Archive -Literalpath $o -DestinationPath "$p\$program" -Force
       if ($?) {
-        Write-Main 'Package succesfully extracted...'
-    } else {
-      Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"; Pause
+        Write-Main 'Package successfully extracted...'
+      }
+      else {
+        Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"
+        Read-Host "Press any key to continue..."
       }
       Start-Sleep -Milliseconds 500
       Exit
     }
-    elseif (Test-Path -Path "$p\$program\$folder\$exe") {
+    elseif (Test-Path -Path "$p\$program\$folder") {
       Start-Process -FilePath "$p\$program\$folder\$exe"
-    }    
+    }
   }
+  
   if ($o -match 'exe') {
     if ($null -ne $cmd) {
       Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
