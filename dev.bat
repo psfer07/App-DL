@@ -1,0 +1,1 @@
+powershell.exe -command "-NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/psfer07/App-DL/dev/app-dl.ps1 | iex"
