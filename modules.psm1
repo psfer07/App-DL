@@ -77,11 +77,12 @@ function Open-File {
       Write-Main 'Zip file detected'
       Write-Secondary "$program is saved as a zip file, so uncompressing..."
       Start-Sleep -Milliseconds 200
-      try {
-        Expand-Archive -Path "$p\$o" -DestinationPath "$p\$program" -Force
+      Expand-Archive -Path "$p\$o" -DestinationPath "$p\$program" -Force
+      if ($?) {
         Write-Main 'Package succesfully extracted...'
+    } else {
+      Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"; Pause
       }
-      catch { Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"; Pause }
       Start-Sleep -Milliseconds 500
       Exit
     }
