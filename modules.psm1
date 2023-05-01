@@ -19,6 +19,51 @@ function Write-Warning($Text) {
   Write-Host "   $Text" -ForegroundColor White
   Write-Host "<$border>" -ForegroundColor Red
 }
+function Get-FileSize {
+  param (
+    [Parameter(Mandatory = $true, Position = 0)]
+    [long]$sizeInBytes
+  )
+  
+  $sizes = "B", "KB", "MB", "GB"
+  $index = 0
+  
+  while ($sizeInBytes -ge 1024 -and $index -lt ($sizes.Count - 1)) {
+    $sizeInBytes = $sizeInBytes / 1024
+    $index++
+  }
+  return "{0:N2} {1}" -f $sizeInBytes, $sizes[$index]
+}
+function Select-App {
+  Clear-Host
+  Write-Main 'Available apps'
+  foreach ($i in 0..($filteredApps.Count - 1)) {
+    $app = $filteredApps[$i]
+    $n = $i + 1
+    Write-Point "$n. $($app.Name)"
+  }
+  if ($pkg -like ".*") {
+    Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
+    $pkg = Read-Host "`nWrite the number of the app you want to get"
+}
+
+}
+function AppLoop {
+  if ($pkg -like ".*") {
+    $response = Invoke-WebRequest -Uri $url -Method Head
+    $size = Get-FileSize ([long]$response.Headers.'Content-Length'[0])
+  
+    Clear-Host
+    Write-Main "$program selected"
+    Write-Point "$program is $syn"
+    Write-Point "Size: $size"
+    if ($exe) { Write-Point "Executable: $exe" }
+    if ($cmd_syn) { Write-Point $cmd_syn }
+    if ($cmd) { Write-Point "Parameters are: $cmd)" }
+    Pause
+    Selec
+    }
+  }
 function Use-Path {
   Clear-Host
   Write-Warning 'It seems that $program is currently allocated in this path'
@@ -66,56 +111,8 @@ function Use-Path {
     default { Write-Warning 'Non-valid character, exiting...'; Start-Sleep -Milliseconds 500; exit }
   }
 }
-function Get-FileSize {
-  param (
-    [Parameter(Mandatory = $true, Position = 0)]
-    [long]$sizeInBytes
-  )
-  
-  $sizes = "B", "KB", "MB", "GB"
-  $index = 0
-  
-  while ($sizeInBytes -ge 1024 -and $index -lt ($sizes.Count - 1)) {
-    $sizeInBytes = $sizeInBytes / 1024
-    $index++
-  }
-  return "{0:N2} {1}" -f $sizeInBytes, $sizes[$index]
-}
 function Restart-Menu {
   Start-Process powershell.exe "-File `"$PSCommandPath`""
   Start-Sleep 1
   Exit
-}
-function Show-Apps {
-  Clear-Host
-  Write-Main 'Available apps'
-  foreach ($i in 0..($filteredApps.Count - 1)) {
-    $app = $filteredApps[$i]
-    $n = $i + 1
-    Write-Point "$n. $($app.Name)"
-  }
-}
-function Select-App {
-  if ($pkg -like ".*") {
-    Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
-    $pkg = Read-Host "`nWrite the number of the app you want to get"
-  }
-  
-}
-function Show-Details {
-  if ($pkg -like ".*") {
-    $response = Invoke-WebRequest -Uri $url -Method Head
-    $size = Get-FileSize ([long]$response.Headers.'Content-Length'[0])
-  
-    Clear-Host
-    Write-Main "$program selected"
-    Write-Point "$program is $syn"
-    Write-Point "Size: $size"
-    if ($exe) { Write-Point "Executable: $exe" }
-    if ($cmd_syn) { Write-Point $cmd_syn }
-    if ($cmd) { Write-Point "Parameters are: $cmd)" }
-    Pause
-    Show-Apps
-    Select-App
-  }
 }
