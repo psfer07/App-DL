@@ -11,15 +11,9 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn }
 }
 
-  Clear-Host
-  Write-Main 'Available apps'
-  foreach ($i in 0..($filteredApps.Count - 1)) {
-    $app = $filteredApps[$i]
-    $n = $i + 1
-    Write-Point "$n. $($app.Name)"
-  }
-  Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
-  $pkg = Read-Host "`nWrite the number of the app you want to get"
+Clear-Host
+Select-App
+$pkg = Read-Host "`nWrite the number of the app you want to get"
 
 # Assign the corresponding variables to the selected app
 $pkg_n = [int]($pkg -replace "\.")
@@ -45,15 +39,8 @@ if ($pkg -like ".*") {
   if ($cmd_syn) { Write-Point $cmd_syn }
   if ($cmd) { Write-Point "Parameters are: $cmd)" }
   Pause
-  Clear-Host
-  Write-Main 'Available apps'
-  foreach ($i in 0..($filteredApps.Count - 1)) {
-    $app = $filteredApps[$i]
-    $n = $i + 1
-    Write-Point "$n. $($app.Name)"
-  }
-  Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
-$pkg = Read-Host "`nWrite the number of the app you want to get"
+  Select-App
+  $pkg = Read-Host "`nWrite the number of the app you want to get"
 }
 
 Write-Main "$program selected"
@@ -68,15 +55,15 @@ if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
 Write-Main "App to download: $program..."
 Write-Secondary "Do you want to open it when finished? (y/n)"
 $open = Read-Host
-do {$open = $false} while (!($open -eq 'y' -or $open -eq 'Y'))
-if ($open -eq 'y' -or $open -eq 'Y') {$open = $true}
+do { $open = $false } while (!($open -eq 'y' -or $open -eq 'Y'))
+if ($open -eq 'y' -or $open -eq 'Y') { $open = $true }
 
 $dl = Read-Host 'Confirmation (press enter or any key to go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
 try {
-Invoke-WebRequest -URI $url -OutFile "$p\$o"
+  Invoke-WebRequest -URI $url -OutFile "$p\$o"
   Write-Secondary 'File downloaded successfully'
 }
-catch {Write-Warning "Failed to download package. Error: $($_.Exception.Message)"}
+catch { Write-Warning "Failed to download package. Error: $($_.Exception.Message)" }
 
-if ($open = $true) {Open-File}
+if ($open = $true) { Open-File }
