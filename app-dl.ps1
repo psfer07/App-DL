@@ -1,8 +1,7 @@
+# Initialize variables
 [string]$branch = 'dev'
 [string]$module = "$Env:TEMP\modules.psm1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $module
-
-# Initialize variables
 Import-Module $module -DisableNameChecking
 $json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
 $nameArray = $json.psobject.Properties.Name
@@ -12,10 +11,7 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn }
 }
 
-#Clear-Host
 Show-Apps
-Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
-$pkg = Read-Host "`nWrite the number of the app you want to get"
 $pkg_n = [int]($pkg -replace "\.")
 
 # Assign the corresponding variables to the selected app
@@ -26,20 +22,6 @@ $url = $filteredApps[$pkg_n - 1].URL
 $cmd = $filteredApps[$pkg_n - 1].Cmd
 $cmd_syn = $filteredApps[$pkg_n - 1].Cmd_syn
 $o = Split-Path $url -Leaf
-
-
-if ($pkg -like ".*") {
-  $program = $filteredApps[$pkg_n - 1].Name
-  $response = Invoke-WebRequest -Uri $url -Method Head
-  $Bytes = 
-  $size = Get-FileSize ([long]$response.Headers.'Content-Length'[0])
-  Write-Host "The length of the file at $url is $size."
-  
-  #Clear-Host
-  Show-Details
-  Pause
-  Get-App
-}
 
 Write-Main "$program selected"
 
@@ -55,12 +37,7 @@ Write-Point '0. Goes back to change the app'
 [string]$p = Read-Host "`nChoose a number"
 
 switch ($p) {
-  0 {
-    #Clear-Host
-    Get-App
-    #Clear-Host
-    Show-Details
-  }
+  0 { Show-Apps; Redo-AppSelection }
   1 { $p = "$Env:USERPROFILE\Desktop"; break }
   2 { $p = "$Env:USERPROFILE\Documents"; break }
   3 { $p = "$Env:USERPROFILE\Downloads"; break }
@@ -71,9 +48,7 @@ switch ($p) {
   'X' { $p = Read-Host 'Set the whole custom path'; break }
   default { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE; break }
 }
-
-
-#Clear-Host
+Clear-Host
 Write-Main "Selected path: $p"
 
 #Checks if the program is installed or uncompressed in the selected folder
@@ -82,13 +57,13 @@ if (Test-Path "$p\$program\$folder\$exe") { Use-Path }
 
 Write-Main "App to download: $program..."
 $d = Read-Host 'Confirmation (press enter or any key to go to the (R)estart menu)'
-if ($d -eq 'R' -or $d -eq 'r') { Restart }
+if ($d -eq 'R' -or $d -eq 'r') { Restart-Menu }
 
+try {
 Invoke-WebRequest -URI $url -OutFile "$p\$o"
-if ($?) {
   Write-Secondary 'File downloaded successfully'
 }
-else {
+catch {
   Write-Warning "Failed to download package. Error: $($_.Exception.Message)"
 }
 
@@ -118,12 +93,12 @@ if ($o -like "*.exe") {
     Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"
     $runcmd = Read-Host
     if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
-      #Clear-Host
+      Clear-Host
       Write-Main "Running $program $($cmd_syn)"
       Start-Process -FilePath "$p\$o" -ArgumentList $($cmd)
     }
     if ($runcmd -ne 'y' -or $runcmd -ne 'Y') {
-      #Clear-Host
+      Clear-Host
       Write-Main "Running $program directly"
       Start-Process -FilePath "$p\$o"
     }

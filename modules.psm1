@@ -81,19 +81,10 @@ function Get-FileSize {
   }
   return "{0:N2} {1}" -f $sizeInBytes, $sizes[$index]
 }
-
-function Restart {
+function Restart-Menu {
   Start-Process powershell.exe "-File `"$PSCommandPath`""
   Start-Sleep 1
   Exit
-}
-function Show-Apps {
-  Write-Main 'Available apps'
-  foreach ($i in 0..($filteredApps.Count - 1)) {
-    $app = $filteredApps[$i]
-    $n = $i + 1
-    Write-Point "$n. $($app.Name)"
-  }
 }
 function Show-Details {
   Write-Main "$program selected"
@@ -103,12 +94,31 @@ function Show-Details {
   if ($cmd_syn) { Write-Point $cmd_syn }
   if ($cmd) { Write-Point "Parameters are: $cmd)" }
 }
-function Get-App {
-  do {
-    Clear-Host
-    Show-Apps
+function Show-Apps {
+  Clear-Host
+  Write-Main 'Available apps'
+  foreach ($i in 0..($filteredApps.Count - 1)) {
+    $app = $filteredApps[$i]
+    $n = $i + 1
+    Write-Point "$n. $($app.Name)"
+  }
+}
+function Select-App {
+  if ($pkg -like ".*") {
     Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
     $pkg = Read-Host "`nWrite the number of the app you want to get"
-  } while (-not $pkg.StartsWith("."))
+  }
   
+}
+function Redo-AppSelection {
+  if ($pkg -like ".*") {
+    $response = Invoke-WebRequest -Uri $url -Method Head
+    $size = Get-FileSize ([long]$response.Headers.'Content-Length'[0])
+  
+    Clear-Host
+    Show-Details
+    Pause
+    Show-Apps
+    Select-App
+  }
 }
