@@ -66,13 +66,22 @@ function Use-Path {
     default { Write-Warning 'Non-valid character, exiting...'; Start-Sleep -Milliseconds 500; exit }
   }
 }
-function Get-FileSize() {
-  param ([int]$size)
-  if ($size -gt 1GB) { [string]::Format("{0:0.00} TB", $size / 1GB) }
-  elseif ($size -gt 1MB) { [string]::Format("{0:0.00} MB", $size / 1MB) }
-  elseif ($size -gt 1KB) { [string]::Format("{0:0.00} KB", $size / 1KB) }
-  elseif ($size -gt 0) { [string]::Format("{0:0.00} B", $size) }
+function Get-FileSize {
+  param (
+    [Parameter(Mandatory = $true, Position = 0)]
+    [long]$sizeInBytes
+  )
+  
+  $sizes = "B", "KB", "MB", "GB", "TB"
+  $index = 0
+  
+  while ($sizeInBytes -ge 1024 -and $index -lt ($sizes.Count - 1)) {
+    $sizeInBytes = $sizeInBytes / 1024
+    $index++
+  }
+  return "{0:N2} {1}" -f $sizeInBytes, $sizes[$index]
 }
+
 function Restart {
   Start-Process powershell.exe "-File `"$PSCommandPath`""
   Start-Sleep 1
