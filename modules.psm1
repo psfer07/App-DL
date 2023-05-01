@@ -48,7 +48,17 @@ function Select-App {
   }
 
 }
-function Redo-AppSelection {
+function Set-AppData {
+  $pkg_n = [int]($pkg -replace "\.")
+  $program = $filteredApps[$pkg_n - 1].Name
+  $exe = $filteredApps[$pkg_n - 1].Exe
+  $folder = $filteredApps[$pkg_n - 1].folder
+  $url = $filteredApps[$pkg_n - 1].URL
+  $cmd = $filteredApps[$pkg_n - 1].Cmd
+  $cmd_syn = $filteredApps[$pkg_n - 1].Cmd_syn
+  $o = Split-Path $url -Leaf
+}
+function Get-AppDetails {
   if ($pkg -like ".*") {
     $response = Invoke-WebRequest -Uri $url -Method Head
     $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
@@ -87,6 +97,8 @@ function Select-Path {
     'X' { $p = Read-Host 'Set the whole custom path'; break }
     default { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE; break }
   }
+  Clear-Host
+  Write-Main "Selected path: $p"
 }
 function Revoke-Path {
   Clear-Host

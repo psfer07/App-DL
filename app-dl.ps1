@@ -12,23 +12,9 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 }
 
 Select-App
-$pkg_n = [int]($pkg -replace "\.")
-
-# Assign the corresponding variables to the selected app
-$program = $filteredApps[$pkg_n - 1].Name
-$exe = $filteredApps[$pkg_n - 1].Exe
-$folder = $filteredApps[$pkg_n - 1].folder
-$url = $filteredApps[$pkg_n - 1].URL
-$cmd = $filteredApps[$pkg_n - 1].Cmd
-$cmd_syn = $filteredApps[$pkg_n - 1].Cmd_syn
-$o = Split-Path $url -Leaf
-
-App-Loop
-Write-Main "$program selected"
-
+Set-AppData
+Get-AppDetails
 Select-Path
-Clear-Host
-Write-Main "Selected path: $p"
 
 #Checks if the program is installed or uncompressed in the selected folder
 if (Test-Path "$p\$o") { Revoke-Path }
@@ -64,8 +50,6 @@ if ($o -like "*.zip") {
   $open = Read-Host 'Open the app?(y/n)'
   if ($open -eq 'y' -or $open -eq 'Y') { Start-Process -FilePath "$p\$program\$folder\$exe" }
 }
-
-
 if ($o -like "*.exe") {
   if ($cmd) {
     Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"
