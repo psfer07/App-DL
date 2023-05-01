@@ -30,8 +30,10 @@ $o = Split-Path $url -Leaf
 
 if ($pkg -like ".*") {
   Clear-Host
+  Write-Main "$program selected"
   Show-Details
   Select-App
+  $pkg = ''
   $pkg = Read-Host "`nWrite the number of the app you want to get"
 }
 
@@ -39,7 +41,7 @@ Write-Main "$program selected"
 Show-Paths
 [string]$p = Read-Host "`nChoose a number"
 switch ($p) {
-  0 {  }
+  0 { Restart-Menu }
   1 { $p = "$Env:USERPROFILE\Desktop"; break }
   2 { $p = "$Env:USERPROFILE\Documents"; break }
   3 { $p = "$Env:USERPROFILE\Downloads"; break }

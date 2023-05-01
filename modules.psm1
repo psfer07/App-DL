@@ -127,8 +127,7 @@ function Open-File {
 }
 function Restart-Menu {
   #Salir de la app / Volver al inicio
-  $script = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/app-dl.ps1"
-  Start-Process -FilePath $script
+  Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/app-dl.ps1" | Invoke-Expression
   Start-Sleep 1
   Exit
 }
