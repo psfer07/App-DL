@@ -56,19 +56,30 @@ if (Test-Path "$p\$o") { Revoke-Path }
 if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
 
 Write-Main "App to download: $program..."
-Write-Secondary "Do you want to open it when finished? (y/n)"
+<#
+ # {Write-Secondary "Do you want to open it when finished? (y/n)"
 $open = Read-Host
 do { $open = $false } while (!($open -eq 'y' -or $open -eq 'Y'))
 if ($open -eq 'y' -or $open -eq 'Y') { $open = $true }
 
 $dl = Read-Host 'Confirmation (press enter or any key to go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
-Invoke-WebRequest -URI $url -OutFile "$p\$o"
+:Enter a comment or description}
+#>
+Invoke-WebRequest -URI $url -OutFile "$path\$out_file"
 if ($?) {
+    Write-Secondary "File downloaded successfully"
+} else {
+    Write-Warning "An error occurred while downloading the file: $_.Exception"
+  }
+
+<#
+ # {if ($_) {
   Write-Secondary "File downloaded successfully"
 }
 else {
   Write-Warning "An error occurred while downloading the file: $($_.Exception.Message)"
-}
+}:Enter a comment or description}
+#>
 
 if ($open = $true) { Open-File }
