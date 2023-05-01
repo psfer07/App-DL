@@ -96,3 +96,18 @@ function Set-Program {
     Write-Point "$n. $($app.Name)"
   }
 }
+function Show-Details {
+  if ($pkg -like ".*") {
+    $response = Invoke-WebRequest -Uri $url -Method Head
+    $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
+  
+    Clear-Host
+    Write-Main "$program selected"
+    Write-Point "$program is $syn"
+    Write-Point "Size: $size"
+    if ($exe) { Write-Point "Executable: $exe" }
+    if ($cmd_syn) { Write-Point $cmd_syn }
+    if ($cmd) { Write-Point "Parameters are: $cmd)" }
+    Pause
+  }
+}
