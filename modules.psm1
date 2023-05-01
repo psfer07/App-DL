@@ -74,11 +74,11 @@ function Open-File {
   Write-Main "Launching $program..."
   if ($o -like "*.zip") {
     $s = "$p\$o"
-    if (Test-Path -Path $s) {
+    if (Test-Path -Literalpath $s) {
       Write-Main 'Zip file detected'
       Write-Secondary "$program is saved as a zip file, so uncompressing..."
       Start-Sleep -Milliseconds 200
-      Expand-Archive -Path $s -DestinationPath "$p\$program" -Force
+      Expand-Archive -Literalpath $s -DestinationPath "$p\$program" -Force
       if ($?) {
         Write-Main 'Package succesfully extracted...'
     } else {
