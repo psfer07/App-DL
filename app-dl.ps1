@@ -11,10 +11,77 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn }
 }
 
-Select-App
-Set-AppData
-Get-AppDetails
-Select-Path
+Clear-Host
+Write-Main 'Available apps'
+foreach ($i in 0..($filteredApps.Count - 1)) {
+  $app = $filteredApps[$i]
+  $n = $i + 1
+  Write-Point "$n. $($app.Name)"
+}
+if ($pkg -like ".*") {
+  Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
+  $pkg = Read-Host "`nWrite the number of the app you want to get"
+}
+
+$pkg_n = [int]($pkg -replace "\.")
+$program = $filteredApps[$pkg_n - 1].Name
+$exe = $filteredApps[$pkg_n - 1].Exe
+$folder = $filteredApps[$pkg_n - 1].folder
+$url = $filteredApps[$pkg_n - 1].URL
+$cmd = $filteredApps[$pkg_n - 1].Cmd
+$cmd_syn = $filteredApps[$pkg_n - 1].Cmd_syn
+$o = Split-Path $url -Leaf
+
+if ($pkg -like ".*") {
+  $response = Invoke-WebRequest -Uri $url -Method Head
+  $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
+
+  Clear-Host
+  Write-Main "$program selected"
+  Write-Point "$program is $syn"
+  Write-Point "Size: $size"
+  if ($exe) { Write-Point "Executable: $exe" }
+  if ($cmd_syn) { Write-Point $cmd_syn }
+  if ($cmd) { Write-Point "Parameters are: $cmd)" }
+  Pause
+  Clear-Host
+  Write-Main 'Available apps'
+  foreach ($i in 0..($filteredApps.Count - 1)) {
+    $app = $filteredApps[$i]
+    $n = $i + 1
+    Write-Point "$n. $($app.Name)"
+  }
+  if ($pkg -like ".*") {
+    Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
+    $pkg = Read-Host "`nWrite the number of the app you want to get"
+  }
+}
+
+
+Write-Point '1. Saves it inside of Desktop'
+Write-Point '2. Saves it inside of Documents'
+Write-Point '3. Saves it inside of Downloads'
+Write-Point '4. Save it inside of C:'
+Write-Point '5. Saves it inside of Program Files'
+Write-Point "6. Save it inside of the user profile`n"
+Write-Point 'X. Introduce a custom path'
+Write-Point '0. Goes back to change the app'
+[string]$p = Read-Host "`nChoose a number"
+
+switch ($p) {
+  0 {  }
+  1 { $p = "$Env:USERPROFILE\Desktop"; break }
+  2 { $p = "$Env:USERPROFILE\Documents"; break }
+  3 { $p = "$Env:USERPROFILE\Downloads"; break }
+  4 { $p = $Env:SystemDrive; break }
+  5 { $p = $Env:ProgramFiles; break }
+  6 { $p = $Env:HOMEPATH; break }
+  'x' { $p = Read-Host 'Set the whole custom path'; break }
+  'X' { $p = Read-Host 'Set the whole custom path'; break }
+  default { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE; break }
+}
+Clear-Host
+Write-Main "Selected path: $p"
 
 #Checks if the program is installed or uncompressed in the selected folder
 if (Test-Path "$p\$o") { Revoke-Path }
