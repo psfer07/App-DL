@@ -11,7 +11,7 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn }
 }
 
-Show-Apps
+Select-App
 $pkg_n = [int]($pkg -replace "\.")
 
 # Assign the corresponding variables to the selected app
@@ -23,6 +23,7 @@ $cmd = $filteredApps[$pkg_n - 1].Cmd
 $cmd_syn = $filteredApps[$pkg_n - 1].Cmd_syn
 $o = Split-Path $url -Leaf
 
+App-Loop
 Write-Main "$program selected"
 
 # Saving path selection
@@ -37,7 +38,7 @@ Write-Point '0. Goes back to change the app'
 [string]$p = Read-Host "`nChoose a number"
 
 switch ($p) {
-  0 { Show-Apps; Redo-AppSelection }
+  0 {  }
   1 { $p = "$Env:USERPROFILE\Desktop"; break }
   2 { $p = "$Env:USERPROFILE\Documents"; break }
   3 { $p = "$Env:USERPROFILE\Downloads"; break }
@@ -52,8 +53,8 @@ Clear-Host
 Write-Main "Selected path: $p"
 
 #Checks if the program is installed or uncompressed in the selected folder
-if (Test-Path "$p\$o") { Use-Path }
-if (Test-Path "$p\$program\$folder\$exe") { Use-Path }
+if (Test-Path "$p\$o") { Revoke-Path }
+if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
 
 Write-Main "App to download: $program..."
 $d = Read-Host 'Confirmation (press enter or any key to go to the (R)estart menu)'

@@ -19,7 +19,7 @@ function Write-Warning($Text) {
   Write-Host "   $Text" -ForegroundColor White
   Write-Host "<$border>" -ForegroundColor Red
 }
-function Get-FileSize {
+function Read-FileSize {
   param (
     [Parameter(Mandatory = $true, Position = 0)]
     [long]$sizeInBytes
@@ -48,10 +48,10 @@ function Select-App {
 }
 
 }
-function AppLoop {
+function Redo- {
   if ($pkg -like ".*") {
     $response = Invoke-WebRequest -Uri $url -Method Head
-    $size = Get-FileSize ([long]$response.Headers.'Content-Length'[0])
+    $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
   
     Clear-Host
     Write-Main "$program selected"
@@ -61,10 +61,10 @@ function AppLoop {
     if ($cmd_syn) { Write-Point $cmd_syn }
     if ($cmd) { Write-Point "Parameters are: $cmd)" }
     Pause
-    Selec
+    Select-App
     }
   }
-function Use-Path {
+function Revoke-Path {
   Clear-Host
   Write-Warning 'It seems that $program is currently allocated in this path'
   $restart = Read-Host 'Write "r" to restart the app and start again, "o" to open the existing app or e to exiting'
@@ -112,6 +112,7 @@ function Use-Path {
   }
 }
 function Restart-Menu {
+  #Salir de la app / Volver al inicio
   Start-Process powershell.exe "-File `"$PSCommandPath`""
   Start-Sleep 1
   Exit
