@@ -14,7 +14,6 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 
 #Clear-Host
 Show-Apps
-
 Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 $pkg_n = [int]($pkg -replace "\.")
@@ -31,14 +30,15 @@ $o = Split-Path $url -Leaf
 
 if ($pkg -like ".*") {
   $program = $filteredApps[$pkg_n - 1].Name
-  $response = Invoke-WebRequest $url
-  $size = Get-FileSize $($response.Content.Length)
+  $response = Invoke-WebRequest -Uri $url -Method Head
+  $Bytes = 
+  $size = Get-FileSize ([long]$response.Headers.'Content-Length'[0])
+  Write-Host "The length of the file at $url is $size."
+  
   #Clear-Host
   Show-Details
   Pause
-  Show-Apps
-  Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
-  $pkg = Read-Host "`nWrite the number of the app you want to get"
+  Get-App
 }
 
 Write-Main "$program selected"
@@ -57,9 +57,7 @@ Write-Point '0. Goes back to change the app'
 switch ($p) {
   0 {
     #Clear-Host
-    Show-Apps
-    Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
-    $pkg = Read-Host "`nWrite the number of the app you want to get"
+    Get-App
     #Clear-Host
     Show-Details
   }
@@ -116,7 +114,7 @@ if ($o -like "*.zip") {
 
 
 if ($o -like "*.exe") {
-  if ($null -ne $cmd) {
+  if ($cmd) {
     Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just open it as normal)? (y/n)"
     $runcmd = Read-Host
     if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
