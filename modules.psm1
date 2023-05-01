@@ -73,11 +73,12 @@ function Revoke-Path {
 function Open-File {
   Write-Main "Launching $program..."
   if ($o -like "*.zip") {
-    if (Test-Path -Path "$p\$o") {
+    $s = "$p\$o"
+    if (Test-Path -Path $s) {
       Write-Main 'Zip file detected'
       Write-Secondary "$program is saved as a zip file, so uncompressing..."
       Start-Sleep -Milliseconds 200
-      Expand-Archive -Path "$p\$o" -DestinationPath "$p\$program" -Force
+      Expand-Archive -Path $s -DestinationPath "$p\$program" -Force
       if ($?) {
         Write-Main 'Package succesfully extracted...'
     } else {
