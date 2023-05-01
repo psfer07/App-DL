@@ -38,13 +38,12 @@ Write-Main "App to download: $program..."
 $d = Read-Host 'Confirmation (press enter or any key to go to the (R)estart menu)'
 if ($d -eq 'R' -or $d -eq 'r') { Restart-Menu }
 
-try {
-Invoke-WebRequest -URI $url -OutFile "$p\$o"
-  Write-Secondary 'File downloaded successfully'
-}
-catch {
-  Write-Warning "Failed to download package. Error: $($_.Exception.Message)"
-}
+Invoke-WebRequest -URI $url -OutFile "$p\$output"
+if ($?) {
+    Write-Secondary "File downloaded successfully"
+} else {
+    Write-Warning "An error occurred while downloading the file: $_.Exception"
+  }
 
 # Checks the package extension for extracting or installing it
 if ($o -like "*.zip") {
