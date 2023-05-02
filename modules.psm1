@@ -54,7 +54,7 @@ function Show-Paths {
   Write-Point '5. Saves it inside of Program Files'
   Write-Point "6. Save it inside of the user profile`n"
   Write-Point 'X. Introduce a custom path'
-  Write-Point '0. Goes back to change the app'
+  Write-Point '0. Resets the program to select another app'
 }
 function Revoke-Path {
 
@@ -63,17 +63,14 @@ function Revoke-Path {
   switch ($restart) {
     'r' { Restart-Menu }
     'R' { Restart-Menu }
-    'o' { Open-File }
-    'O' { Open-File }
+    'o' { goto Open-File }
+    'O' { goto Open-File }
     'e' { Write-Main 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
     'E' { Write-Main 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
     default { Write-Warning 'Non-valid character, exiting...'; Start-Sleep -Milliseconds 500; exit }
   }
 }
 function Open-File {
-  param([string]$p)
-  param([string]$o)
-
   Write-Main "Launching $program..."
   Write-Point "$p\$o"
   if ($o -match 'zip') {

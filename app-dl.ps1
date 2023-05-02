@@ -71,4 +71,51 @@ if ($?) {
 } else {
     Write-Warning "An error occurred while downloading the file: $_"
   }
-if ($open = $true) { Open-File -p $p -o $o}
+if ($open = $true) { 
+  :Open-File
+  Write-Main "Launching $program..."
+  Write-Point "$p\$o"
+  if ($o -match 'zip') {
+    # Error is the $p, it's not been imported correctly
+
+    if (Test-Path -LiteralPath "$p\$o") {
+      Write-Main 'Zip file detected'
+      Write-Secondary "$program is saved as a zip file, so uncompressing..."
+      Start-Sleep -Milliseconds 200
+      Expand-Archive -Literalpath $o -DestinationPath "$p\$program" -Force
+      if ($?) {
+        Write-Main 'Package successfully extracted...'
+      }
+      else {
+        Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"
+        Read-Host "Press any key to continue..."
+      }
+      Start-Sleep -Milliseconds 500
+      Exit
+    }
+    elseif (Test-Path -Path "$p\$program\$folder") {
+      Start-Process -FilePath "$p\$program\$folder\$exe"
+    }
+  }
+  
+  if ($o -match 'exe') {
+    if ($null -ne $cmd) {
+      Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
+      $runcmd = Read-Host
+      if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
+        
+        Write-Main "Running $program $($cmd_syn)"
+        Start-Process -FilePath "$p\$o" -ArgumentList $($cmd)
+        Start-Sleep -Milliseconds 200
+        Exit
+      }
+    }
+    if ($runcmd -ne 'y' -or $runcmd -ne 'Y') {
+      
+      Write-Main "Running $program directly"
+      Start-Process -FilePath "$p\$o"
+      Start-Sleep -Milliseconds 200
+      Exit
+    }
+  }
+ }
