@@ -17,14 +17,14 @@ $pkg = Read-Host "`nWrite the number of the app you want to get"
 
 # Assign the corresponding variables to the selected app
 $pkg_n = [int]($pkg -replace "\.")
-$selectedApp = $filteredApps[$pkg_n - 1]
-$program = $selectedApp.Name
-$exe = $selectedApp.Exe
-$syn = $selectedApp.Syn
-$folder = $selectedApp.folder
-$url = $selectedApp.URL
-$cmd = $selectedApp.Cmd
-$cmd_syn = $selectedApp.Cmd_syn
+$n = $filteredApps[$pkg_n - 1]
+$program = $n.Name
+$exe = $n.Exe
+$syn = $n.Syn
+$folder = $n.folder
+$url = $n.URL
+$cmd = $n.Cmd
+$cmd_syn = $n.Cmd_syn
 $o = Split-Path $url -Leaf
 
 
@@ -62,13 +62,9 @@ Write-Main "App to download: $program..."
 Write-Secondary "Do you want to open it when finished? (y/n)"
 $open = Read-Host
 if ($open -eq 'y' -or $open -eq 'Y') { $open = $true} else { $open = $false }
-$dl = Read-Host 'Confirmation (press enter or any key to go to the (R)estart menu)'
+$dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
 
 Invoke-WebRequest -URI $url -OutFile "$p\$o"
-if ($?) {
-    Write-Secondary "File downloaded successfully"
-} else {
-    Write-Warning "An error occurred while downloading the file: $_Exception"
-  }
+if ($?) { Write-Secondary "File downloaded successfully"} else { Write-Warning "An error occurred while downloading the file: $_Exception" }
 if ($open = $true) { Open-File }
