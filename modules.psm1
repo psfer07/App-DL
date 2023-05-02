@@ -78,7 +78,8 @@ function Open-File {
   if ($o -match 'zip') {
     # Error is the $p, it's not been imported correctly
     
-    if (Test-Path -LiteralPath "$p\$o") {
+    $fullPath = Join-Path -Path $p -ChildPath $o
+    if (Test-Path -LiteralPath $fullPath) {
       Write-Main 'Zip file detected'
       Write-Secondary "$program is saved as a zip file, so uncompressing..."
       Start-Sleep -Milliseconds 200
