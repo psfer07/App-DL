@@ -71,4 +71,4 @@ if ($?) {
 } else {
     Write-Warning "An error occurred while downloading the file: $_"
   }
-if ($open = $true) { Open-File -p $p}
+if ($open = $true) { Open-File }
