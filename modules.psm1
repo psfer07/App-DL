@@ -71,14 +71,15 @@ function Revoke-Path {
   }
 }
 function Open-File {
-  param([string]$filepath)
+  param([string]$p)
+  param([string]$o)
 
   Write-Main "Launching $program..."
-  $filepath
+  Write-Point "$p\$o"
   if ($o -match 'zip') {
     # Error is the $p, it's not been imported correctly
 
-    if (Test-Path -LiteralPath $filepath) {
+    if (Test-Path -LiteralPath "$p\$o") {
       Write-Main 'Zip file detected'
       Write-Secondary "$program is saved as a zip file, so uncompressing..."
       Start-Sleep -Milliseconds 200
