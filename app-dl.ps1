@@ -11,7 +11,7 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn }
 }
 
-$appList = {
+
 Clear-Host
 Select-App
 $pkg = Read-Host "`nWrite the number of the app you want to get"
@@ -35,10 +35,6 @@ if ($pkg -match '.') {
   Show-Details
   &$appList
 }
-}
-
-&$appList
-
 
 Write-Main "$program selected"
 Show-Paths
