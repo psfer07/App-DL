@@ -33,7 +33,7 @@ if ($pkg -like ".*") {
   Clear-Host
   Write-Main "$program selected"
   Show-Details
-  goto AppList
+  goto :AppList
 }
 
 Write-Main "$program selected"
