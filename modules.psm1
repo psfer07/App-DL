@@ -63,8 +63,8 @@ function Revoke-Path {
   switch ($restart) {
     'r' { Restart-Menu }
     'R' { Restart-Menu }
-    'o' { goto Open-File }
-    'O' { goto Open-File }
+    'o' { Open-File }
+    'O' { Open-File }
     'e' { Write-Main 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
     'E' { Write-Main 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
     default { Write-Warning 'Non-valid character, exiting...'; Start-Sleep -Milliseconds 500; exit }
@@ -72,15 +72,13 @@ function Revoke-Path {
 }
 function Open-File {
   Write-Main "Launching $program..."
-  Write-Point "$p\$o"
   if ($o -match 'zip') {
-    # Error is the $p, it's not been imported correctly
-
+    
     if (Test-Path -LiteralPath "$p\$o") {
       Write-Main 'Zip file detected'
       Write-Secondary "$program is saved as a zip file, so uncompressing..."
       Start-Sleep -Milliseconds 200
-      Expand-Archive -Literalpath $o -DestinationPath "$p\$program" -Force
+      Expand-Archive -Literalpath "$p\$o" -DestinationPath "$p\$program" -Force
       if ($?) {
         Write-Main 'Package successfully extracted...'
       }
