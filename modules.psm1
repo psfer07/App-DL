@@ -71,7 +71,7 @@ function Revoke-Path {
   }
 }
 function Open-File {
-  $launch = Start-Process -FilePath "$p\$program\$folder\$exe"
+  
   Write-Main "Launching $program..."
   if ($o -match 'zip') {
     
@@ -88,13 +88,13 @@ function Open-File {
         Read-Host "Press any key to continue..."
       }
       Start-Sleep -Milliseconds 500
-      Invoke-Expression $launch
+      Start-Process -FilePath "$p\$program\$folder\$exe"
       Start-Sleep -Milliseconds 500
       
       Exit
     }
     elseif (Test-Path -Path "$p\$program\$folder") {
-      Invoke-Expression $launch
+      Start-Process -FilePath "$p\$program\$folder\$exe"
     }
   }
   
