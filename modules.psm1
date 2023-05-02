@@ -1,23 +1,24 @@
-function Write-Main($Text) {
-  $border = '============================================'
-  Write-Host "`n`n<$border>" -ForegroundColor Blue
-  Write-Host "   $Text" -ForegroundColor White
-  Write-Host "<$border>" -ForegroundColor Blue
+function Write-Main($T) {
+  $b = '============================================'
+  Write-Host "`n`n<$b>" -ForegroundColor Blue
+  Write-Host "   $T" -ForegroundColor White
+  Write-Host "<$b>" -ForegroundColor Blue
 }
-function Write-Secondary($Text) {
-  Write-Host "`n<==========[" -NoNewline -ForegroundColor Green
-  Write-Host " $Text " -NoNewline -ForegroundColor White
-  Write-Host "]==========>`n" -ForegroundColor Green
+function Write-Secondary($T) {
+  $b = '=========='
+  Write-Host "`n<$b[" -NoNewline -ForegroundColor Green
+  Write-Host " $T " -NoNewline -ForegroundColor White
+  Write-Host "]$b>`n" -ForegroundColor Green
 }
-function Write-Point($Text) {
+function Write-Point($T) {
   Write-Host '==> ' -NoNewline -ForegroundColor Green
-  Write-Host "$Text" -ForegroundColor White
+  Write-Host "$T" -ForegroundColor White
 }
-function Write-Warning($Text) {
-  $border = '============================================'
-  Write-Host "`n`n<$border>" -ForegroundColor Red
-  Write-Host "   $Text" -ForegroundColor White
-  Write-Host "<$border>" -ForegroundColor Red
+function Write-Warning($T) {
+  $b = '============================================'
+  Write-Host "`n`n<$b>" -ForegroundColor Red
+  Write-Host "   $T" -ForegroundColor White
+  Write-Host "<$b>" -ForegroundColor Red
 }
 function Read-FileSize() {
   Param ([int]$size)
@@ -34,7 +35,7 @@ function Select-App {
     $n = $i + 1
     Write-Point "$n. $($app.Name)"
   }
-  Write-Host "`nType a dot before the number to display all the program properties, for example: '.1'"
+  Write-Host "`nType a dot before or after the number to display all the program properties, for example: '.1', '1."
 }
 function Show-Details {
   $response = Invoke-WebRequest -Uri $url -Method Head
