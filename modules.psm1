@@ -88,9 +88,9 @@ function Open-File {
         Read-Host "Press any key to continue..."
       }
       Start-Sleep -Milliseconds 500
+      Write-Main "Running $program directly"
       Start-Process -FilePath "$p\$program\$folder\$exe"
-      Start-Sleep -Milliseconds 500
-      
+      Start-Sleep -Milliseconds 200
       Exit
     }
     elseif (Test-Path -Path "$p\$program\$folder") {
