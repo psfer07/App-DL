@@ -76,9 +76,11 @@ function Open-File {
 
   if ($o -match 'zip') {
     if (Test-Path -Path "$p\$program\$folder") {
+      Write-Main "$program is uncompressed in $p, so opening it directly..."
+      Start-Sleep 1
       Start-Process -FilePath "$p\$program\$folder\$exe"
       Start-Sleep -Milliseconds 200
-      Exit
+      break
     }
 
     elseif (Test-Path -LiteralPath "$p\$o") {
