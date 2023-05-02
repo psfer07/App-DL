@@ -71,4 +71,4 @@ if ($?) {
 } else {
     Write-Warning "An error occurred while downloading the file: $_"
   }
-if ($open = $true) { Open-File }
+if ($open = $true) { Open-File -FilePath "$p\$o"}
