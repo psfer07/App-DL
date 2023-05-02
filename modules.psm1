@@ -74,15 +74,15 @@ function Open-File {
   
   Write-Main "Launching $program..."
 
-  if ($o -match "*.zip") {
+  if ($o -match 'zip') {
     if (Test-Path -Path "$p\$program\$folder") {
       Write-Main "$program is uncompressed in $p, so opening it directly..."
-      Start-Sleep 1
+      Start-Sleep -Milliseconds 500
       Start-Process -FilePath "$p\$program\$folder\$exe"
-      Start-Sleep -Milliseconds 200
+      Start-Sleep 1
+      Exit
     }
 
-      break
     elseif (Test-Path -LiteralPath "$p\$o") {
       Write-Main 'Zip file detected'
       Write-Secondary "$program is saved as a zip file, so uncompressing..."
@@ -95,15 +95,17 @@ function Open-File {
         Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"
         Read-Host "Press any key to continue..."
       }
-      Start-Sleep -Milliseconds 500
+      Start-Sleep 2
+      Clear-Host
       Write-Main "Running $program directly"
+      Start-Sleep -Milliseconds 500
       Start-Process -FilePath "$p\$program\$folder\$exe"
       Start-Sleep -Milliseconds 200
       Exit
     }
   }
-  
-  if ($o -match "*.exe") {
+
+  if ($o -match 'exe') {
     if ($null -ne $cmd) {
       Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
       $runcmd = Read-Host
