@@ -73,9 +73,15 @@ function Revoke-Path {
 function Open-File {
   
   Write-Main "Launching $program..."
+
   if ($o -match 'zip') {
-    
-    if (Test-Path -LiteralPath "$p\$o") {
+    if (Test-Path -Path "$p\$program\$folder") {
+      Start-Process -FilePath "$p\$program\$folder\$exe"
+      Start-Sleep -Milliseconds 200
+      Exit
+    }
+
+    elseif (Test-Path -LiteralPath "$p\$o") {
       Write-Main 'Zip file detected'
       Write-Secondary "$program is saved as a zip file, so uncompressing..."
       Start-Sleep -Milliseconds 200
@@ -92,9 +98,6 @@ function Open-File {
       Start-Process -FilePath "$p\$program\$folder\$exe"
       Start-Sleep -Milliseconds 200
       Exit
-    }
-    elseif (Test-Path -Path "$p\$program\$folder") {
-      Start-Process -FilePath "$p\$program\$folder\$exe"
     }
   }
   
