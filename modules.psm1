@@ -45,6 +45,7 @@ function Show-Details {
   if ($cmd_syn) { Write-Point $cmd_syn }
   if ($cmd) { Write-Point "Parameters are: $cmd)" }
   Pause
+  $pkg,$pkg_n,$program,$url,$size,$syn,$exe,$cmd_syn,$cmd = $null # Discards the obtained values for that the user can select them as many times as wanted
 }
 function Show-Paths {
   Write-Point '1. Saves it inside of Desktop'
