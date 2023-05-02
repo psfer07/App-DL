@@ -13,7 +13,6 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 
 
 Clear-Host
-&$Ascii
 Select-App
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 
