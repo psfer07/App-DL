@@ -13,6 +13,7 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 
 
 Clear-Host
+&$Ascii
 Select-App
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 
@@ -34,7 +35,7 @@ if ($pkg -match '.') {
   Write-Main "$program selected"
   Show-Details
   &$appList
-}
+} else {break}
 
 Write-Main "$program selected"
 Show-Paths
@@ -60,7 +61,7 @@ Write-Main "App to download: $program..."
 
 Write-Secondary "Do you want to open it when finished? (y/n)"
 $open = Read-Host
-if ($open -eq 'y' -or $open -eq 'Y') { $open = $true} else { $open = $false }
+if ($open -eq 'y' -or $open -eq 'Y') { $open = $true } else { $open = $false }
 $dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
 
