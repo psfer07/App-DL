@@ -74,7 +74,7 @@ function Open-File {
   param([string]$filepath)
 
   Write-Main "Launching $program..."
-  $p
+  $filepath
   if ($o -match 'zip') {
     # Error is the $p, it's not been imported correctly
 
