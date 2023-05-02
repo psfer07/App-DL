@@ -74,7 +74,7 @@ function Open-File {
   
   Write-Main "Launching $program..."
 
-  if ($o -match 'zip') {
+  if ($o -match "*.zip") {
     if (Test-Path -Path "$p\$program\$folder") {
       Write-Main "$program is uncompressed in $p, so opening it directly..."
       Start-Sleep 1
@@ -103,7 +103,7 @@ function Open-File {
     }
   }
   
-  if ($o -match 'exe') {
+  if ($o -match "*.exe") {
     if ($null -ne $cmd) {
       Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
       $runcmd = Read-Host

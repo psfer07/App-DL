@@ -69,6 +69,6 @@ Invoke-WebRequest -URI $url -OutFile "$p\$o"
 if ($?) {
     Write-Secondary "File downloaded successfully"
 } else {
-    Write-Warning "An error occurred while downloading the file: $_"
+    Write-Warning "An error occurred while downloading the file: $_Exception"
   }
 if ($open = $true) { Open-File }
