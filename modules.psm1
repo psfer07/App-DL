@@ -71,7 +71,7 @@ function Revoke-Path {
   }
 }
 function Open-File {
-  $launch = "Start-Process -FilePath $p\$program\$folder\$exe"
+  $launch = Start-Process -FilePath "$p\$program\$folder\$exe"
   Write-Main "Launching $program..."
   if ($o -match 'zip') {
     
