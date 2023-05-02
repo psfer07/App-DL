@@ -80,9 +80,9 @@ function Open-File {
       Start-Sleep 1
       Start-Process -FilePath "$p\$program\$folder\$exe"
       Start-Sleep -Milliseconds 200
-      break
     }
 
+      break
     elseif (Test-Path -LiteralPath "$p\$o") {
       Write-Main 'Zip file detected'
       Write-Secondary "$program is saved as a zip file, so uncompressing..."
