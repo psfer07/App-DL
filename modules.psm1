@@ -38,7 +38,7 @@ function Select-App {
 }
 function Show-Details {
   $response = Invoke-WebRequest -Uri $url -Method Head
-  $size = Read-FileSize ($response.Headers.'Content-Length')
+  $size = Read-FileSize ($response.Headers.'Content-Length') # Converts the raw lenght of the file into something understandable by the user
   Write-Main "$program selected"
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
@@ -72,7 +72,7 @@ function Revoke-Path {
   }
 }
 function Open-File {
-  
+  # Opens the app
   Write-Main "Launching $program..."
 
   if ($o -like "*.zip") {
@@ -83,7 +83,7 @@ function Open-File {
       Start-Sleep 1
       Exit
     }
-
+    # It uncompresses it and opens the app
     elseif (Test-Path -LiteralPath "$p\$o") {
       Write-Main 'Zip file detected'
       Write-Secondary "$program is saved as a zip file, so uncompressing..."
@@ -107,7 +107,8 @@ function Open-File {
   }
 
   if ($o -like "*.exe") {
-    if ($null -ne $cmd) {
+    # If there are any recommended parameters for the executable, asks for using them.
+    if ($cmd) {
       Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
       $runcmd = Read-Host
       if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
