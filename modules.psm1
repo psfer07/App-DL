@@ -38,7 +38,7 @@ function Select-App {
 }
 function Show-Details {
   $response = Invoke-WebRequest -Uri $url -Method Head
-  $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
+  $size = Read-FileSize ([long]$response.Headers.'Content-Length')
   Write-Point "$program is $syn"
   Write-Host $url
   Write-Point "Size: $size"
