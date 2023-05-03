@@ -52,9 +52,9 @@ if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
 Write-Main "App to download: $program..."
 
 Write-Secondary "Do you want to open it when finished? (y/n)"
-$open = Read-Host
+$openAns = Read-Host
 $open = $false
-if ($open -eq 'y' -or $open -eq 'Y') { $open = $true }
+if ($openAns -eq 'y' -or $openAns -eq 'Y') { $open = $true }
 $dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
 
