@@ -56,14 +56,15 @@ Clear-Host
 # Asks the user to open the program after downloading it
 Write-Secondary "Do you want to open it when finished? (y/n)"
 $openAns = Read-Host
-$open,$openString = $false
+$open = $false
+$openString = $null
 if ($openAns -eq 'y' -or $openAns -eq 'Y') { $open = $true }
 if ($open -eq $true) {$openString = 'and open'}
 
 # Last confirmation
 Write-Main "You are going to download $openString $program in $p..."
 $dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
-if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
+if ($dl -eq 'R' -or $dl -eq 'r') { Restart-App }
 
 # Downloads the package displaying a percentage to the user
 $webClient = New-Object System.Net.WebClient
@@ -76,7 +77,7 @@ while ($webClient.IsBusy) {
     $bytesTotal = $webClient.TotalBytesToReceive
     $percent = [int](($bytesReceived / $bytesTotal) * 100)
     $progress = @{Activity = "Download File"; Status = $status; PercentComplete = $percent;}
-    Write-Progress @progress
+    Write-Progress $progress
     Start-Sleep 1
 }
 if ($?) { Write-Main "File downloaded successfully"} else { Write-Warning "An error occurred while downloading the file: $_Exception" }

@@ -42,6 +42,7 @@ function Show-Details {
   Write-Main "$program selected"
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
+  if ($folder) {Write-Point "Saved in: $folder"}
   if ($exe) { Write-Point "Executable: $exe" }
   if ($cmd_syn) { Write-Point $cmd_syn }
   if ($cmd) { Write-Point "Parameters are: $cmd)" }
