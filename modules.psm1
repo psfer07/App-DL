@@ -127,5 +127,5 @@ function Open-File {
   }
 }
 function Restart-App {
-  powershell.exe -command "Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/app-dl.ps1" | Invoke-Expression"
+  powershell.exe -Executionpolicy Bypass -command "Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/app-dl.ps1" | Invoke-Expression"
 }
