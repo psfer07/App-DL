@@ -22,9 +22,8 @@ $pkg = Read-Host "`nWrite the number of the app you want to get"
 $pkg_n = [int]($pkg -replace "\."); $n = $filteredApps[$pkg_n - 1]; $program = $n.Name; $exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $o = Split-Path $url -Leaf
 
 Write-Main "$program selected"
-Start-Sleep -Seconds 2
+Start-Sleep -Seconds 3
 Clear-Host
-Write-Main "$program selected"
 Show-Details
 Show-Paths
 [string]$p = Read-Host "`nChoose a number"
