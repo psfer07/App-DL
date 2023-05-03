@@ -35,7 +35,6 @@ function Select-App {
     $n = $i + 1
     Write-Point "$n. $($app.Name)"
   }
-  Write-Host "`nType a dot before or after the number to display all the program properties, for example: '.1', '1."
 }
 function Show-Details {
   $response = Invoke-WebRequest -Uri $url -Method Head
