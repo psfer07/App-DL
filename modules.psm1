@@ -130,6 +130,4 @@ function Open-File {
 function Restart {
   $pkg,$pkg_n,$program,$url,$size,$syn,$exe,$cmd_syn,$cmd,$o,$p = $null # Resets variables
   powershell.exe -command "Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/app-dl.ps1" | Invoke-Expression"
-  Start-Sleep 1
-  Exit
 }
