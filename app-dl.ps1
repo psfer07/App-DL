@@ -58,5 +58,5 @@ $dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
 
 Invoke-WebRequest -URI $url -OutFile "$p\$o"
-if ($?) { Write-Secondary "File downloaded successfully"} else { Write-Warning "An error occurred while downloading the file: $_Exception" }
+if ($?) { Write-Main "File downloaded successfully"} else { Write-Warning "An error occurred while downloading the file: $_Exception" }
 if ($open = $true) { Open-File }
