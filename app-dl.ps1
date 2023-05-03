@@ -59,10 +59,10 @@ $openAns = Read-Host
 $open = $false
 $openString = $null
 if ($openAns -eq 'y' -or $openAns -eq 'Y') { $open = $true }
-if ($open -eq $true) {$openString = 'and open'}
+if ($open -eq $true) {$openString = ' and open'}
 
 # Last confirmation
-Write-Main "You are going to download $openString $program in $p..."
+Write-Main "You are going to download$openString $program in $p..."
 $dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-App }
 
