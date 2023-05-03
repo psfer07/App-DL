@@ -11,7 +11,6 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn }
 }
 
-$pkg,$pkg_n,$program,$url,$size,$syn,$exe,$cmd_syn,$cmd,$o,$p = $null # Resets variables if the program is loaded from the Restart-App function
 Clear-Host
 Select-App
 $pkg = Read-Host "`nWrite the number of the app you want to get"
@@ -19,6 +18,7 @@ $pkg = Read-Host "`nWrite the number of the app you want to get"
 # Assign the corresponding variables to the selected app
 $pkg_n = [int]($pkg -replace "\.")
 $n = $filteredApps[$pkg_n - 1]
+$program,$exe,$syn,$folder,$url,$cmd,$cmd_syn,$o = $null # Resets variables if the program is loaded from the Restart-App function
 $program = $n.Name
 $exe = $n.Exe
 $syn = $n.Syn
