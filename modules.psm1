@@ -45,9 +45,9 @@ function Show-Details {
   if ($exe) { Write-Point "Executable: $exe" }
   if ($cmd_syn) { Write-Point $cmd_syn }
   if ($cmd) { Write-Point "Parameters are: $cmd)" }
-  $pkg,$pkg_n,$program,$url,$size,$syn,$exe,$cmd_syn,$cmd = $null # Discards the obtained values for that the user can select them as many times as wanted
 }
 function Show-Paths {
+  Write-Main 'Path selecting'
   Write-Point '1. Saves it inside of Desktop'
   Write-Point '2. Saves it inside of Documents'
   Write-Point '3. Saves it inside of Downloads'

@@ -33,13 +33,9 @@ if ($pkg -match '.') {
   Clear-Host
   Write-Main "$program selected"
   Show-Details
-  Read-Host "Press any key to continue"
-  Clear-Host
-  Select-App
-  $pkg = Read-Host "`nWrite the number of the app you want to get"
-} else {break}
+}
 
-Write-Main "$program selected"
+
 Show-Paths
 [string]$p = Read-Host "`nChoose a number"
 switch ($p) {
