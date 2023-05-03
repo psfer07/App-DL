@@ -60,4 +60,4 @@ if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
 
 Invoke-WebRequest -URI $url -OutFile "$p\$o"
 if ($?) { Write-Main "File downloaded successfully"} else { Write-Warning "An error occurred while downloading the file: $_Exception" }
-if ($open = $true) { Open-File }
+if ($open -eq $true) { Open-File }
