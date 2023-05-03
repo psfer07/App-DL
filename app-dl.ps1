@@ -8,8 +8,11 @@ $nameArray = $json.psobject.Properties.Name
 $filteredApps = @()
 foreach ($i in 0..($nameArray.Count - 1)) {
   $name = $nameArray[$i]; $app = $json.$name; $folder = $app.folder; $url = $app.URL; $exe = $app.exe; $syn = $app.syn; $cmd = $app.cmd; $cmd_syn = $app.cmd_syn
+  $response = Invoke-WebRequest -Uri $url -Method Head
+  $size = [int]$response.Headers.'Content-Length'
   $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn }
 }
+
 
 Clear-Host
 Select-App
