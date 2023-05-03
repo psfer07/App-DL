@@ -63,5 +63,11 @@
     "PortableApps": {
         "URL": "https://download2.portableapps.com/portableapps/PortableApps.comPlatform/PortableApps.com_Platform_Setup_25.0.paf.exe",
         "syn": "a suite for portable apps"
+    },
+    "TorBrowser": {
+        "URL": "https://dist.torproject.org/torbrowser/12.0.4/torbrowser-install-win64-12.0.4_ALL.exe",
+        "syn": "the best privacy-care browser, based on firefox",
+        "folder": "Tor Browser",
+        "exe": "firefox.exe"
     }
 }
