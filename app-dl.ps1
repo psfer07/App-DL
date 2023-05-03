@@ -14,14 +14,14 @@ foreach ($i in 0..($nameArray.Count - 1)) {
   $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn }
 }
 
-Clear-Host
+#Clear-Host
 Select-App
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 
 # Assign the corresponding variables to the selected app
 $pkg_n = [int]($pkg -replace "\."); $n = $filteredApps[$pkg_n - 1]; $program = $n.Name; $exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $o = Split-Path $url -Leaf
 
-Clear-Host
+#Clear-Host
 Write-Main "$program selected"
 Show-Details
 Show-Paths
