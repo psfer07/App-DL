@@ -53,7 +53,8 @@ Write-Main "App to download: $program..."
 
 Write-Secondary "Do you want to open it when finished? (y/n)"
 $open = Read-Host
-if ($open -eq 'y' -or $open -eq 'Y') { $open = $true } else { $open = $false }
+$open = $false
+if ($open -eq 'y' -or $open -eq 'Y') { $open = $true }
 $dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
 
