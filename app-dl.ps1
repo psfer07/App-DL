@@ -21,6 +21,8 @@ $pkg = Read-Host "`nWrite the number of the app you want to get"
 # Assign the corresponding variables to the selected app
 $pkg_n = [int]($pkg -replace "\."); $n = $filteredApps[$pkg_n - 1]; $program = $n.Name; $exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $o = Split-Path $url -Leaf
 
+Write-Main "$program selected"
+Start-Sleep 2
 #Clear-Host
 Write-Main "$program selected"
 Show-Details
@@ -42,13 +44,16 @@ switch ($p) {
 Write-Main "Selected path: $p"
 if (Test-Path "$p\$o") { Revoke-Path }
 if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
-
-Write-Main "App to download: $program..."
+Start-Sleep 2
+#Clear-Host
 
 Write-Secondary "Do you want to open it when finished? (y/n)"
 $openAns = Read-Host
-$open = $false
+$open,$openString = $false
 if ($openAns -eq 'y' -or $openAns -eq 'Y') { $open = $true }
+if ($open -eq $true) {$openString = 'and open'}
+
+Write-Main "You are going to download $openString $program in $p..."
 $dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-Menu }
 
