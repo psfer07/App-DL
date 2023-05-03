@@ -40,6 +40,7 @@ function Show-Details {
   $response = Invoke-WebRequest -Uri $url -Method Head
   $size = Read-FileSize ([long]$response.Headers.'Content-Length'[0])
   Write-Point "$program is $syn"
+  Write-Host $url
   Write-Point "Size: $size"
   if ($exe) { Write-Point "Executable: $exe" }
   if ($cmd_syn) { Write-Point $cmd_syn }

@@ -18,7 +18,6 @@ $pkg = Read-Host "`nWrite the number of the app you want to get"
 # Assign the corresponding variables to the selected app
 $pkg_n = [int]($pkg -replace "\.")
 $n = $filteredApps[$pkg_n - 1]
-$program,$exe,$syn,$folder,$url,$cmd,$cmd_syn,$o = $null # Resets variables if the program is loaded from the Restart-App function
 $program = $n.Name
 $exe = $n.Exe
 $syn = $n.Syn
