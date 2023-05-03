@@ -33,7 +33,7 @@ Show-Details
 Show-Paths
 [string]$p = Read-Host "`nChoose a number"
 switch ($p) {
-  0 { Restart }
+  0 { Restart-App }
   1 { $p = "$Env:USERPROFILE\Desktop"; break }
   2 { $p = "$Env:USERPROFILE\Documents"; break }
   3 { $p = "$Env:USERPROFILE\Downloads"; break }

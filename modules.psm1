@@ -62,8 +62,8 @@ function Revoke-Path {
   Write-Warning 'It seems that $program is currently allocated in this path'
   $restart = Read-Host "You can (r)estart, (o)pen $program or (e)xit the app"
   switch ($restart) {
-    'r' { Restart }
-    'R' { Restart }
+    'r' { Restart-App }
+    'R' { Restart-App }
     'o' { Open-File }
     'O' { Open-File }
     'e' { Write-Main 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
@@ -127,7 +127,7 @@ function Open-File {
     }
   }
 }
-function Restart {
+function Restart-App {
   $pkg,$pkg_n,$program,$url,$size,$syn,$exe,$cmd_syn,$cmd,$o,$p = $null # Resets variables
   powershell.exe -command "Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/app-dl.ps1" | Invoke-Expression"
 }
