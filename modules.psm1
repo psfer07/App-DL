@@ -21,7 +21,7 @@ function Write-Warning($T) {
   Write-Host "<$b>" -ForegroundColor Red
 }
 function Read-FileSize() {
-  Param ($size)
+  Param ([int]$size)
   if ($size -gt 1GB) { [string]::Format("{0:0.00} GB", $size / 1GB) }
   elseIf ($size -gt 1MB) { [string]::Format("{0:0.00} MB", $size / 1MB) }
   elseIf ($size -gt 1KB) { [string]::Format("{0:0.00} kB", $size / 1KB) }
@@ -37,15 +37,13 @@ function Select-App {
   }
 }
 function Show-Details {
-  $request = [System.Net.WebRequest]::Create($url)
-  $response = $request.GetResponse()
-  $fileSize = [int]$response.ContentLength
-  $size = Read-FileSize $fileSize
-  $response.Close()
-  
+  $request = Invoke-WebRequest -Uri $url
+  $size = Read-FileSize ($request.Headers."Content-Length")
+
   Write-Main "$program selected"
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
+  Write-Point "Raw size: $request.Headers."Content-Length""
   if ($folder) {Write-Point "Saved in: $folder"}
   if ($exe) { Write-Point "Executable: $exe" }
   if ($cmd_syn) { Write-Point $cmd_syn }
