@@ -40,7 +40,7 @@ function Show-Details {
   $request = [System.Net.WebRequest]::Create($url)
   $response = $request.GetResponse()
   Write-Host $response.ContentLength
-  $size = Read-FileSize [int]::Parse($response.ContentLength) # Converts the raw length of the file into something understandable by the user
+  $size = Read-FileSize ($response.ContentLength) # Converts the raw length of the file into something understandable by the user
   $response.Close()
 
   Write-Main "$program selected"
