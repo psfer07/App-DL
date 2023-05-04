@@ -67,24 +67,8 @@ $dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-App }
 
 # Downloads the package displaying a percentage to the user
-$request = [System.Net.WebRequest]::Create($url)
-$response = $request.GetResponse()
-$total = [int]$response.ContentLength
-$response.Close()
 
-$client = New-Object System.Net.WebClient
-$client.DownloadFileAsync($url, "$p\$o")
+Invoke-RestMethod -Uri $url -OutFile "$p\$o"
 
-$progress = 0
-while ($progress -lt 100)
-{
-    if (Test-Path "$p\$o")
-    {
-        $downloaded = (Get-Item $o).Length
-        $progress = $downloaded / $total * 100
-        Write-Progress "Download in progress: $([int]$progress)% complete" -PercentComplete ([int]$progress) -TotalCount $total
-    }
-    Start-Sleep -Seconds 1
-}
 if ($?) { Write-Main "File downloaded successfully"} else { Write-Warning "An error occurred while downloading the file: $_Exception" }
 if ($open -eq $true) { Open-File }
