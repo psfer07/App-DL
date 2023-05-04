@@ -1,6 +1,8 @@
 # Bypasses any execution policy
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 
+Remove-Item "$Env:TEMP\modules.psm1" -Force -ErrorAction SilentlyContinue
+
 # Imports variables
 [string]$branch = 'dev'
 [string]$module = "$Env:TEMP\modules.psm1"
