@@ -21,7 +21,7 @@ function Write-Warning($T) {
   Write-Host "<$b>" -ForegroundColor Red
 }
 function Read-FileSize() {
-  Param ([int]$size)
+  Param ($size)
   if ($size -gt 1GB) { [string]::Format("{0:0.00} GB", $size / 1GB) }
   elseIf ($size -gt 1MB) { [string]::Format("{0:0.00} MB", $size / 1MB) }
   elseIf ($size -gt 1KB) { [string]::Format("{0:0.00} kB", $size / 1KB) }
@@ -39,6 +39,7 @@ function Select-App {
 function Show-Details {
   $request = [System.Net.WebRequest]::Create($url)
   $response = $request.GetResponse()
+  Write-Host $response.ContentLength
   $size = Read-FileSize [int]::Parse($response.ContentLength) # Converts the raw length of the file into something understandable by the user
   $response.Close()
 
