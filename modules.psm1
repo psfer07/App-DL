@@ -29,11 +29,11 @@ function Select-App {
   }
 }
 function Read-FileSize() {
-  Param ([int]$rawsize)
-  if ($rawsize -gt 1GB) { [string]::Format("{0:0.00} GB", $size / 1GB) }
-  elseIf ($rawsize -gt 1MB) { [string]::Format("{0:0.00} MB", $size / 1MB) }
-  elseIf ($rawsize -gt 1KB) { [string]::Format("{0:0.00} kB", $size / 1KB) }
-  elseIf ($rawsize -gt 0) { [string]::Format("{0:0.00} B", $size) }
+  Param ([int]$size)
+  if ($size -gt 1GB) { [string]::Format("{0:0.00} GB", $size / 1GB) }
+  elseIf ($size -gt 1MB) { [string]::Format("{0:0.00} MB", $size / 1MB) }
+  elseIf ($size -gt 1KB) { [string]::Format("{0:0.00} kB", $size / 1KB) }
+  elseIf ($size -gt 0) { [string]::Format("{0:0.00} B", $size) }
   else { "" }
 }
 function Show-Details {
