@@ -1,6 +1,7 @@
 # Bypasses any execution policy
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 
+# Removes last possible modules.psm1 from the computer
 Remove-Item "$Env:TEMP\modules.psm1" -Force -ErrorAction SilentlyContinue
 
 # Imports variables
