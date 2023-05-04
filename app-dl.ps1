@@ -6,9 +6,9 @@ Remove-Item "$Env:TEMP\modules.psm1" -Force -ErrorAction SilentlyContinue
 
 # Imports variables
 [string]$branch = 'dev'
-[string]$module = "$Env:TEMP\modules.psm1"
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $module
-Import-Module $module -DisableNameChecking
+# [string]$module = "$Env:TEMP\modules.psm1"
+# Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $module
+Import-Module ".\modules.psm1" -DisableNameChecking
 $json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
 $nameArray = $json.psobject.Properties.Name
 $filteredApps = @()
