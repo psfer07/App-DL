@@ -39,8 +39,7 @@ function Select-App {
 function Show-Details {
   $request = [System.Net.WebRequest]::Create($url)
   $response = $request.GetResponse()
-  $total = [int]$response.ContentLength
-  $size = Read-FileSize ($total) # Converts the raw lenght of the file into something understandable by the user
+  $size = Read-FileSize ([int]$response.ContentLength) # Converts the raw lenght of the file into something understandable by the user
   Write-Main "$program selected"
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
