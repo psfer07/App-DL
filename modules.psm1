@@ -20,14 +20,6 @@ function Write-Warning($T) {
   Write-Host "   $T" -ForegroundColor White
   Write-Host "<$b>" -ForegroundColor Red
 }
-function Read-FileSize() {
-  Param ([int]$rawsize)
-  if ($rawsize -gt 1GB) { [string]::Format("{0:0.00} GB", $size / 1GB) }
-  elseIf ($rawsize -gt 1MB) { [string]::Format("{0:0.00} MB", $size / 1MB) }
-  elseIf ($rawsize -gt 1KB) { [string]::Format("{0:0.00} kB", $size / 1KB) }
-  elseIf ($rawsize -gt 0) { [string]::Format("{0:0.00} B", $size) }
-  else { "" }
-}
 function Select-App {
   Write-Main 'Available apps'
   foreach ($i in 0..($filteredApps.Count - 1)) {
@@ -36,14 +28,21 @@ function Select-App {
     Write-Point "$n. $($app.Name)"
   }
 }
+function Read-FileSize() {
+  Param ([int]$size)
+  if ($size -gt 1GB) { [string]::Format("{0:0.00} GB", $size / 1GB) }
+  elseIf ($size -gt 1MB) { [string]::Format("{0:0.00} MB", $size / 1MB) }
+  elseIf ($size -gt 1KB) { [string]::Format("{0:0.00} kB", $size / 1KB) }
+  elseIf ($size -gt 0) { [string]::Format("{0:0.00} B", $size) }
+  else { "" }
+}
 function Show-Details {
-  $request = Invoke-WebRequest -Uri $url
-  $size = Read-FileSize ($request.Headers."Content-Length")
-
+  [int]$request = Invoke-WebRequest $url -Method Head
+  $size = Read-FileSize ($request.Headers["Content-Length"])
+  Write-Host $request.Headers["Content-Length"]
   Write-Main "$program selected"
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
-  Write-Point "Raw size: $request.Headers."Content-Length""
   if ($folder) {Write-Point "Saved in: $folder"}
   if ($exe) { Write-Point "Executable: $exe" }
   if ($cmd_syn) { Write-Point $cmd_syn }
