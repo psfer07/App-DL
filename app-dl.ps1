@@ -54,7 +54,6 @@ Write-Main "Selected path: $p"
 if (Test-Path "$p\$o") { Revoke-Path }
 if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
 Start-Sleep -Milliseconds 2500
-Clear-Host
 
 # Asks the user to open the program after downloading it
 Write-Secondary "Do you want to open it when finished? (y/n)"
@@ -65,7 +64,7 @@ if ($openAns -eq 'y' -or $openAns -eq 'Y') { $open = $true }
 if ($open -eq $true) {$openString = ' and open'}
 
 # Last confirmation
-Write-Main "You are going to download$openString $program in $p..."
+Write-Main "You are going to download$openString $program"
 $dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-App }
 
@@ -74,4 +73,4 @@ if ($dl -eq 'R' -or $dl -eq 'r') { Restart-App }
 Invoke-RestMethod -Uri $url -OutFile "$p\$o"
 
 if ($?) { Write-Main "File downloaded successfully"} else { Write-Warning "An error occurred while downloading the file" }
-if ($open -eq $true) { Open-File } elseif ($open -eq $false) {exit}
+if ($open -eq $true) { Open-File } else {exit}
