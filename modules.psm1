@@ -38,8 +38,8 @@ function Read-FileSize() {
 }
 function Show-Details {
   $request = Invoke-WebRequest $url -Method Head
-  $rawsize = $request.Headers["Content-Length"]
-  $size = Read-FileSize $rawsize
+  [int]$rawsize = $request.Headers["Content-Length"]
+  [string]$size = Read-FileSize $rawsize
 
   Write-Main "$program selected"
   Write-Point "$program is $syn"
