@@ -73,5 +73,5 @@ if ($dl -eq 'R' -or $dl -eq 'r') { Restart-App }
 
 Invoke-RestMethod -Uri $url -OutFile "$p\$o"
 
-if ($?) { Write-Main "File downloaded successfully"} else { Write-Warning "An error occurred while downloading the file: $_Exception" }
-if ($open -eq $true) { Open-File }
+if ($?) { Write-Main "File downloaded successfully"} else { Write-Warning "An error occurred while downloading the file" }
+if ($open -eq $true) { Open-File } elseif ($open -eq $false) {exit}
