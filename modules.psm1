@@ -38,7 +38,7 @@ function Read-FileSize() {
 }
 function Show-Details {
   $request = Invoke-WebRequest $url -Method Head
-  Write-Host $request
+  $request
   $rawsize = [int]$request.Headers['Content-Length']
   $size = Read-FileSize $rawsize
   Write-Host $rawsize
