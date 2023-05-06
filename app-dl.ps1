@@ -53,7 +53,7 @@ Write-Main "Selected path: $p"
 # Checks if the program was allocated there before
 if (Test-Path "$p\$o") { Revoke-Path }
 if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
-Start-Sleep -Milliseconds 2500
+Start-Sleep -Seconds 1
 
 # Asks the user to open the program after downloading it
 Write-Secondary "Do you want to open it when finished? (y/n)"
