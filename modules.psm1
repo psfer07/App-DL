@@ -38,7 +38,7 @@ function Read-FileSize() {
 }
 function Show-Details {
   $request = Invoke-WebRequest $url -Method Head
-  [int]$rawsize = $request.Headers["Content-Length"]
+  $rawsize = [int]$request.Headers['Content-Length']  
   [string]$size = Read-FileSize $rawsize
   Write-Host $size
   Write-Main "$program selected"
@@ -82,7 +82,7 @@ function Open-File {
     if (Test-Path -Path "$p\$program\$folder") {
       Write-Main "$program is uncompressed in $p, so opening it directly..."
       Start-Sleep -Milliseconds 500
-      Start-Process -FilePath "$p\$program\$folder\$exe"
+      Start-Process -FilePath "$p\$program\$folder\$exe" -ErrorAction SilentlyContinue
       Start-Sleep 1
       Exit
     }
@@ -103,7 +103,7 @@ function Open-File {
       Clear-Host
       Write-Main "Running $program directly"
       Start-Sleep -Milliseconds 500
-      Start-Process -FilePath "$p\$program\$folder\$exe"
+      Start-Process -FilePath "$p\$program\$folder\$exe" -ErrorAction SilentlyContinue
       Start-Sleep -Milliseconds 200
       Exit
     }
@@ -117,7 +117,7 @@ function Open-File {
       if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
         
         Write-Main "Running $program $($cmd_syn)"
-        Start-Process -FilePath "$p\$o" -ArgumentList $($cmd)
+        Start-Process -FilePath "$p\$o" -ArgumentList $($cmd) -ErrorAction SilentlyContinue
         Start-Sleep -Milliseconds 200
         Exit
       }
@@ -125,7 +125,7 @@ function Open-File {
     if ($runcmd -ne 'y' -or $runcmd -ne 'Y') {
       
       Write-Main "Running $program directly"
-      Start-Process -FilePath "$p\$o"
+      Start-Process -FilePath "$p\$o" -ErrorAction SilentlyContinue
       Start-Sleep -Milliseconds 200
       Exit
     }
