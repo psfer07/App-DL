@@ -1,75 +1,73 @@
-{    "Bleachbit": {
+{
+    "7-Zip": {
+        "URL": "https://www.7-zip.org/a/7z2201-x64.exe",
+        "exe": "7zFM.exe",
+        "syn": "a well known file archiver with the high compression algorithms"
+    },
+    "BCUninstaller": {
+        "URL": "https://github.com/Klocman/Bulk-Crap-Uninstaller/releases/download/v5.4/BCUninstaller_5.4_portable.zip",
+        "exe": "BCUninstaller.exe",
+        "syn": "an advanced app uninstaller that research in your system for any program leftover"
+    },
+    "Bleachbit": {
         "URL": "https://download.bleachbit.org/BleachBit-4.4.2-portable.zip",
         "exe": "bleachbit.exe",
         "folder": "Bleachbit-Portable",
-        "size": "12MB",
-        "syn": "Very well-known app and system cleaner with bunch of posible configurations"
-        },
-    "BCUninstaller": {
-        "URL": "https://github.com/Klocman/Bulk-Crap-Uninstaller/releases/download/v5.4/BCUninstaller_5.4_portable.zip",
-        "size": "142MB",
-        "exe": "BCUninstaller.exe",
-        "syn": "Advanced app uninstaller that research in your system for any program leftover"
-},
-    "Dism++": {
-        "URL": "https://github.com/Chuyu-Team/Dism-Multi-language/releases/download/v10.1.1002.1/Dism++10.1.1002.1.zip",
-        "size": "3.6MB",
-        "exe": "Dism++x64.exe",
-        "syn": "Very efective app to clean almost all the unused system files and also can optimize"
-    },
-    "DNSJumper": {
-        "URL": "https://www.sordum.org/files/download/dns-jumper/DnsJumper.zip",
-        "size": "360KB",
-        "exe": "DnsJumper.exe",
-        "syn": "Simple program that checks for the quickest DNS for you"
-    },
-    "TIW_11": {
-        "URL": "https://github.com/builtbybel/ThisIsWin11/releases/download/1.4.1/TIW11.zip",
-        "size": "160KB",
-        "exe": "ThisIsWin11.exe",
-        "syn": "Useful app to customize and optimize almost every configuration in your PC"
-    },
-    "ShutUp10++": {
-        "URL": "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
-        "size": "1,7MB",
-        "exe": "OOSU10.exe",
-        "syn": "Pretty good Windows optimizer and privacy protector"
-    },
-    "7-Zip": {
-        "URL": "https://www.7-zip.org/a/7z2201-x64.exe",
-        "size": "1,5MB",
-        "exe": "7zFM.exe",
-        "cmd": "/D=\"$path\"",
-        "cmd_syn": "installing it in the specified folder",
-        "syn": "Well known file archiver with the high compression algorithms"
-    },
-    "McAfee-Stinger": {
-        "URL": "https://downloadcenter.trellix.com/products/mcafee-avert/Stinger/stinger64.exe",
-        "size": "38MB",
-        "exe": "stinger64.exe",
-        "cmd": "--GO --ADL --ROOTKIT --WMI",
-        "cmd_syn": "doing a full scan of all local drives",
-        "syn": "Advanced rootkit and threat remover"
-    },
-    "Ungoogled-Chromium": {
-        "URL": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/111.0.5563.65-1.1/ungoogled-chromium_111.0.5563.65-1.1_windows_x64.zip",
-        "size": "113MB",
-        "folder": "ungoogled-chromium_111.0.5563.65-1.1_windows",
-        "exe": "chrome.exe",
-        "syn": "Full-debloated version of Google Chrome"
+        "syn": "a very well-known app and system cleaner with bunch of posible configurations"
     },
     "Brave": {
         "URL": "https://github.com/portapps/brave-portable/releases/download/1.47.171-85/brave-portable-win64-1.47.171-85-setup.exe",
-        "size": "120MB",
         "folder": "brave-portable",
         "exe": "brave-portable.exe",
-        "syn": "A portable version of the Brave browser"
+        "syn": "a portable version of the Brave browser"
+    },
+    "Dism++": {
+        "URL": "https://github.com/Chuyu-Team/Dism-Multi-language/releases/download/v10.1.1002.1/Dism++10.1.1002.1.zip",
+        "exe": "Dism++x64.exe",
+        "syn": "a very efective app to clean almost all the unused system files and also can optimize"
+    },
+    "DNSJumper": {
+        "URL": "https://www.sordum.org/files/download/dns-jumper/DnsJumper.zip",
+        "exe": "DnsJumper.exe",
+        "syn": "a simple program that checks for the quickest DNS for you"
+    },
+    "McAfee-Stinger": {
+        "URL": "https://downloadcenter.trellix.com/products/mcafee-avert/Stinger/stinger64.exe",
+        "exe": "stinger64.exe",
+        "cmd": "--GO --ADL --ROOTKIT --WMI",
+        "cmd_syn": "does a full scan of all local drives",
+        "syn": "an advanced rootkit and threat remover"
     },
     "OpenVPN": {
         "URL": "https://github.com/portapps/openvpn-portable/releases/download/2.4.9-I601-8/openvpn-portable-win64-2.4.9-I601-8-setup.exe",
-        "size": "10MB",
         "folder": "openvpn-portable",
         "exe": "openvpn-portable.exe",
-        "syn": "A portable VPN"
+        "syn": "a portable VPN"
+    },
+    "PortableApps": {
+        "URL": "https://download2.portableapps.com/portableapps/PortableApps.comPlatform/PortableApps.com_Platform_Setup_25.0.paf.exe",
+        "syn": "a suite for portable apps"
+    },
+    "ShutUp10++": {
+        "URL": "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
+        "exe": "OOSU10.exe",
+        "syn": "a pretty good Windows optimizer and privacy protector"
+    },
+    "TIW_11": {
+        "URL": "https://github.com/builtbybel/ThisIsWin11/releases/download/1.4.1/TIW11.zip",
+        "exe": "ThisIsWin11.exe",
+        "syn": "a useful app to customize and optimize almost every configuration in your PC"
+    },
+    "TorBrowser": {
+        "URL": "https://dist.torproject.org/torbrowser/12.0.4/torbrowser-install-win64-12.0.4_ALL.exe",
+        "syn": "the best privacy-care browser, based on firefox",
+        "folder": "Tor Browser",
+        "exe": "firefox.exe"
+    },
+    "Ungoogled-Chromium": {
+        "URL": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/111.0.5563.65-1.1/ungoogled-chromium_111.0.5563.65-1.1_windows_x64.zip",
+        "folder": "ungoogled-chromium_111.0.5563.65-1.1_windows",
+        "exe": "chrome.exe",
+        "syn": "a full-debloated version of Google Chrome"
     }
 }
