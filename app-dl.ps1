@@ -20,7 +20,7 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 }
 
 # Lists every single app in the JSON
-#Clear-Host
+Clear-Host
 Select-App
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 
@@ -29,7 +29,7 @@ $pkg_n = [int]($pkg -replace "\."); $n = $filteredApps[$pkg_n - 1]; $program = $
 
 Write-Main "$program selected"
 Start-Sleep -Milliseconds 2500
-#Clear-Host
+Clear-Host
 Show-Details
 
 # Sets all possible paths for downloading the program
@@ -54,7 +54,7 @@ Write-Main "Selected path: $p"
 if (Test-Path "$p\$o") { Revoke-Path }
 if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
 Start-Sleep -Milliseconds 2500
-#Clear-Host
+Clear-Host
 
 # Asks the user to open the program after downloading it
 Write-Secondary "Do you want to open it when finished? (y/n)"
