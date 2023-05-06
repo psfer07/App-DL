@@ -30,13 +30,11 @@ function Select-App {
 }
 function Show-Details {
   $request = Invoke-WebRequest $url -Method Head
-  $length = [int]$request.Headers['Content-Length']
-  if ($length -gt 1GB) { [string]::Format("{0:0.00} GB", $length / 1GB) }
-  elseIf ($length -gt 1MB) { [string]::Format("{0:0.00} MB", $length / 1MB) }
-  elseIf ($length -gt 1KB) { [string]::Format("{0:0.00} kB", $length / 1KB) }
-  elseIf ($length -gt 0) { [string]::Format("{0:0.00} B", $length) }
-  $size = Read-FileSize $length
-  Write-Host $length
+  $size = [int]$request.Headers['Content-Length']
+  if ($size -gt 1GB) { [string]::Format("{0:0.00} GB", $size / 1GB) }
+  elseIf ($size -gt 1MB) { [string]::Format("{0:0.00} MB", $size / 1MB) }
+  elseIf ($size -gt 1KB) { [string]::Format("{0:0.00} kB", $size / 1KB) }
+  elseIf ($size -gt 0) { [string]::Format("{0:0.00} B", $size) }
   Write-Main "$program selected"
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
