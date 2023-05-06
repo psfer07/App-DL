@@ -8,6 +8,7 @@ Remove-Item "$Env:TEMP\modules.psm1" -Force -ErrorAction SilentlyContinue
 [string]$branch = 'dev'
 # [string]$module = "$Env:TEMP\modules.psm1"
 # Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $module
+Get-Content ".\modules.psm1" -Raw
 Import-Module ".\modules.psm1" -DisableNameChecking
 $json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
 $nameArray = $json.psobject.Properties.Name
@@ -20,7 +21,7 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 }
 
 # Lists every single app in the JSON
-Clear-Host
+#Clear-Host
 Select-App
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 
@@ -29,7 +30,7 @@ $pkg_n = [int]($pkg -replace "\."); $n = $filteredApps[$pkg_n - 1]; $program = $
 
 Write-Main "$program selected"
 Start-Sleep -Milliseconds 2500
-Clear-Host
+#Clear-Host
 Show-Details
 
 # Sets all possible paths for downloading the program
