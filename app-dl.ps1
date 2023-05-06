@@ -3,7 +3,7 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 
 # Imports variables
 Import-Module ".\modules.psm1" -DisableNameChecking
-$json = ".\apps.json"
+$json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
 $nameArray = $json.psobject.Properties.Name
 $filteredApps = @()
 
