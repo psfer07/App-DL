@@ -29,17 +29,17 @@ function Select-App {
   }
 }
 function Read-FileSize() {
-  Param ([int]$size)
-  if ($size -gt 1GB) { [string]::Format("{0:0.00} GB", $size / 1GB) }
-  elseIf ($size -gt 1MB) { [string]::Format("{0:0.00} MB", $size / 1MB) }
-  elseIf ($size -gt 1KB) { [string]::Format("{0:0.00} kB", $size / 1KB) }
-  elseIf ($size -gt 0) { [string]::Format("{0:0.00} B", $size) }
+  Param ([int]$length)
+  if ($length -gt 1GB) { [string]::Format("{0:0.00} GB", $length / 1GB) }
+  elseIf ($length -gt 1MB) { [string]::Format("{0:0.00} MB", $length / 1MB) }
+  elseIf ($length -gt 1KB) { [string]::Format("{0:0.00} kB", $length / 1KB) }
+  elseIf ($length -gt 0) { [string]::Format("{0:0.00} B", $length) }
   else { "" }
 }
 function Show-Details {
   $request = Invoke-WebRequest $url -Method Head
-  $size = $request.Headers["Content-Length"]
-  [int]$size = Read-FileSize $size
+  $rawsize = $request.Headers["Content-Length"]
+  $size = Read-FileSize $rawsize
 
   Write-Main "$program selected"
   Write-Point "$program is $syn"
