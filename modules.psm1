@@ -38,10 +38,13 @@ function Read-FileSize() {
 }
 function Show-Details {
   $request = Invoke-WebRequest $url -Method Head
-  $request
-  $rawsize = [int]$request.Headers['Content-Length']
-  $size = Read-FileSize $rawsize
-  Write-Host $rawsize
+  $length = [int]$request.Headers['Content-Length']
+  if ($length -gt 1GB) { [string]::Format("{0:0.00} GB", $length / 1GB) }
+  elseIf ($length -gt 1MB) { [string]::Format("{0:0.00} MB", $length / 1MB) }
+  elseIf ($length -gt 1KB) { [string]::Format("{0:0.00} kB", $length / 1KB) }
+  elseIf ($length -gt 0) { [string]::Format("{0:0.00} B", $length) }
+  $size = Read-FileSize $length
+  Write-Host $length
   Write-Main "$program selected"
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
