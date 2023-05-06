@@ -40,7 +40,7 @@ function Show-Details {
   $request = Invoke-WebRequest $url -Method Head
   [int]$rawsize = $request.Headers["Content-Length"]
   [string]$size = Read-FileSize $rawsize
-
+  Write-Host $size
   Write-Main "$program selected"
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
