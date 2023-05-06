@@ -14,12 +14,22 @@ irm bit.ly/psappdl | iex
 
 ---
 
-* Added app details (writing a period before the number for displaying them)
+* Added app details
 * Added accurate file sizes for each program
+* Rewrited descriptions for every program
 * Reworked UI design
-* Fixed known bugs
-* Improved stability
+* Fixed old bugs
+* Cleared code by storing all functions in an isolated module
 * Improved performance
+* More readable code by simplifying operations
+
+  ![App selection](image/README/1683374769482.png "App selection")
+
+  ![App saving](image/README/1683374909918.png "App saving")
+* Known bugs:
+
+  * It only runs without problems in Powershell base, so it won't run for example in Powershell 7.
+  * Confirmation line doesn't work at all yet, so if you need to restart the app, you have to restart it in other part
 
 ### App-DL v1.1
 
