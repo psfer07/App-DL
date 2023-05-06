@@ -28,14 +28,6 @@ function Select-App {
     Write-Point "$n. $($app.Name)"
   }
 }
-function Read-FileSize() {
-  Param ([int]$length)
-  if ($length -gt 1GB) { [string]::Format("{0:0.00} GB", $length / 1GB) }
-  elseIf ($length -gt 1MB) { [string]::Format("{0:0.00} MB", $length / 1MB) }
-  elseIf ($length -gt 1KB) { [string]::Format("{0:0.00} kB", $length / 1KB) }
-  elseIf ($length -gt 0) { [string]::Format("{0:0.00} B", $length) }
-  else { "" }
-}
 function Show-Details {
   $request = Invoke-WebRequest $url -Method Head
   $length = [int]$request.Headers['Content-Length']
