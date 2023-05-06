@@ -43,7 +43,7 @@ function Show-Details {
   Write-Main "$program selected"
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
-  if ($folder) {Write-Point "Saved in: $folder"}
+  if ($folder) { Write-Point "Saved in: $folder" }
   if ($exe) { Write-Point "Executable: $exe" }
   if ($cmd_syn) { Write-Point $cmd_syn }
   if ($cmd) { Write-Point "Parameters are: $cmd)" }
@@ -53,9 +53,9 @@ function Show-Paths {
   Write-Point '1. Saves it inside of Desktop'
   Write-Point '2. Saves it inside of Documents'
   Write-Point '3. Saves it inside of Downloads'
-  Write-Point '4. Save it inside of C:'
+  Write-Point '4. Saves it inside of C:'
   Write-Point '5. Saves it inside of Program Files'
-  Write-Point "6. Save it inside of the user profile`n"
+  Write-Point "6. Saves it inside of the user profile`n"
   Write-Point 'X. Introduce a custom path'
   Write-Point '0. Resets the program to select another app'
 }

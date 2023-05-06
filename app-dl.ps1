@@ -67,8 +67,6 @@ if ($open -eq $true) {$openString = ' and open'}
 Write-Main "You are going to download$openString $program"
 $dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-App }
-
-# Downloads the package displaying a percentage to the user
 Clear-Host
 Invoke-RestMethod -Uri $url -OutFile "$p\$o"
 
