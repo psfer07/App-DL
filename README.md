@@ -30,7 +30,6 @@ irm bit.ly/psappdl | iex
 * Known bugs:
 
   * It only runs without problems in Powershell base, so it won't run for example in Powershell 7.
-  * Confirmation line doesn't work at all yet, so if you need to restart the app, you have to restart it in other part
 
 ### App-DL v1.1
 
