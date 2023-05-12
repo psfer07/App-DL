@@ -31,6 +31,11 @@
         "exe": "DnsJumper.exe",
         "syn": "a simple program that checks for the quickest DNS for you"
     },
+    "Everything": {
+        "URL": "https://www.voidtools.com/Everything-1.4.1.1023.x64.zip",
+        "syn": "a portable data indexer, much lighter and faster than Windows search",
+        "exe": "Everything.exe"
+    },
     "McAfee-Stinger": {
         "URL": "https://downloadcenter.trellix.com/products/mcafee-avert/Stinger/stinger64.exe",
         "exe": "stinger64.exe",
@@ -69,5 +74,10 @@
         "folder": "ungoogled-chromium_111.0.5563.65-1.1_windows",
         "exe": "chrome.exe",
         "syn": "a full-debloated version of Google Chrome"
+    },
+    "Winget": {
+        "URL": "https://github.com/microsoft/winget-cli/releases/download/v1.4.10173/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle",
+        "syn": "the official CLI Windows Package manager (some desktops doesn't have it by default)",
+        "installs": true
     }
 }
