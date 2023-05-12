@@ -1,3 +1,13 @@
+function Set-Variables {
+  # $json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
+  $json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
+  $nameArray = $json.psobject.Properties.Name
+  $filteredApps = @()
+  foreach ($i in 0..($nameArray.Count - 1)) {
+    $name = $nameArray[$i]; $app = $json.$name; $folder = $app.folder; $url = $app.URL; $exe = $app.exe; $syn = $app.syn; $cmd = $app.cmd; $cmd_syn = $app.cmd_syn; $installs = $app.installs
+    $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn; Installs = $installs }
+  }
+}
 function Write-Main($T) {
   $b = '============================================'
   Write-Host "`n`n<$b>" -ForegroundColor Blue
@@ -29,7 +39,6 @@ function Read-FileSize {
   elseIf ($length -gt 1KB) { [string]::Format("{0:0.00} kB", $length / 1KB) }
   elseIf ($length -gt 0) { [string]::Format("{0:0.00} B", $length) }
 }
-
 function Show-Details {
   $request = Invoke-WebRequest $url -Method Head
   $length = [int]$request.Headers['Content-Length']
@@ -117,25 +126,25 @@ function Open-Zip {
 }
 function Open-Exe {
   Write-Main 'Exe file detected'
-# If there are any recommended parameters for the executable, asks for using them.
-if ($cmd) {
-  Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
-  $runcmd = Read-Host
-  if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
+  # If there are any recommended parameters for the executable, asks for using them.
+  if ($cmd) {
+    Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
+    $runcmd = Read-Host
+    if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
     
-    Write-Main "Running $program $($cmd_syn)"
-    Start-Process -FilePath "$p\$o" -ArgumentList $($cmd) -ErrorAction SilentlyContinue
+      Write-Main "Running $program $($cmd_syn)"
+      Start-Process -FilePath "$p\$o" -ArgumentList $($cmd) -ErrorAction SilentlyContinue
+      Start-Sleep -Milliseconds 200
+      Exit
+    }
+  }
+  if ($runcmd -ne 'y' -or $runcmd -ne 'Y') {
+  
+    Write-Main "Running $program directly"
+    Start-Process -FilePath "$p\$o" -ErrorAction SilentlyContinue
     Start-Sleep -Milliseconds 200
     Exit
   }
-}
-if ($runcmd -ne 'y' -or $runcmd -ne 'Y') {
-  
-  Write-Main "Running $program directly"
-  Start-Process -FilePath "$p\$o" -ErrorAction SilentlyContinue
-  Start-Sleep -Milliseconds 200
-  Exit
-}
 }
 function Open-MSApp {
   Write-Main 'Bundle Microsoft app detected'

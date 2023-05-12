@@ -9,17 +9,10 @@ Remove-Item "$Env:TEMP\modules.psm1" -Force -ErrorAction SilentlyContinue
 # [string]$module = "$Env:TEMP\modules.psm1"
 # Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $module
 # Import-Module $module -DisableNameChecking
-# $json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
-$json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
 Import-Module ".\modules.psm1" -DisableNameChecking
-$nameArray = $json.psobject.Properties.Name
-$filteredApps = @()
 
 # Sets the JSON data into Powershell variables
-foreach ($i in 0..($nameArray.Count - 1)) {
-  $name = $nameArray[$i]; $app = $json.$name; $folder = $app.folder; $url = $app.URL; $exe = $app.exe; $syn = $app.syn; $cmd = $app.cmd; $cmd_syn = $app.cmd_syn
-  $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn }
-}
+Set-Variables
 
 # Lists every single app in the JSON
 Clear-Host
