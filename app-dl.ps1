@@ -5,13 +5,11 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 Remove-Item "$Env:TEMP\modules.psm1" -Force -ErrorAction SilentlyContinue
 
 # Imports variables
-# [string]$branch = 'dev'
-# [string]$module = "$Env:TEMP\modules.psm1"
-# Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $module
-# Import-Module $module -DisableNameChecking
-# $json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
-$json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
-Import-Module ".\modules.psm1" -DisableNameChecking
+[string]$branch = 'dev'
+[string]$module = "$Env:TEMP\modules.psm1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $module
+Import-Module $module -DisableNameChecking
+$json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
 $nameArray = $json.psobject.Properties.Name
 $filteredApps = @()
 
@@ -27,7 +25,7 @@ Select-App
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 
 # Assign the corresponding variables to the selected app
-$n = $filteredApps[$pkg - 1]; $program = $n.Name; $exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $o = Split-Path $url -Leaf
+$pkg_n = [int]($pkg -replace "\."); $n = $filteredApps[$pkg_n - 1]; $program = $n.Name; $exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $o = Split-Path $url -Leaf
 
 Write-Main "$program selected"
 Start-Sleep -Milliseconds 2500
@@ -36,6 +34,21 @@ Show-Details
 
 # Sets all possible paths for downloading the program
 Show-Paths
+[string]$p = Read-Host "`nChoose a number"
+switch ($p) {
+  0 { Restart-App }
+  1 { $p = "$Env:USERPROFILE\Desktop"; break }
+  2 { $p = "$Env:USERPROFILE\Documents"; break }
+  3 { $p = "$Env:USERPROFILE\Downloads"; break }
+  4 { $p = $Env:SystemDrive; break }
+  5 { $p = $Env:ProgramFiles; break }
+  6 { $p = $Env:HOMEPATH; break }
+  'x' { $p = Read-Host 'Set the whole custom path'; break }
+  'X' { $p = Read-Host 'Set the whole custom path'; break }
+  default { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE; break }
+}
+
+Write-Main "Selected path: $p"
 
 # Checks if the program was allocated there before
 if (Test-Path "$p\$o") { Revoke-Path }
@@ -43,7 +56,7 @@ if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
 Start-Sleep -Seconds 1
 
 # Asks the user to open the program after downloading it
-Write-Main "Do you want to open it when finished? (y/n)"
+Write-Secondary "Do you want to open it when finished? (y/n)"
 $openAns = Read-Host
 $open = $false
 $openString = $null
@@ -54,9 +67,8 @@ if ($open -eq $true) {$openString = ' and open'}
 Write-Main "You are going to download$openString $program"
 $dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-App }
-
 Clear-Host
 Invoke-RestMethod -Uri $url -OutFile "$p\$o"
 
 if ($?) { Write-Main "File downloaded successfully"} else { Write-Warning "An error occurred while downloading the file" }
-if ($open -eq $false) { exit } else { Open-File }
+if ($open -eq $true) { Open-File } else {exit}
