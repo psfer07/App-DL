@@ -14,17 +14,20 @@ function Write-Warning($T) {
   Write-Host "   $T" -ForegroundColor White
   Write-Host "<$b>" -ForegroundColor Red
 }
-function Show-Details {
-  $request = Invoke-WebRequest $url -Method Head
-  $length = [int]$request.Headers['Content-Length']
+function Get-AppSize {
   if ($length -gt 1GB) { [string]::Format("{0:0.00} GB", $length / 1GB) }
   elseIf ($length -gt 1MB) { [string]::Format("{0:0.00} MB", $length / 1MB) }
   elseIf ($length -gt 1KB) { [string]::Format("{0:0.00} kB", $length / 1KB) }
   elseIf ($length -gt 0) { [string]::Format("{0:0.00} B", $length) }
+}
+function Show-Details {
+  $request = Invoke-WebRequest $url -Method Head
+  $length = [int]$request.Headers['Content-Length']
+  $size = Get-AppSize $length
 
   Write-Main "$program selected"
   Write-Point "$program is $syn"
-  Write-Point "Size: $lenght"
+  Write-Point "Size: $size"
   if ($folder) { Write-Point "Saved in: $folder" }
   if ($exe) { Write-Point "Executable: $exe" }
   if ($cmd_syn) { Write-Point $cmd_syn }
@@ -55,8 +58,8 @@ function Open-File {
   # Opens the app
   Write-Main "Launching $program..."
   if ($o -like "*.zip") { Open-Zip }
-  elseif ($o -like "*.exe") { Write-Main 'Exe file detected'; Open-Exe }
-  elseif ($o -like "*.msi") { Write-Main 'Windows installer detected' ; Open-Exe }
+  elseif ($o -like "*.exe") { Open-Exe }
+  elseif ($o -like "*.msi") { Open-Msi }
   elseif ($o -like "*.msixbundle" -or "*.appxbundle" -or "*.msix" -or "*.appx") { Open-MSApp }
 }
 function Open-Zip {
@@ -90,6 +93,8 @@ function Open-Zip {
   }
 }
 function Open-Exe {
+  Write-Main 'Exe file detected'
+
   # If there are any recommended parameters for the executable, asks for using them.
   if ($cmd) {
     $runcmd = Read-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
@@ -108,6 +113,13 @@ function Open-Exe {
     Start-Sleep -Milliseconds 200
     Exit
   }
+}
+function Open-Msi {
+  Write-Main 'Windows installer detected'
+  Write-Main "Installing $program silently"
+  msiexec.exe /i "$p\$o" /passive /norestart
+  Start-Sleep -Milliseconds 200
+  Exit
 }
 function Open-MSApp {
   Write-Main 'Bundle Microsoft app detected'
