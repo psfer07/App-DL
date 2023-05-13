@@ -55,8 +55,9 @@ function Open-File {
   # Opens the app
   Write-Main "Launching $program..."
   if ($o -like "*.zip") { Open-Zip }
-  if ($o -like "*.exe") { Open-Exe }
-  if ($o -like "*.msixbundle" -or "*.appxbundle" -or "*.msix" -or "*.appx") { Open-MSApp }
+  elseif ($o -like "*.exe") { Open-Exe }
+  elseif ($O -like "*.msi") { Open-Msi }
+  elseif ($o -like "*.msixbundle" -or "*.appxbundle" -or "*.msix" -or "*.appx") { Open-MSApp }
 }
 function Open-Zip {
   if (Test-Path -Path "$p\$program\$folder") {
@@ -92,8 +93,7 @@ function Open-Exe {
   Write-Main 'Exe file detected'
   # If there are any recommended parameters for the executable, asks for using them.
   if ($cmd) {
-    Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
-    $runcmd = Read-Host
+    $runcmd = Read-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
     if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
     
       Write-Main "Running $program $($cmd_syn)"
@@ -109,6 +109,9 @@ function Open-Exe {
     Start-Sleep -Milliseconds 200
     Exit
   }
+}
+function Open-Msi {
+  Write-Main 'Windows installer detected'
 }
 function Open-MSApp {
   Write-Main 'Bundle Microsoft app detected'
