@@ -24,7 +24,14 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 
 # Lists every single app in the JSON
 #Clear-Host
-Select-App
+Write-Main 'Available apps'
+foreach ($i in 0..($filteredApps.Count - 1)) {
+  $app = $filteredApps[$i]
+  $n = $i + 1
+  $enum = "$n. $($app.Name)"
+  $spaces = " " * (30 - $enum.Length)
+  Write-Point "$enum$spaces | Related to: $($app.Type)"
+}
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 
 # Assign the corresponding variables to the selected app
@@ -37,6 +44,20 @@ Show-Details
 
 # Sets all possible paths for downloading the program
 Show-Paths
+[string]$p = Read-Host "`nChoose a number"
+  switch ($p) {
+    0 { Restart-App }
+    1 { $p = "$Env:USERPROFILE\Desktop"; break }
+    2 { $p = "$Env:USERPROFILE\Documents"; break }
+    3 { $p = "$Env:USERPROFILE\Downloads"; break }
+    4 { $p = $Env:SystemDrive; break }
+    5 { $p = $Env:ProgramFiles; break }
+    6 { $p = $Env:HOMEPATH; break }
+    'x' { $p = Read-Host 'Set the whole custom path'; break }
+    'X' { $p = Read-Host 'Set the whole custom path'; break }
+    default { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE; break }
+  }
+  Write-Main "Selected path: $p"
 
 # Checks if the program was allocated there before
 if (Test-Path "$p\$o") { Revoke-Path }
