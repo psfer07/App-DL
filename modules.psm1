@@ -19,7 +19,9 @@ function Select-App {
   foreach ($i in 0..($filteredApps.Count - 1)) {
     $app = $filteredApps[$i]
     $n = $i + 1
-    Write-Point "$n. $($app.Name)"
+    $enum = "$n. $($app.Name)"
+    $spaces = " " * (30 - $enum.Length)
+    Write-Point "$enum$spaces | Related to: $($app.Type)"
   }
 }
 function Show-Details {
@@ -29,6 +31,7 @@ function Show-Details {
   elseIf ($length -gt 1MB) { [string]::Format("{0:0.00} MB", $length / 1MB) }
   elseIf ($length -gt 1KB) { [string]::Format("{0:0.00} kB", $length / 1KB) }
   elseIf ($length -gt 0) { [string]::Format("{0:0.00} B", $length) }
+
   Write-Main "$program selected"
   Write-Point "$program is $syn"
   Write-Point "Size: $lenght"
