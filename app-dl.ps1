@@ -28,7 +28,7 @@ Select-App
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 
 # Assign the corresponding variables to the selected app
-$n = $filteredApps[$pkg - 1]; $program = $n.Name; $exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $o = Split-Path $url -Leaf
+$n = $filteredApps[$pkg - 1]; $program = $n.Name; $exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $installs = $n.installs; $type = $n.type; $o = Split-Path $url -Leaf
 
 Write-Main "$program selected"
 Start-Sleep -Milliseconds 2500
