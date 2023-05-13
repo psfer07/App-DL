@@ -1,13 +1,3 @@
-function Set-Variables {
-  # $json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
-  $json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
-  $nameArray = $json.psobject.Properties.Name
-  $filteredApps = @()
-  foreach ($i in 0..($nameArray.Count - 1)) {
-    $name = $nameArray[$i]; $app = $json.$name; $folder = $app.folder; $url = $app.URL; $exe = $app.exe; $syn = $app.syn; $cmd = $app.cmd; $cmd_syn = $app.cmd_syn; $installs = $app.installs
-    $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn; Installs = $installs }
-  }
-}
 function Write-Main($T) {
   $b = '============================================'
   Write-Host "`n`n<$b>" -ForegroundColor Blue
@@ -32,20 +22,16 @@ function Select-App {
     Write-Point "$n. $($app.Name)"
   }
 }
-function Read-FileSize {
-  Param ([int]$length)
+function Show-Details {
+  $request = Invoke-WebRequest $url -Method Head
+  $length = [int]$request.Headers['Content-Length']
   if ($length -gt 1GB) { [string]::Format("{0:0.00} GB", $length / 1GB) }
   elseIf ($length -gt 1MB) { [string]::Format("{0:0.00} MB", $length / 1MB) }
   elseIf ($length -gt 1KB) { [string]::Format("{0:0.00} kB", $length / 1KB) }
   elseIf ($length -gt 0) { [string]::Format("{0:0.00} B", $length) }
-}
-function Show-Details {
-  $request = Invoke-WebRequest $url -Method Head
-  $length = [int]$request.Headers['Content-Length']
-  $size = Read-FileSize $length
   Write-Main "$program selected"
   Write-Point "$program is $syn"
-  Write-Point "Size: $size"
+  Write-Point "Size: $lenght"
   if ($folder) { Write-Point "Saved in: $folder" }
   if ($exe) { Write-Point "Executable: $exe" }
   if ($cmd_syn) { Write-Point $cmd_syn }
