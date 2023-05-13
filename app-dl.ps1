@@ -8,11 +8,11 @@ Remove-Item "$Env:TEMP\modules.psm1" -Force -ErrorAction SilentlyContinue
 # [string]$branch = 'dev'
 # [string]$module = "$Env:TEMP\modules.psm1"
 # Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $module
-# Import-Module $module -DisableNameChecking
+# Import-Module $module -DisableNameChecking -Force
 # $json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
 $json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
 Get-Content .\modules.psm1
-Import-Module ".\modules.psm1" -DisableNameChecking
+Import-Module ".\modules.psm1" -DisableNameChecking -Force
 
 # Sets the JSON data into Powershell variables
 $nameArray = $json.psobject.Properties.Name
