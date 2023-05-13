@@ -21,10 +21,6 @@ function Get-AppSize {
   elseIf ($length -gt 0) { [string]::Format("{0:0.00} B", $length) }
 }
 function Show-Details {
-  $request = Invoke-WebRequest $url -Method Head
-  $length = [int]$request.Headers['Content-Length']
-  $size = Get-AppSize $length
-
   Write-Main "$program selected"
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
@@ -127,6 +123,6 @@ function Open-MSApp {
 }
 function Restart-App {
   Write-Main 'Leaving session...'
-  Start-Sleep -Milliseconds 300
+  Start-Sleep -Milliseconds 200
   powershell.exe -command "Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/app-dl.ps1" | Invoke-Expression"
 }
