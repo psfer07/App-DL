@@ -18,8 +18,8 @@ Import-Module ".\modules.psm1" -DisableNameChecking
 $nameArray = $json.psobject.Properties.Name
 $filteredApps = @()
 foreach ($i in 0..($nameArray.Count - 1)) {
-  $name = $nameArray[$i]; $app = $json.$name; $folder = $app.folder; $url = $app.URL; $exe = $app.exe; $syn = $app.syn; $cmd = $app.cmd; $cmd_syn = $app.cmd_syn; $installs = $app.installs; $type = $app.type
-  $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn; Installs = $installs; Type = $type }
+  $name = $nameArray[$i]; $app = $json.$name; $folder = $app.folder; $url = $app.URL; $exe = $app.exe; $syn = $app.syn; $cmd = $app.cmd; $cmd_syn = $app.cmd_syn; $type = $app.type
+  $filteredApps += [PsCustomObject]@{Index = $i; Name = $name; Folder = $folder; URL = $url; Exe = $exe; Size = $size; Syn = $syn; Cmd = $cmd; Cmd_syn = $cmd_syn; Type = $type }
 }
 
 # Lists every single app in the JSON
@@ -28,7 +28,7 @@ Select-App
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 
 # Assign the corresponding variables to the selected app
-$n = $filteredApps[$pkg - 1]; $program = $n.Name; $exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $installs = $n.installs; $type = $n.type; $o = Split-Path $url -Leaf
+$n = $filteredApps[$pkg - 1]; $program = $n.Name; $exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $type = $n.type; $o = Split-Path $url -Leaf
 
 Write-Main "$program selected"
 Start-Sleep -Milliseconds 2500
