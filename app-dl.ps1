@@ -74,10 +74,16 @@ if ($open -eq $true) { $openString = ' and open' }
 
 # Last confirmation
 Write-Main "You are going to download$openString $program"
-$dl = Read-Host 'Confirmation (press any key or go to the (R)estart menu)'
+$dl = Read-Host 'Confirmation press any key or go to the (R)estart menu)'
 if ($dl -eq 'R' -or $dl -eq 'r') { Restart-App }
 
 #Clear-Host
 Invoke-RestMethod -Uri $url -OutFile "$p\$o"
 if ($?) { Write-Main "File downloaded successfully" } else { Write-Warning "An error occurred while downloading the file" }
-if ($open -eq $false) { exit } else { Open-File }
+if ($open -eq $true) { Open-File }
+Write-Point 'Do you want to download another app? (y/n)' -NoNewline
+$repeat = Read-Host
+if ($repeat -eq 'y' -or $repeat -eq 'Y') {
+  
+  Restart-App
+}
