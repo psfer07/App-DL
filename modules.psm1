@@ -126,5 +126,7 @@ function Open-MSApp {
   Add-AppPackage -Path "$p\$o"
 }
 function Restart-App {
+  Write-Main 'Leaving session...'
+  Start-Sleep -Milliseconds 500
   powershell.exe -command "Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/app-dl.ps1" | Invoke-Expression"
 }
