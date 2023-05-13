@@ -11,6 +11,12 @@
         "syn": "an advanced app uninstaller that research in your system for any program leftover",
         "type": 2
     },
+    "BlankAndSecure": {
+        "URL": "https://files1.majorgeeks.com/10afebdbffcd4742c81a3cb0f6ce4092156b4375/drives/BlankAndSecure.zip",
+        "syn": "an easy-to-use software utility that rewrites files and folders with zeros before permanently erasing them from your hard drive",
+        "exe": "BlankAndSecure.exe",
+        "type": 2
+    },
     "Bleachbit": {
         "URL": "https://download.bleachbit.org/BleachBit-4.4.2-portable.zip",
         "exe": "bleachbit.exe",
@@ -19,11 +25,18 @@
         "type": 2
     },
     "Brave-Portable": {
-        "URL": "https://github.com/portapps/brave-portable/releases/download/1.47.171-85/brave-portable-win64-1.47.171-85-setup.exe",
+        "URL": "https://github.com/portapps/brave-portable/releases/download/1.49.132-86/brave-portable-win64-1.49.132-86-setup.exe",
         "folder": "brave-portable",
         "exe": "brave-portable.exe",
         "syn": "a portable version of the Brave browser",
         "type": 3
+    },
+    "DiskGenius": {
+        "URL": "https://engdownload.geniusite.com/winpe/DGEng5501488_x64.zip",
+        "syn": "a full-featured partition manager, which is designed to optimize disk usage for Windows users",
+        "folder": "DiskGenius",
+        "exe": "DiskGenius.exe",
+        "type": 1
     },
     "Dism++": {
         "URL": "https://github.com/Chuyu-Team/Dism-Multi-language/releases/download/v10.1.1002.1/Dism++10.1.1002.1.zip",
@@ -56,7 +69,7 @@
         "folder": "openvpn-portable",
         "exe": "openvpn-portable.exe",
         "syn": "a portable VPN",
-        "type": 4
+        "type": 5
     },
     "PortableApps": {
         "URL": "https://download2.portableapps.com/portableapps/PortableApps.comPlatform/PortableApps.com_Platform_Setup_25.0.paf.exe",
@@ -68,11 +81,6 @@
         "exe": "OOSU10.exe",
         "syn": "a pretty good Windows optimizer and privacy protector",
         "type": 7
-    },
-    "Sniffet": {
-        "URL": "https://github.com/GyulyVGC/sniffnet/releases/download/v1.1.4/Sniffnet_Windows.msi",
-        "syn": "",
-        "type": 4
     },
     "TIW_11": {
         "URL": "https://github.com/builtbybel/ThisIsWin11/releases/download/1.4.1/TIW11.zip",
@@ -97,7 +105,6 @@
     "Winget": {
         "URL": "https://github.com/microsoft/winget-cli/releases/download/v1.4.10173/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle",
         "syn": "the official CLI Windows Package manager (some desktops doesn't have it by default)",
-        "installs": true,
         "type": 1
     }
 }
