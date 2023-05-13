@@ -56,6 +56,16 @@
         "exe": "Everything.exe",
         "type": 1
     },
+    "FileOptimizer": {
+        "URL": "https://download2.portableapps.com/portableapps/FileOptimizerPortable/FileOptimizerPortable_16.30.2781.paf.exe",
+        "syn": "an advanced file optimizer featuring a lossless (no quality loss) file size reduction with high compatibility",
+        "type": 2
+    },
+    "KVRT": {
+        "URL": "https://devbuilds.s.kaspersky-labs.com/devbuilds/KVRT/latest/full/KVRT.exe",
+        "syn": "the Kaspersky Virus Removal Tool, a portable antivirus updated with the latest definitions",
+        "type": 5
+    },
     "McAfee-Stinger": {
         "URL": "https://downloadcenter.trellix.com/products/mcafee-avert/Stinger/stinger64.exe",
         "exe": "stinger64.exe",
@@ -76,17 +86,29 @@
         "syn": "a suite for portable apps",
         "type": 1
     },
+    "RegistryLiveWatch": {
+        "URL": "https://files1.majorgeeks.com/10afebdbffcd4742c81a3cb0f6ce4092156b4375/registry/rgm.zip",
+        "syn": "a free, lightweight and portable tool to monitor activity on a registry key",
+        "exe": "rgm.exe",
+        "type": 4
+    },
     "ShutUp10++": {
         "URL": "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
         "exe": "OOSU10.exe",
         "syn": "a pretty good Windows optimizer and privacy protector",
-        "type": 7
+        "type": 6
+    },
+    "Sniffer": {
+        "URL": "https://files1.majorgeeks.com/10afebdbffcd4742c81a3cb0f6ce4092156b4375/networking/sniffer.zip",
+        "syn": "a suite of IP Tools built around a packet sniffer (needs wpcap.dll and a NDIS protocol). Used for network monitoring",
+        "exe": "iptools.exe",
+        "type": 4
     },
     "TIW_11": {
         "URL": "https://github.com/builtbybel/ThisIsWin11/releases/download/1.4.1/TIW11.zip",
         "exe": "ThisIsWin11.exe",
         "syn": "a useful app to customize and optimize almost every configuration in your PC",
-        "type": 7
+        "type": 6
     },
     "TorBrowser": {
         "URL": "https://dist.torproject.org/torbrowser/12.0.4/torbrowser-install-win64-12.0.4_ALL.exe",
@@ -102,9 +124,21 @@
         "syn": "a full-debloated version of Google Chrome",
         "type": 3
     },
+    "Ventoy": {
+        "URL": "https://github.com/ventoy/Ventoy/releases/download/v1.0.91/ventoy-1.0.91-windows.zip",
+        "folder": "ventoy-1.0.91",
+        "exe": "Ventoy2Disk.exe",
+        "syn": "an open source tool to create bootable USB drive for ISO/WIM/IMG/VHD(x)/EFI files",
+        "type": 1
+    },
     "Winget": {
         "URL": "https://github.com/microsoft/winget-cli/releases/download/v1.4.10173/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle",
         "syn": "the official CLI Windows Package manager (some desktops doesn't have it by default)",
+        "type": 1
+    },
+    "ZeroInstall": {
+        "URL": "https://get.0install.net/0install.exe",
+        "syn": "a decentralised cross-platform software installation system",
         "type": 1
     }
 }
