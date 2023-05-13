@@ -14,6 +14,16 @@ function Write-Warning($T) {
   Write-Host "   $T" -ForegroundColor White
   Write-Host "<$b>" -ForegroundColor Red
 }
+function Show-Apps {
+  Write-Main 'Available apps'
+  foreach ($i in 0..($filteredApps.Count - 1)) {
+    $app = $filteredApps[$i]
+    $n = $i + 1
+    $enum = "$n. $($app.Name)"
+    $spaces = " " * (30 - $enum.Length)
+    Write-Point "$enum$spaces | Related to $($app.Type)"
+  }
+}
 function Get-AppSize {
   if ($length -gt 1GB) { [string]::Format("{0:0.00} GB", $length / 1GB) }
   elseIf ($length -gt 1MB) { [string]::Format("{0:0.00} MB", $length / 1MB) }
@@ -21,6 +31,10 @@ function Get-AppSize {
   elseIf ($length -gt 0) { [string]::Format("{0:0.00} B", $length) }
 }
 function Show-Details {
+  $request = Invoke-WebRequest $url -Method Head
+  $length = [int]$request.Headers['Content-Length']
+  $size = Get-AppSize $length
+
   Write-Main "$program selected"
   Write-Point "$program is $syn"
   Write-Point "Size: $size"
@@ -37,6 +51,7 @@ function Show-Paths {
   Write-Point '4. Saves it inside of C:'
   Write-Point '5. Saves it inside of Program Files'
   Write-Point "6. Saves it inside of the user profile`n"
+  Write-Point "7. Saves it temporarily (opens it automatically)`n"
   Write-Point 'X. Introduce a custom path'
   Write-Point '0. Resets the program to select another app'
 }
