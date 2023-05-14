@@ -22,7 +22,7 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 }
 
 # Lists every single app in the JSON
-#Clear-Host
+Clear-Host
 Show-Apps
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 
@@ -31,10 +31,11 @@ $n = $filteredApps[$pkg - 1]; $program = $n.Name
 
 Write-Main "$program selected"
 # Assign the left variables for quicker response
-$exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $type = $n.type; $o = Split-Path $url -Leaf; $open = $false
+$exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $type = $n.type
+$o = Split-Path $url -Leaf; $open = $false; $request = Invoke-WebRequest $url -Method Head; $length = [int]$request.Headers['Content-Length']
 
 Start-Sleep -Milliseconds 750
-#Clear-Host
+Clear-Host
 Show-Details
 
 # Sets all possible paths for downloading the program
@@ -52,12 +53,12 @@ switch ($p) {
   'x' { $p = Read-Host 'Set the whole custom path'; break }
   default { Write-Host "Invalid input. Using default path: $Env:USERPROFILE"; $p = $Env:USERPROFILE; break }
 }
-
 # Checks if the program was allocated there before
 if (Test-Path "$p\$o") { Revoke-Path }
 if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
 
 
+Clear-Host
 # Asks the user to open the program after downloading it
 $openString = $null
 if ($open -eq $false) {
@@ -65,38 +66,30 @@ if ($open -eq $false) {
   Write-Point "Do you want to open it when finished? (y/n)"
   $openAns = Read-Host
   if ($openAns -eq 'y' -or $openAns -eq 'Y') { $open = $true }
-} else { $openString = ' and open' }
-
+}
+else { $openString = ' and open' }
 
 # Last confirmation
 Write-Main "You are going to download$openString $program"
 $confirm = Read-Host 'Confirmation press any key or go to the (R)estart menu)'
 if ($confirm -eq 'R' -or $confirm -eq 'r') { Restart-App }
+Clear-Host
 
-#Clear-Host
+# Start download
 $wc = New-Object System.Net.WebClient
-$downloaded = 1
-$length = ($wc.GetResponse($url)).ContentLength
-
-$wc.DownloadFileCompleted = {
-  Write-Main "File downloaded successfully"  else { Write-Warning "An error occurred while downloading the file" }
-}
-
-$wc.DownloadProgressChanged = {
-    $completed = $_.BytesReceived
-    $total = $_.TotalBytesToReceive
-    $percentage = $completed / $total * 100
-    Write-Progress -Activity "Downloading $o" -Status "Progress" -PercentComplete $percentage
-}
-
 $wc.DownloadFileAsync($url, "$p\$o")
 
+# Updates the download progress
 while ($wc.IsBusy) {
-    Start-Sleep -Milliseconds 100
-    $downloaded = (Get-Item "$p\$o").Length
-    $percentage = $downloaded / $length * 100
-    Write-Host $percentage
-    # Write-Progress -Activity "Downloading $program..." -Status "Progress" -PercentComplete $percentage
+  $DownloadedOld = (Get-Item "$p\$o").Length
+  Start-Sleep -Milliseconds 100
+  $Downloaded = (Get-Item "$p\$o").Length
+  $MBs = ($Downloaded - $DownloadedOld)*10
+  $MBs = [Math]::Round($MBs) / 1MB
+  $percentage = ($Downloaded / $length) * 100
+  $percentage = [Math]::Round($percentage)
+  $downloadedString = "{0:N2} MB / {1:N2} MB at {2:N2} MB/s" -f ($Downloaded / 1MB), ($length / 1MB), $MBs
+  Write-Progress -Activity "Downloading $program..." -Status "$downloadedString ($percentage%) complete" -PercentComplete $percentage
 }
 
 if ($open -eq $true) { Open-File }
