@@ -109,7 +109,7 @@
         "exe": "iptools.exe",
         "type": "hardware information and monitoring"
     },
-    "TIW_11": {
+    "ThisIsWindows11": {
         "URL": "https://github.com/builtbybel/ThisIsWin11/releases/download/1.4.1/TIW11.zip",
         "exe": "ThisIsWin11.exe",
         "syn": "a useful app to customize and optimize almost every configuration in your PC",
@@ -123,8 +123,8 @@
         "type": "browsers"
     },
     "Ungoogled-Chromium": {
-        "URL": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/113.0.5672.64-1/ungoogled-chromium_113.0.5672.64-1_windows_x64.zip",
-        "folder": "ungoogled-chromium_113.0.5672.64-1_windows",
+        "URL": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/113.0.5672.93-1.1/ungoogled-chromium_113.0.5672.93-1.1_windows_x64.zip",
+        "folder": "ungoogled-chromium_113.0.5672.93-1.1_windows",
         "exe": "chrome.exe",
         "syn": "a full-debloated version of Google Chrome",
         "type": "browsers"
@@ -134,6 +134,11 @@
         "folder": "ventoy-1.0.91",
         "exe": "Ventoy2Disk.exe",
         "syn": "an open source tool to create bootable USB drive for ISO/WIM/IMG/VHD(x)/EFI files",
+        "type": "various utilities"
+    },
+    "VitualBox-Portable": {
+        "URL": "https://www.vbox.me/files/Portable-VirtualBox_v5.1.22-Starter_v6.4.10-Win_all.exe",
+        "syn": "a free and open source software tool that lets you run any operating system from a usb stick without separate installation",
         "type": "various utilities"
     },
     "Winget": {
