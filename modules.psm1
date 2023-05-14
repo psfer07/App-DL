@@ -1,94 +1,48 @@
-function Write-Main($T) {
+function Write-Main($t) {
   $b = '============================================'
   Write-Host "`n`n<$b>" -ForegroundColor Blue
-  Write-Host "   $T" -ForegroundColor White
+  Write-Host "   $t" -ForegroundColor White
   Write-Host "<$b>" -ForegroundColor Blue
 }
-function Write-Secondary($T) {
-  $b = '=========='
-  Write-Host "`n<$b[" -NoNewline -ForegroundColor Green
-  Write-Host " $T " -NoNewline -ForegroundColor White
-  Write-Host "]$b>`n" -ForegroundColor Green
-}
-function Write-Point($T) {
+function Write-Point($t) {
   Write-Host '==> ' -NoNewline -ForegroundColor Green
-  Write-Host "$T" -ForegroundColor White
+  Write-Host "$t" -ForegroundColor White
 }
-function Write-Warning($T) {
+function Write-Warning($t) {
   $b = '============================================'
   Write-Host "`n`n<$b>" -ForegroundColor Red
-  Write-Host "   $T" -ForegroundColor White
+  Write-Host "   $t" -ForegroundColor White
   Write-Host "<$b>" -ForegroundColor Red
 }
-function Select-App {
-  Write-Main 'Available apps'
-  foreach ($i in 0..($filteredApps.Count - 1)) {
-    $app = $filteredApps[$i]
-    $n = $i + 1
-    Write-Point "$n. $($app.Name)"
-  }
-}
-function Read-FileSize {
-  Param ([int]$length)
+function Get-AppSize {
   if ($length -gt 1GB) { [string]::Format("{0:0.00} GB", $length / 1GB) }
   elseIf ($length -gt 1MB) { [string]::Format("{0:0.00} MB", $length / 1MB) }
   elseIf ($length -gt 1KB) { [string]::Format("{0:0.00} kB", $length / 1KB) }
   elseIf ($length -gt 0) { [string]::Format("{0:0.00} B", $length) }
 }
-
-function Show-Details {
-  $request = Invoke-WebRequest $url -Method Head
-  $length = [int]$request.Headers['Content-Length']
-  $size = Read-FileSize $length
-  Write-Main "$program selected"
-  Write-Point "$program is $syn"
-  Write-Point "Size: $size"
-  if ($folder) { Write-Point "Saved in: $folder" }
-  if ($exe) { Write-Point "Executable: $exe" }
-  if ($cmd_syn) { Write-Point $cmd_syn }
-  if ($cmd) { Write-Point "Parameters are: $cmd)" }
-}
-function Show-Paths {
-  Write-Main 'Path selecting'
-  Write-Point '1. Saves it inside of Desktop'
-  Write-Point '2. Saves it inside of Documents'
-  Write-Point '3. Saves it inside of Downloads'
-  Write-Point '4. Saves it inside of C:'
-  Write-Point '5. Saves it inside of Program Files'
-  Write-Point "6. Saves it inside of the user profile`n"
-  Write-Point 'X. Introduce a custom path'
-  Write-Point '0. Resets the program to select another app'
-}
 function Revoke-Path {
-
-  Write-Warning 'It seems that $program is currently allocated in this path'
+  Write-Warning "It seems that $program is currently allocated in this path"
   $restart = Read-Host "You can (r)estart, (o)pen $program or (e)xit the app"
   switch ($restart) {
     'r' { Restart-App }
-    'R' { Restart-App }
     'o' { Open-File }
-    'O' { Open-File }
     'e' { Write-Main 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
-    'E' { Write-Main 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
     default { Write-Warning 'Non-valid character, exiting...'; Start-Sleep -Milliseconds 500; exit }
   }
 }
 function Open-File {
-  # Opens the app
-  Write-Main "Launching $program..."
-
   if ($o -like "*.zip") {
     if (Test-Path -Path "$p\$program\$folder") {
       Write-Main "$program is uncompressed in $p, so opening it directly..."
       Start-Sleep -Milliseconds 500
       Start-Process -FilePath "$p\$program\$folder\$exe" -ErrorAction SilentlyContinue
       Start-Sleep 1
-      Exit
+      
     }
     # It uncompresses it and opens the app
     elseif (Test-Path -LiteralPath "$p\$o") {
       Write-Main 'Zip file detected'
-      Write-Secondary "$program is saved as a zip file, so uncompressing..."
+      Write-Point "$program is saved as a zip file, so uncompressing..."
       Start-Sleep -Milliseconds 200
       Expand-Archive -Literalpath "$p\$o" -DestinationPath "$p\$program" -Force
       if ($?) {
@@ -104,32 +58,58 @@ function Open-File {
       Start-Sleep -Milliseconds 500
       Start-Process -FilePath "$p\$program\$folder\$exe" -ErrorAction SilentlyContinue
       Start-Sleep -Milliseconds 200
-      Exit
+      
     }
   }
+  elseif ($o -like "*.exe") {
+    Write-Main 'Exe file detected'
 
-  if ($o -like "*.exe") {
     # If there are any recommended parameters for the executable, asks for using them.
     if ($cmd) {
-      Write-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
+      Write-Point "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
       $runcmd = Read-Host
       if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
-        
+      
         Write-Main "Running $program $($cmd_syn)"
         Start-Process -FilePath "$p\$o" -ArgumentList $($cmd) -ErrorAction SilentlyContinue
         Start-Sleep -Milliseconds 200
-        Exit
       }
     }
-    if ($runcmd -ne 'y' -or $runcmd -ne 'Y') {
-      
+    else {    
       Write-Main "Running $program directly"
       Start-Process -FilePath "$p\$o" -ErrorAction SilentlyContinue
       Start-Sleep -Milliseconds 200
-      Exit
     }
+  }
+  elseif ($o -like "*.msi") {
+    Write-Main 'Microsoft installer detected'
+    Write-Main "Installing $program passively"
+    Start-Process -FilePath msiexec.exe -ArgumentList "/i `"$p\$o`" /passive /promptrestart" -Wait
+    Write-Main "$program successfully installed"
+    Write-Point 'Do you want to launch it?(y/n)'
+    $openInst = Read-Host
+    if ($openInst -eq 'y' -or $openInst -eq 'Y') {
+      Write-Main "Launching $program..."
+
+      # Adapted from https://social.technet.microsoft.com/Forums/ie/en-US/1d50d2f7-f532-40b5-859e-d5cacab1f337/pull-a-msi-property-from-a-powershell-custom-object
+      $windowsInstaller = New-Object -com WindowsInstaller.Installer
+      $database = $windowsInstaller.GetType().InvokeMember("OpenDatabase", 'InvokeMethod', $Null, $windowsInstaller, @("$p\$o", 0))
+      $query = "SELECT Value FROM Property WHERE Property='ProductName'"
+      $view = $database.GetType().InvokeMember("OpenView", 'InvokeMethod', $Null, $database, ($query))
+      $view.GetType().InvokeMember("Execute", 'InvokeMethod', $Null, $view, $Null)
+      $record = $view.GetType().InvokeMember("Fetch", 'InvokeMethod', $Null, $view, $Null)
+      $prod = $record.GetType().InvokeMember("StringData", 'GetProperty', $Null, $record, 1)
+      $prod = Get-WmiObject -Class Win32_Product | Where-Object { $_.Name -eq $prod }
+      $Inst = $prod.InstallLocation
+      Start-Process -FilePath "$Inst\$folder\$exe"
+    }
+  }
+  elseif ($o -like "*.msix" -or $o -like "*.msixbundle" -or $o -like "*.appx" -or $o -like "*.appxbundle") {
+    Write-Main 'Bundle Microsoft app detected'
+    Add-AppPackage -Path "$p\$o"
   }
 }
 function Restart-App {
+  Write-Main 'Leaving session...'
   powershell.exe -command "Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/app-dl.ps1" | Invoke-Expression"
 }

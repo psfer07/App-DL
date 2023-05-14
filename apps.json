@@ -2,72 +2,158 @@
     "7-Zip": {
         "URL": "https://www.7-zip.org/a/7z2201-x64.exe",
         "exe": "7zFM.exe",
-        "syn": "a well known file archiver with the high compression algorithms"
+        "syn": "a well known file archiver with the high compression algorithms",
+        "type": "various utilities"
     },
     "BCUninstaller": {
         "URL": "https://github.com/Klocman/Bulk-Crap-Uninstaller/releases/download/v5.4/BCUninstaller_5.4_portable.zip",
         "exe": "BCUninstaller.exe",
-        "syn": "an advanced app uninstaller that research in your system for any program leftover"
+        "syn": "an advanced app uninstaller that research in your system for any program leftover",
+        "type": "app and data management"
+    },
+    "BlankAndSecure": {
+        "URL": "https://files1.majorgeeks.com/10afebdbffcd4742c81a3cb0f6ce4092156b4375/drives/BlankAndSecure.zip",
+        "syn": "an easy-to-use software utility that rewrites files and folders with zeros before permanently erasing them from your hard drive",
+        "exe": "BlankAndSecure.exe",
+        "type": "app and data management"
     },
     "Bleachbit": {
         "URL": "https://download.bleachbit.org/BleachBit-4.4.2-portable.zip",
         "exe": "bleachbit.exe",
         "folder": "Bleachbit-Portable",
-        "syn": "a very well-known app and system cleaner with bunch of posible configurations"
+        "syn": "a very well-known app and system cleaner with bunch of posible configurations",
+        "type": "app and data management"
     },
-    "Brave": {
-        "URL": "https://github.com/portapps/brave-portable/releases/download/1.47.171-85/brave-portable-win64-1.47.171-85-setup.exe",
+    "Brave-Portable": {
+        "URL": "https://github.com/portapps/brave-portable/releases/download/1.49.132-86/brave-portable-win64-1.49.132-86-setup.exe",
         "folder": "brave-portable",
         "exe": "brave-portable.exe",
-        "syn": "a portable version of the Brave browser"
+        "syn": "a portable version of the Brave browser",
+        "type": "browsers"
+    },
+    "DiskGenius": {
+        "URL": "https://engdownload.geniusite.com/winpe/DGEng5501488_x64.zip",
+        "syn": "a full-featured partition manager, which is designed to optimize disk usage for Windows users",
+        "folder": "DiskGenius",
+        "exe": "DiskGenius.exe",
+        "type": "various utilities"
     },
     "Dism++": {
         "URL": "https://github.com/Chuyu-Team/Dism-Multi-language/releases/download/v10.1.1002.1/Dism++10.1.1002.1.zip",
         "exe": "Dism++x64.exe",
-        "syn": "a very efective app to clean almost all the unused system files and also can optimize"
+        "syn": "a very efective app to clean almost all the unused system files and also can optimize",
+        "type": "app and data management"
     },
     "DNSJumper": {
         "URL": "https://www.sordum.org/files/download/dns-jumper/DnsJumper.zip",
         "exe": "DnsJumper.exe",
-        "syn": "a simple program that checks for the quickest DNS for you"
+        "syn": "a simple program that checks for the quickest DNS for you",
+        "type": "hardware information and monitoring"
+    },
+    "Everything": {
+        "URL": "https://www.voidtools.com/Everything-1.4.1.1023.x64.zip",
+        "syn": "a portable data indexer, much lighter and faster than Windows search",
+        "exe": "Everything.exe",
+        "type": "various utilities"
+    },
+    "FileOptimizer": {
+        "URL": "https://download2.portableapps.com/portableapps/FileOptimizerPortable/FileOptimizerPortable_16.30.2781.paf.exe",
+        "syn": "an advanced file optimizer featuring a lossless (no quality loss) file size reduction with high compatibility",
+        "type": "app and data management"
+    },
+    "KVRT": {
+        "URL": "https://devbuilds.s.kaspersky-labs.com/devbuilds/KVRT/latest/full/KVRT.exe",
+        "syn": "the Kaspersky Virus Removal Tool, a portable antivirus updated with the latest definitions",
+        "type": "security"
+    },
+    "LibreOffice": {
+        "URL": "https://tdf.jensgutermuth.de/libreoffice/stable/7.5.3/win/x86_64/LibreOffice_7.5.3_Win_x86-64.msi",
+        "syn": "the most efficient free and open office suite on the market",
+        "folder": "program",
+        "exe": "soffice.exe",
+        "type": "personal use"
     },
     "McAfee-Stinger": {
         "URL": "https://downloadcenter.trellix.com/products/mcafee-avert/Stinger/stinger64.exe",
         "exe": "stinger64.exe",
         "cmd": "--GO --ADL --ROOTKIT --WMI",
-        "cmd_syn": "does a full scan of all local drives",
-        "syn": "an advanced rootkit and threat remover"
+        "cmd_syn": "doing a full scan of all local drives",
+        "syn": "an advanced rootkit and threat remover",
+        "type": "security"
     },
     "OpenVPN": {
         "URL": "https://github.com/portapps/openvpn-portable/releases/download/2.4.9-I601-8/openvpn-portable-win64-2.4.9-I601-8-setup.exe",
         "folder": "openvpn-portable",
         "exe": "openvpn-portable.exe",
-        "syn": "a portable VPN"
+        "syn": "a portable VPN",
+        "type": "security"
     },
     "PortableApps": {
         "URL": "https://download2.portableapps.com/portableapps/PortableApps.comPlatform/PortableApps.com_Platform_Setup_25.0.paf.exe",
-        "syn": "a suite for portable apps"
+        "syn": "a suite for portable apps",
+        "type": "various utilities"
+    },
+    "RegistryLiveWatch": {
+        "URL": "https://files1.majorgeeks.com/10afebdbffcd4742c81a3cb0f6ce4092156b4375/registry/rgm.zip",
+        "syn": "a free, lightweight and portable tool to monitor activity on a registry key",
+        "exe": "rgm.exe",
+        "type": "hardware information and monitoring"
     },
     "ShutUp10++": {
         "URL": "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
         "exe": "OOSU10.exe",
-        "syn": "a pretty good Windows optimizer and privacy protector"
+        "syn": "a pretty good Windows optimizer and privacy protector",
+        "type": "optimization"
     },
-    "TIW_11": {
+    "Sniffer": {
+        "URL": "https://files1.majorgeeks.com/10afebdbffcd4742c81a3cb0f6ce4092156b4375/networking/sniffer.zip",
+        "syn": "a suite of IP Tools built around a packet sniffer (needs wpcap.dll and a NDIS protocol). Used for network monitoring",
+        "exe": "iptools.exe",
+        "type": "hardware information and monitoring"
+    },
+    "ThisIsWindows11": {
         "URL": "https://github.com/builtbybel/ThisIsWin11/releases/download/1.4.1/TIW11.zip",
         "exe": "ThisIsWin11.exe",
-        "syn": "a useful app to customize and optimize almost every configuration in your PC"
+        "syn": "a useful app to customize and optimize almost every configuration in your PC",
+        "type": "optimization"
     },
     "TorBrowser": {
         "URL": "https://dist.torproject.org/torbrowser/12.0.4/torbrowser-install-win64-12.0.4_ALL.exe",
         "syn": "the best privacy-care browser, based on firefox",
         "folder": "Tor Browser",
-        "exe": "firefox.exe"
+        "exe": "firefox.exe",
+        "cmd": "/S",
+        "cmd_syn": "installing itself silently",
+        "type": "browsers"
     },
     "Ungoogled-Chromium": {
-        "URL": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/111.0.5563.65-1.1/ungoogled-chromium_111.0.5563.65-1.1_windows_x64.zip",
-        "folder": "ungoogled-chromium_111.0.5563.65-1.1_windows",
+        "URL": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/113.0.5672.93-1.1/ungoogled-chromium_113.0.5672.93-1.1_windows_x64.zip",
+        "folder": "ungoogled-chromium_113.0.5672.93-1.1_windows",
         "exe": "chrome.exe",
-        "syn": "a full-debloated version of Google Chrome"
+        "syn": "a full-debloated version of Google Chrome",
+        "type": "browsers"
+    },
+    "Ventoy": {
+        "URL": "https://github.com/ventoy/Ventoy/releases/download/v1.0.91/ventoy-1.0.91-windows.zip",
+        "folder": "ventoy-1.0.91",
+        "exe": "Ventoy2Disk.exe",
+        "syn": "an open source tool to create bootable USB drive for ISO/WIM/IMG/VHD(x)/EFI files",
+        "type": "various utilities"
+    },
+    "VitualBox-Portable": {
+        "URL": "https://www.vbox.me/files/Portable-VirtualBox_v5.1.22-Starter_v6.4.10-Win_all.exe",
+        "syn": "a free and open source software tool that lets you run any operating system from a usb stick without separate installation",
+        "exe": "Portable-VirtualBox.exe",
+        "type": "various utilities"
+    },
+    "Winget": {
+        "URL": "https://github.com/microsoft/winget-cli/releases/download/v1.4.10173/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle",
+        "syn": "the official CLI Windows Package manager (some desktops doesn't have it by default)",
+        "type": "app and data management"
+    },
+    "ZeroInstall": {
+        "URL": "https://get.0install.net/0install.exe",
+        "syn": "a decentralised cross-platform software installation system",
+        "type": "various utilities"
     }
 }

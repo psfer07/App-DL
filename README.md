@@ -1,6 +1,6 @@
 # App-DL
 
-This program is a simple package manager which downloads packaged portable apps from verified repositories.
+This program is an app downloader which downloads several apps from verified repositories.
 
 All you need to do is typing or copying this command in your powershell terminal. It will redirect you to the app.
 
@@ -9,6 +9,23 @@ irm bit.ly/psappdl | iex
 ```
 
 ## Changelog
+
+### App-DL v1.3
+
+* Added app categories for the user to know what the app is related to
+* Released new progress bar, displaying percent completed, download speed and total downloaded
+* Fixed all known bugs
+* Added 12 more apps
+* Updated app versions
+* Now the program supports zip, exe, msi, appx, appxbundle, msix, msixbundle files
+* Improved UI response
+* Improved stability
+* Increased performance
+* Friendly reading code
+  ![App Selection](image/README/1684076485675.png "App selection")
+  ![Path selection](image/README/1684076635434.png "Path selection")
+  ![Confirmation](image/README/1684076676273.png "Confirmation")
+  ![Download bar](image/README/1684076802172.png "Download bar")
 
 ### App-DL v1.2
 
@@ -23,13 +40,13 @@ irm bit.ly/psappdl | iex
 * Improved performance
 * More readable code by simplifying operations
 
-![App selection](image/README/1683374732427.png "App selection")
+  ![App selection](image/README/1683374732427.png "App selection")
 
-![App saving](image/README/1683374909918.png "App saving")
-
+  ![App saving](image/README/1683374909918.png "App saving")
 * Known bugs:
 
   * It only runs without problems in Powershell base, so it won't run for example in Powershell 7.
+  * Confirmation line doesn't work at all yet, so if you need to restart the app, you have to restart it in other part
 
 ### App-DL v1.1
 
