@@ -19,6 +19,7 @@ irm bit.ly/psappdl | iex
 * Updated app versions
 * Now the program supports zip, exe, msi, appx, appxbundle, msix, msixbundle files
 * Improved UI response
+* Improved stability
 * Increased performance
 * Friendly reading code
   ![App Selection](image/README/1684076485675.png "App selection")
