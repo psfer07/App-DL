@@ -31,14 +31,13 @@ function Revoke-Path {
   }
 }
 function Open-File {
-  Write-Main "Launching $program..."
   if ($o -like "*.zip") {
     if (Test-Path -Path "$p\$program\$folder") {
       Write-Main "$program is uncompressed in $p, so opening it directly..."
       Start-Sleep -Milliseconds 500
       Start-Process -FilePath "$p\$program\$folder\$exe" -ErrorAction SilentlyContinue
       Start-Sleep 1
-      break
+      
     }
     # It uncompresses it and opens the app
     elseif (Test-Path -LiteralPath "$p\$o") {
@@ -59,37 +58,51 @@ function Open-File {
       Start-Sleep -Milliseconds 500
       Start-Process -FilePath "$p\$program\$folder\$exe" -ErrorAction SilentlyContinue
       Start-Sleep -Milliseconds 200
-      break
+      
     }
   }
   elseif ($o -like "*.exe") {
     Write-Main 'Exe file detected'
-  
+
     # If there are any recommended parameters for the executable, asks for using them.
     if ($cmd) {
-      $runcmd = Read-Host "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
+      Write-Point "There is a preset for running $program $($cmd_syn). Do you want to do it (if not, it will just launch it as normal)? (y/n)"
+      $runcmd = Read-Host
       if ($runcmd -eq 'y' -or $runcmd -eq 'Y') {
       
         Write-Main "Running $program $($cmd_syn)"
         Start-Process -FilePath "$p\$o" -ArgumentList $($cmd) -ErrorAction SilentlyContinue
         Start-Sleep -Milliseconds 200
-        break
       }
     }
-    if ($runcmd -ne 'y' -or $runcmd -ne 'Y') {
-    
+    else {    
       Write-Main "Running $program directly"
       Start-Process -FilePath "$p\$o" -ErrorAction SilentlyContinue
       Start-Sleep -Milliseconds 200
-      break
     }
   }
   elseif ($o -like "*.msi") {
-    Write-Main 'Windows installer detected'
-    Write-Main "Installing $program silently"
-    msiexec.exe /i "$p\$o" /passive /norestart
-    Start-Sleep -Milliseconds 200
-    break
+    Write-Main 'Microsoft installer detected'
+    Write-Main "Installing $program passively"
+    Start-Process -FilePath msiexec.exe -ArgumentList "/i `"$p\$o`" /passive /promptrestart" -Wait
+    Write-Main "$program successfully installed"
+    Write-Point 'Do you want to launch it?(y/n)'
+    $openInst = Read-Host
+    if ($openInst -eq 'y' -or $openInst -eq 'Y') {
+      Write-Main "Launching $program..."
+
+      # Adapted from https://social.technet.microsoft.com/Forums/ie/en-US/1d50d2f7-f532-40b5-859e-d5cacab1f337/pull-a-msi-property-from-a-powershell-custom-object
+      $windowsInstaller = New-Object -com WindowsInstaller.Installer
+      $database = $windowsInstaller.GetType().InvokeMember("OpenDatabase", 'InvokeMethod', $Null, $windowsInstaller, @("$p\$o", 0))
+      $query = "SELECT Value FROM Property WHERE Property='ProductName'"
+      $view = $database.GetType().InvokeMember("OpenView", 'InvokeMethod', $Null, $database, ($query))
+      $view.GetType().InvokeMember("Execute", 'InvokeMethod', $Null, $view, $Null)
+      $record = $view.GetType().InvokeMember("Fetch", 'InvokeMethod', $Null, $view, $Null)
+      $prod = $record.GetType().InvokeMember("StringData", 'GetProperty', $Null, $record, 1)
+      $prod = Get-WmiObject -Class Win32_Product | Where-Object { $_.Name -eq $prod }
+      $Inst = $prod.InstallLocation
+      Start-Process -FilePath "$Inst\$folder\$exe"
+    }
   }
   elseif ($o -like "*.msix" -or $o -like "*.msixbundle" -or $o -like "*.appx" -or $o -like "*.appxbundle") {
     Write-Main 'Bundle Microsoft app detected'
@@ -98,6 +111,5 @@ function Open-File {
 }
 function Restart-App {
   Write-Main 'Leaving session...'
-  Start-Sleep -Milliseconds 200
   powershell.exe -command "Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/app-dl.ps1" | Invoke-Expression"
 }
