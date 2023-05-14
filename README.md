@@ -15,12 +15,16 @@ irm bit.ly/psappdl | iex
 * Added app categories for the user to know what the app is related to
 * Released new progress bar, displaying percent completed, download speed and total downloaded
 * Fixed all known bugs
-* Added more apps
+* Added 12 more apps
 * Updated app versions
 * Now the program supports zip, exe, msi, appx, appxbundle, msix, msixbundle files
 * Improved UI response
 * Increased performance
 * Friendly reading code
+  ![App Selection](image/README/1684076485675.png "App selection")
+  ![Path selection](image/README/1684076635434.png "Path selection")
+  ![Confirmation](image/README/1684076676273.png "Confirmation")
+  ![Download bar](image/README/1684076802172.png "Download bar")
 
 ### App-DL v1.2
 
