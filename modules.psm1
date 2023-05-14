@@ -14,16 +14,6 @@ function Write-Warning($t) {
   Write-Host "   $t" -ForegroundColor White
   Write-Host "<$b>" -ForegroundColor Red
 }
-function Show-Apps {
-  Write-Main 'Available apps'
-  foreach ($i in 0..($filteredApps.Count - 1)) {
-    $app = $filteredApps[$i]
-    $n = $i + 1
-    $enum = "$n. $($app.Name)"
-    $spaces = " " * (30 - $enum.Length)
-    Write-Point "$enum$spaces | Related to $($app.Type)"
-  }
-}
 function Get-AppSize {
   if ($length -gt 1GB) { [string]::Format("{0:0.00} GB", $length / 1GB) }
   elseIf ($length -gt 1MB) { [string]::Format("{0:0.00} MB", $length / 1MB) }

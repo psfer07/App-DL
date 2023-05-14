@@ -6,12 +6,12 @@ Remove-Item "$Env:TEMP\modules.psm1" -Force -ErrorAction SilentlyContinue
 
 # Imports variables
 [string]$branch = 'dev'
-[string]$mod = "$Env:TEMP\modules.psm1"
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $mod
-Import-Module $mod -DisableNameChecking -Force
-$json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
-# $json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
-# Import-Module ".\modules.psm1" -DisableNameChecking -Force
+# [string]$mod = "$Env:TEMP\modules.psm1"
+# Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $mod
+# Import-Module $mod -DisableNameChecking -Force
+# $json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
+$json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
+Import-Module ".\modules.psm1" -DisableNameChecking -Force
 
 # Sets the JSON data into Powershell variables
 $nameArray = $json.psobject.Properties.Name
@@ -23,7 +23,14 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 
 # Lists every single app in the JSON
 Clear-Host
-Show-Apps
+Write-Main 'Available apps'
+foreach ($i in 0..($filteredApps.Count - 1)) {
+  $app = $filteredApps[$i]
+  $n = $i + 1
+  $enum = "$n. $($app.Name)"
+  $spaces = " " * (30 - $enum.Length)
+  Write-Point "$enum$spaces | Related to $($app.Type)"
+}
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 
 # Assign the corresponding variables to the selected app
