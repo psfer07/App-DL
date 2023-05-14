@@ -69,6 +69,8 @@
     "LibreOffice": {
         "URL": "https://tdf.jensgutermuth.de/libreoffice/stable/7.5.3/win/x86_64/LibreOffice_7.5.3_Win_x86-64.msi",
         "syn": "the most efficient free and open office suite on the market",
+        "folder": "program",
+        "exe": "soffice.exe",
         "type": "personal use"
     },
     "McAfee-Stinger": {
