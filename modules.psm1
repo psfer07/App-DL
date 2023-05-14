@@ -38,7 +38,7 @@ function Open-File {
       Start-Sleep -Milliseconds 500
       Start-Process -FilePath "$p\$program\$folder\$exe" -ErrorAction SilentlyContinue
       Start-Sleep 1
-      Exit
+      break
     }
     # It uncompresses it and opens the app
     elseif (Test-Path -LiteralPath "$p\$o") {
@@ -59,9 +59,8 @@ function Open-File {
       Start-Sleep -Milliseconds 500
       Start-Process -FilePath "$p\$program\$folder\$exe" -ErrorAction SilentlyContinue
       Start-Sleep -Milliseconds 200
-      Exit
+      break
     }
-    break
   }
   elseif ($o -like "*.exe") {
     Write-Main 'Exe file detected'
@@ -74,7 +73,7 @@ function Open-File {
         Write-Main "Running $program $($cmd_syn)"
         Start-Process -FilePath "$p\$o" -ArgumentList $($cmd) -ErrorAction SilentlyContinue
         Start-Sleep -Milliseconds 200
-        Exit
+        break
       }
     }
     if ($runcmd -ne 'y' -or $runcmd -ne 'Y') {
@@ -82,9 +81,8 @@ function Open-File {
       Write-Main "Running $program directly"
       Start-Process -FilePath "$p\$o" -ErrorAction SilentlyContinue
       Start-Sleep -Milliseconds 200
-      Exit
+      break
     }
-    break
   }
   elseif ($o -like "*.msi") {
     Write-Main 'Windows installer detected'
