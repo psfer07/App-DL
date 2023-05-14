@@ -120,6 +120,8 @@
         "syn": "the best privacy-care browser, based on firefox",
         "folder": "Tor Browser",
         "exe": "firefox.exe",
+        "cmd": "/S",
+        "cmd_syn": "installing itself silently",
         "type": "browsers"
     },
     "Ungoogled-Chromium": {
