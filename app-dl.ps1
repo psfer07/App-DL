@@ -58,7 +58,7 @@ Write-Point "Size: $size"
 if ($folder) { Write-Point "Saved in: $folder" }
 if ($exe) { Write-Point "Executable: $exe" }
 if ($cmd_syn) { Write-Point $cmd_syn }
-if ($cmd) { Write-Point "Parameters are: $cmd)" }
+if ($cmd) { Write-Point "Parameters are: $cmd" }
 
 # Sets all possible paths for downloading the program
 Write-Main 'Path selecting'
@@ -86,15 +86,15 @@ switch ($p) {
 }
 
 # Checks if the program was allocated there before
-if (Test-Path "$p\$o") { Revoke-Path }
-if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
+if (Test-Path "$p\$o") { Revoke-Path; break }
+if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path; break }
 
 Clear-Host
 # Asks the user to open the program after downloading it
 $openString = $null
 if ($open -eq $false) {
   Write-Main "Selected path: $p"
-  Write-Point "Do you want to open it when finished? (y/n)"
+  Write-Point "Do you want to open the DOWNLOADED file when finished? (y/n)"
   $openAns = Read-Host
   if ($openAns -eq 'y' -or $openAns -eq 'Y') { $open = $true }
 }
@@ -112,9 +112,9 @@ $wc.DownloadFileAsync($url, "$p\$o")
 # Update the download progress
 while ($wc.IsBusy) {
   $downloadedOld = (Get-Item "$p\$o").Length
-  Start-Sleep -Milliseconds 100
+  Start-Sleep -Milliseconds 200
   $Downloaded = (Get-Item "$p\$o").Length
-  $MBs = ($downloaded - $DownloadedOld)*10
+  $MBs = ($downloaded - $DownloadedOld)*5
   $MBs = [Math]::Round($MBs) / 1MB
   $percentage = ($downloaded / $length) * 100
   $percentage = [Math]::Round($percentage)
@@ -122,7 +122,7 @@ while ($wc.IsBusy) {
   Write-Progress -Activity "Downloading $program..." -Status "$downloadedString ($percentage%) complete" -PercentComplete $percentage
 }
 
-if ($open -eq $true) { Open-File }
+if ($open -eq $true) { Clear-Host; Open-File }
 
 # Continue downloading
 Write-Point 'Do you want to download another app? (y/n)'
