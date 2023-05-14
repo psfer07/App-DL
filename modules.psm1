@@ -31,8 +31,6 @@ function Get-AppSize {
   elseIf ($length -gt 0) { [string]::Format("{0:0.00} B", $length) }
 }
 function Show-Details {
-  $request = Invoke-WebRequest $url -Method Head
-  $length = [int]$request.Headers['Content-Length']
   $size = Get-AppSize $length
   if ($request.error -eq 404) {
     Write-Warning "This program is not currently aviable"
