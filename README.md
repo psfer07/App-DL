@@ -1,6 +1,6 @@
 # App-DL
 
-This program is a simple package manager which downloads packaged portable apps from verified repositories.
+This program is an app downloader which downloads several apps from verified repositories.
 
 All you need to do is typing or copying this command in your powershell terminal. It will redirect you to the app.
 
@@ -9,6 +9,18 @@ irm bit.ly/psappdl | iex
 ```
 
 ## Changelog
+
+### App-DL v1.3
+
+* Added app categories for the user to know what the app is related to
+* Released new progress bar, displaying percent completed, download speed and total downloaded
+* Fixed all known bugs
+* Added more apps
+* Updated app versions
+* Now the program supports zip, exe, msi, appx, appxbundle, msix, msixbundle files
+* Improved UI response
+* Increased performance
+* Friendly reading code
 
 ### App-DL v1.2
 
@@ -23,7 +35,7 @@ irm bit.ly/psappdl | iex
 * Improved performance
 * More readable code by simplifying operations
 
-  ![App selection](image/README/1683374769482.png "App selection")
+  ![App selection](image/README/1683374732427.png "App selection")
 
   ![App saving](image/README/1683374909918.png "App saving")
 * Known bugs:
