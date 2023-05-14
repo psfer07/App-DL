@@ -1,17 +1,17 @@
-function Write-Main($T) {
+function Write-Main($t) {
   $b = '============================================'
   Write-Host "`n`n<$b>" -ForegroundColor Blue
-  Write-Host "   $T" -ForegroundColor White
+  Write-Host "   $t" -ForegroundColor White
   Write-Host "<$b>" -ForegroundColor Blue
 }
-function Write-Point($T) {
+function Write-Point($t) {
   Write-Host '==> ' -NoNewline -ForegroundColor Green
-  Write-Host "$T" -ForegroundColor White
+  Write-Host "$t" -ForegroundColor White
 }
-function Write-Warning($T) {
+function Write-Warning($t) {
   $b = '============================================'
   Write-Host "`n`n<$b>" -ForegroundColor Red
-  Write-Host "   $T" -ForegroundColor White
+  Write-Host "   $t" -ForegroundColor White
   Write-Host "<$b>" -ForegroundColor Red
 }
 function Show-Apps {
@@ -74,7 +74,7 @@ function Open-File {
   if ($o -like "*.zip") { Open-Zip }
   elseif ($o -like "*.exe") { Open-Exe }
   elseif ($o -like "*.msi") { Open-Msi }
-  elseif ($o -like "*.msixbundle" -or "*.appxbundle" -or "*.msix" -or "*.appx") { Open-MSApp }
+  elseif ($o -like "*.msix" -or "*.msixbundle" -or "*.appx" -or "*.appxbundle") { Open-MSApp }
 }
 function Open-Zip {
   if (Test-Path -Path "$p\$program\$folder") {

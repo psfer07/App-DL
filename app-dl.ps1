@@ -6,12 +6,12 @@ Remove-Item "$Env:TEMP\modules.psm1" -Force -ErrorAction SilentlyContinue
 
 # Imports variables
 [string]$branch = 'dev'
-# [string]$module = "$Env:TEMP\modules.psm1"
-# Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $module
-# Import-Module $module -DisableNameChecking -Force
-# $json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
-$json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
-Import-Module ".\modules.psm1" -DisableNameChecking -Force
+[string]$mod = "$Env:TEMP\modules.psm1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/psfer07/App-DL/$branch/modules.psm1" -OutFile $mod
+Import-Module $mod -DisableNameChecking -Force
+$json = Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/apps.json"
+# $json = Get-Content ".\apps.json" -Raw | ConvertFrom-Json
+# Import-Module ".\modules.psm1" -DisableNameChecking -Force
 
 # Sets the JSON data into Powershell variables
 $nameArray = $json.psobject.Properties.Name
@@ -71,8 +71,8 @@ else { $openString = ' and open' }
 
 # Last confirmation
 Write-Main "You are going to download$openString $program"
-$confirm = Read-Host 'Confirmation press any key or go to the (R)estart menu)'
-if ($confirm -eq 'R' -or $confirm -eq 'r') { Restart-App }
+$conf = Read-Host 'Confirmation press any key or go to the (R)estart menu)'
+if ($conf -eq 'R' -or $conf -eq 'r') { Restart-App }
 Clear-Host
 
 # Start download
@@ -81,14 +81,14 @@ $wc.DownloadFileAsync($url, "$p\$o")
 
 # Updates the download progress
 while ($wc.IsBusy) {
-  $DownloadedOld = (Get-Item "$p\$o").Length
+  $downloadedOld = (Get-Item "$p\$o").Length
   Start-Sleep -Milliseconds 100
   $Downloaded = (Get-Item "$p\$o").Length
-  $MBs = ($Downloaded - $DownloadedOld)*10
+  $MBs = ($downloaded - $DownloadedOld)*10
   $MBs = [Math]::Round($MBs) / 1MB
-  $percentage = ($Downloaded / $length) * 100
+  $percentage = ($downloaded / $length) * 100
   $percentage = [Math]::Round($percentage)
-  $downloadedString = "{0:N2} MB / {1:N2} MB at {2:N2} MB/s" -f ($Downloaded / 1MB), ($length / 1MB), $MBs
+  $downloadedString = "{0:N2} MB / {1:N2} MB at {2:N2} MB/s" -f ($downloaded / 1MB), ($length / 1MB), $MBs
   Write-Progress -Activity "Downloading $program..." -Status "$downloadedString ($percentage%) complete" -PercentComplete $percentage
 }
 
