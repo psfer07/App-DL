@@ -34,6 +34,11 @@ function Show-Details {
   $request = Invoke-WebRequest $url -Method Head
   $length = [int]$request.Headers['Content-Length']
   $size = Get-AppSize $length
+  if ($request.error -eq 404) {
+    Write-Warning "This program is not currently aviable"
+    Write-Host "Contact the developer for him to fix it"
+    Restart-App
+  }
 
   Write-Main "$program selected"
   Write-Point "$program is $syn"
