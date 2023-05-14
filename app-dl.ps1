@@ -22,16 +22,19 @@ foreach ($i in 0..($nameArray.Count - 1)) {
 }
 
 # Lists every single app in the JSON
-Clear-Host
+#Clear-Host
 Show-Apps
 $pkg = Read-Host "`nWrite the number of the app you want to get"
 
 # Assign the corresponding variables to the selected app
-$n = $filteredApps[$pkg - 1]; $program = $n.Name; $exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $type = $n.type; $o = Split-Path $url -Leaf
+$n = $filteredApps[$pkg - 1]; $program = $n.Name
 
 Write-Main "$program selected"
-Start-Sleep 1
-Clear-Host
+# Assign the left variables for quicker response
+$exe = $n.Exe; $syn = $n.Syn; $folder = $n.folder; $url = $n.URL; $cmd = $n.Cmd; $cmd_syn = $n.Cmd_syn; $type = $n.type; $o = Split-Path $url -Leaf; $open = $false
+
+Start-Sleep -Milliseconds 750
+#Clear-Host
 Show-Details
 
 # Sets all possible paths for downloading the program
@@ -54,53 +57,48 @@ switch ($p) {
 if (Test-Path "$p\$o") { Revoke-Path }
 if (Test-Path "$p\$program\$folder\$exe") { Revoke-Path }
 
-$openString = $null
-if ($open -eq $true) { $openString = ' and open' }
 
 # Asks the user to open the program after downloading it
-if ($open -ne $true) {
+$openString = $null
+if ($open -eq $false) {
   Write-Main "Selected path: $p"
   Write-Point "Do you want to open it when finished? (y/n)"
   $openAns = Read-Host
-  $open = $false
   if ($openAns -eq 'y' -or $openAns -eq 'Y') { $open = $true }
-}
+} else { $openString = ' and open' }
+
 
 # Last confirmation
 Write-Main "You are going to download$openString $program"
 $confirm = Read-Host 'Confirmation press any key or go to the (R)estart menu)'
 if ($confirm -eq 'R' -or $confirm -eq 'r') { Restart-App }
 
-Clear-Host
+#Clear-Host
 $wc = New-Object System.Net.WebClient
-$bytesReceived = 0
-$total = $wc.DownloadFile($url, "$p\$o")
-$timer = New-Object System.Timers.Timer -Property @{
-  Interval  = 100
-  AutoReset = $true
+$downloaded = 1
+$length = ($wc.GetResponse($url)).ContentLength
+
+$wc.DownloadFileCompleted = {
+  Write-Main "File downloaded successfully"  else { Write-Warning "An error occurred while downloading the file" }
 }
 
-# Define the progress writer script block
-$progressWriter = {
-  $percentComplete = ($args[0].BytesReceived / $args[0].TotalBytesToReceive) * 100
-  Write-Progress -Activity "Downloading $o" -Status 'Downloading' -PercentComplete $percentComplete
+$wc.DownloadProgressChanged = {
+    $completed = $_.BytesReceived
+    $total = $_.TotalBytesToReceive
+    $percentage = $completed / $total * 100
+    Write-Progress -Activity "Downloading $o" -Status "Progress" -PercentComplete $percentage
 }
 
-# Add event handler
-$eventId = Register-ObjectEvent $wc DownloadProgressChanged -Action $progressWriter
-$timer.Start()
+$wc.DownloadFileAsync($url, "$p\$o")
 
-# Wait for download to complete
-while ($bytesReceived -lt $total) {
-  $bytesReceived = $wc.BytesReceived
-  Start-Sleep -Milliseconds 100
+while ($wc.IsBusy) {
+    Start-Sleep -Milliseconds 100
+    $downloaded = (Get-Item "$p\$o").Length
+    $percentage = $downloaded / $length * 100
+    Write-Host $percentage
+    # Write-Progress -Activity "Downloading $program..." -Status "Progress" -PercentComplete $percentage
 }
 
-# Stop the timer and remove event handler
-$timer.Stop()
-Unregister-Event -SubscriptionId $eventId
-
-if ($?) { Write-Main "File downloaded successfully" } else { Write-Warning "An error occurred while downloading the file" }
 if ($open -eq $true) { Open-File }
 Write-Point 'Do you want to download another app? (y/n)'
 $repeat = Read-Host
