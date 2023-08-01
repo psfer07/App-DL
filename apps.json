@@ -65,7 +65,7 @@
             "syn": "a useful app to customize and optimize almost every configuration in your PC"
         }
     },
-    "Browser": {
+    "Browsers": {
         "Brave-Portable": {
             "URL": "https://github.com/portapps/brave-portable/releases/download/1.52.129-87/brave-portable-win64-1.52.129-87.7z",
             "portapps": true,
