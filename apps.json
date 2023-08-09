@@ -1,7 +1,7 @@
 {
     "Data management": {
-        
         "7-Zip": {
+            "Name": "7-Zip",
             "URL": "https://www.7-zip.org/a/7z2301-x64.exe",
             "exe": "7zFM.exe",
             "portable": true,
@@ -9,6 +9,7 @@
             "size": "5,70MB"
         },
         "BlankAndSecure": {
+            "Name": "BlankAndSecure",
             "URL": "https://files1.majorgeeks.com/10afebdbffcd4742c81a3cb0f6ce4092156b4375/drives/BlankAndSecure.zip",
             "exe": "BlankAndSecure.exe",
             "portable": true,
@@ -16,6 +17,7 @@
             "size": "175KB"
         },
         "DiskGenius": {
+            "Name": "DiskGenius",
             "URL": "https://engdownload.geniusite.com/winpe/DGEng5501488_x64.zip",
             "folder": "DiskGenius",
             "exe": "DiskGenius.exe",
@@ -24,6 +26,7 @@
             "size": "64MB"
         },
         "Ventoy": {
+            "Name": "Ventoy",
             "URL": "https://github.com/ventoy/Ventoy/releases/download/v1.0.94/ventoy-1.0.94-windows.zip",
             "folder": "ventoy-1.0.94",
             "exe": "Ventoy2Disk.exe",
@@ -33,8 +36,8 @@
         }
     },
     "System optimization": {
-
         "BCUninstaller": {
+            "Name": "BCUninstaller",
             "URL": "https://github.com/Klocman/Bulk-Crap-Uninstaller/releases/download/v5.6/BCUninstaller_5.6_portable.zip",
             "exe": "BCUninstaller.exe",
             "portable": true,
@@ -42,6 +45,7 @@
             "size": "358MB"
         },
         "Bleachbit": {
+            "Name": "Bleachbit",
             "URL": "https://download.bleachbit.org/BleachBit-4.4.2-portable.zip",
             "folder": "Bleachbit-Portable",
             "exe": "bleachbit.exe",
@@ -50,6 +54,7 @@
             "size": "16,4MB"
         },
         "Dism++": {
+            "Name": "Dism++",
             "URL": "https://github.com/Chuyu-Team/Dism-Multi-language/releases/download/v10.1.1002.1/Dism++10.1.1002.1.zip",
             "exe": "Dism++x64.exe",
             "portable": true,
@@ -57,6 +62,7 @@
             "size": "7,5MB"
         },
         "DNSJumper": {
+            "Name": "DNSJumper",
             "URL": "https://www.sordum.org/files/download/dns-jumper/DnsJumper.zip",
             "exe": "DnsJumper.exe",
             "portable": true,
@@ -64,12 +70,14 @@
             "size": "1,08MB"
         },
         "FileOptimizer": {
+            "Name": "FileOptimizer",
             "URL": "https://download2.portableapps.com/portableapps/FileOptimizerPortable/FileOptimizerPortable_16.30.2781.paf.exe",
             "portable": true,
             "syn": "an advanced file optimizer featuring a lossless (no quality loss) file size reduction with high compatibility",
             "size": "378MB"
         },
         "RegistryLiveWatch": {
+            "Name": "RegistryLiveWatch",
             "URL": "https://files1.majorgeeks.com/10afebdbffcd4742c81a3cb0f6ce4092156b4375/registry/rgm.zip",
             "exe": "rgm.exe",
             "portable": true,
@@ -77,12 +85,14 @@
             "size": "725KB"
         },
         "ShutUp10++": {
+            "Name": "ShutUp10++",
             "URL": "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
             "exe": "OOSU10.exe",
             "portable": true,
             "syn": "a pretty good Windows optimizer and privacy protector"
         },
         "BloatyNoisy": {
+            "Name": "BloatyNoisy",
             "URL": "https://github.com/builtbybel/BloatyNosy/releases/download/0.85.0/BloatyNosyApp.zip",
             "exe": "BloatyNoisy.exe",
             "portable": true,
@@ -91,14 +101,15 @@
         }
     },
     "Browsers": {
-
         "Brave-Portable": {
+            "Name": "Brave",
             "URL": "https://github.com/portapps/brave-portable/releases/download/1.52.129-87/brave-portable-win64-1.52.129-87.7z",
             "portapps": true,
             "syn": "a portable version of the Brave browser",
             "size": "327MB"
         },
         "TorBrowser": {
+            "Name": "TorBrowser",
             "URL": "https://www.torproject.org/dist/torbrowser/12.5.2/torbrowser-install-win64-12.5.2_ALL.exe",
             "folder": "Tor Browser",
             "exe": "firefox.exe",
@@ -109,21 +120,23 @@
             "size": "252MB"
         },
         "Ungoogled-Chromium-portable": {
+            "Name": "Ungoogled-Chromium",
             "URL": "https://github.com/portapps/ungoogled-chromium-portable/releases/download/103.0.5060.114-15/ungoogled-chromium-portable-win64-103.0.5060.114-15.7z",
             "portapps": true,
-            "syn": "a full-debloated version of Google Chrome (portable also)",
+            "syn": "a full-debloated version of Google Chrome",
             "size": "281MB"
         }
     },
     "Basic apps": {
-
         "Discord-portable": {
+            "Name": "Discord",
             "URL": "https://github.com/portapps/discord-portable/releases/download/1.0.9010-15/discord-portable-win32-1.0.9010-15.7z",
             "portapps": true,
             "syn": "a famous gamer-focused social media",
             "size": "172MB"
         },
         "Everything": {
+            "Name": "Everything",
             "URL": "https://www.voidtools.com/Everything-1.4.1.1023.x64.zip",
             "exe": "Everything.exe",
             "portable": true,
@@ -131,6 +144,7 @@
             "size": "3,2MB"
         },
         "LibreOffice": {
+            "Name": "LibreOffice",
             "URL": "https://tdf.jensgutermuth.de/libreoffice/stable/7.5.3/win/x86_64/LibreOffice_7.5.3_Win_x86-64.msi",
             "folder": "program",
             "exe": "soffice.exe",
@@ -138,23 +152,27 @@
             "size": "668MB"
         },
         "PortableApps": {
+            "Name": "PortableApps",
             "URL": "https://download2.portableapps.com/portableapps/PortableApps.comPlatform/PortableApps.com_Platform_Setup_25.0.paf.exe",
             "syn": "a suite for portable apps",
             "size": "16,9MB"
         },
         "qBittorrent-portable": {
+            "Name": "qBittorrent",
             "URL": "https://github.com/portapps/qbittorrent-portable/releases/download/4.5.0-19/qbittorrent-portable-win64-4.5.0-19.7z",
             "portapps": true,
             "syn": "A free and open-source software alternative to µTorrent",
             "size": "40MB"
         },
         "VLC-portable": {
+            "Name": "VLC",
             "URL": "https://github.com/portapps/vlc-portable/releases/download/3.0.16-11/vlc-portable-win64-3.0.16-11.7z",
             "portapps": true,
             "syn": "an open-source media player",
             "size": "173MB"
         },
         "WhatsApp-portable": {
+            "Name": "WhatsApp",
             "URL": "https://github.com/portapps/whatsapp-portable/releases/download/2.2134.10-32/whatsapp-portable-win64-2.2134.10-32.7z",
             "portapps": true,
             "syn": "a portable version of the instant messaging app",
@@ -162,13 +180,14 @@
         }
     },
     "Security & Privacy": {
-
         "KVRT": {
+            "Name": "KVRT",
             "URL": "https://devbuilds.s.kaspersky-labs.com/devbuilds/KVRT/latest/full/KVRT.exe",
             "portable": true,
             "syn": "the Kaspersky Virus Removal Tool, a portable antivirus updated with the latest definitions"
         },
         "McAfee-Stinger": {
+            "Name": "McAfee-Stinger",
             "URL": "https://downloadcenter.trellix.com/products/mcafee-avert/Stinger/stinger64.exe",
             "exe": "stinger64.exe",
             "portable": true,
@@ -177,6 +196,7 @@
             "cmd_syn": "doing a full scan of all local drives"
         },
         "NextDNS": {
+            "Name": "NextDNS",
             "URL": "https://github.com/nextdns/nextdns/releases/download/v1.39.4/nextdns_1.39.4_windows_amd64.zip",
             "exe": "nextdns.exe",
             "portable": true,
@@ -184,12 +204,14 @@
             "size": "5,89MB"
         },
         "OpenVPN-portable": {
+            "Name": "OpenVPN",
             "URL": "https://github.com/portapps/openvpn-portable/releases/download/2.4.9-I601-8/openvpn-portable-win64-2.4.9-I601-8.7z",
             "portapps": true,
             "syn": "a well known open-source VPN",
             "size": "21,5MB"
         },
         "Portmaster": {
+            "Name": "Portmaster",
             "URL": "https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.exe",
             "syn": "a privacy suite for your desktop OS",
             "cmd": "/S",
@@ -197,6 +219,7 @@
             "size": "429MB"
         },
         "Wireshark-portable": {
+            "Name": "Wireshark",
             "URL": "https://github.com/portapps/wireshark-portable/releases/download/3.6.5-19/wireshark-portable-win64-3.6.5-19.7z",
             "portapps": true,
             "syn": "a network package analyzer tool",
@@ -204,8 +227,8 @@
         }
     },
     "Development software": {
-
         "Platform-tools": {
+            "Name": "Platform-tools",
             "URL": "https://dl.google.com/android/repository/platform-tools_r34.0.4-windows.zip",
             "folder": "platform-tools",
             "portable": true,
@@ -215,11 +238,13 @@
             "size": "12,4MB"
         },
         "Universal-Android-Debloater": {
+            "Name": "Universal-Android-Debloater",
             "URL": "https://github.com/0x192/universal-android-debloater/releases/download/0.5.1/uad_gui-windows.exe",
             "portable": true,
             "syn": "a cross-platform GUI written in Rust using ADB to debloat non-rooted android devices"
         },
         "VitualBox-Portable": {
+            "Name": "VitualBox",
             "URL": "https://www.vbox.me/files/Portable-VirtualBox_v5.1.22-Starter_v6.4.10-Win_all.exe",
             "exe": "Portable-VirtualBox.exe",
             "portable": true,
@@ -227,16 +252,19 @@
             "size": "2,5MB"
         },
         "VSCode-portable": {
+            "Name": "VSCode",
             "URL": "https://github.com/portapps/vscode-portable/releases/download/1.73.1-47/vscode-portable-win64-1.73.1-47.7z",
             "portapps": true,
             "syn": "a lightweight but powerful source code editor",
             "size": "249MB"
         },
         "Winget": {
+            "Name": "Winget",
             "URL": "https://github.com/microsoft/winget-cli/releases/download/v1.5.1881/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle",
             "syn": "the official CLI Windows Package manager (some desktops doesn't have it by default)"
         },
         "ZeroInstall": {
+            "Name": "ZeroInstall",
             "URL": "https://get.0install.net/0install.exe",
             "portable": true,
             "syn": "a decentralised cross-platform software installation system",
