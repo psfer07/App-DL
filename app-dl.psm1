@@ -65,7 +65,7 @@ function Get-AppSize {
 }
 function Revoke-Path {
   Write-Warning "It seems that $program is currently allocated in this path"
-  do { $reset = Read-Host "You can (r)estart, (o)pen, or (e)xit the app (OPEN default)" } while ($reset -ne 'r' -and $reset -ne 'o' -and $reset -ne 'e')
+  do { $reset = Read-Host "You can (r)estart, (o)pen, or (e)xit the app" } while ($reset -ne 'r' -and $reset -ne 'o' -and $reset -ne 'e')
 
   switch ($reset) {
     'r' { Reset-App }
