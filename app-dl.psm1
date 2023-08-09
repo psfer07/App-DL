@@ -96,7 +96,7 @@ function Open-App {
     "*.zip" {
       Write-Title "Zip file detected"
       if (Test-Path -Path "$p\$program\$folder") {
-        Write-Title "$program is Available in $pName, so opening..."
+        Write-Title "$program is Available in $path, so opening..."
         Open-Extracted
       }
       # Expand and open the app
@@ -117,13 +117,17 @@ function Open-App {
       }
     }
     "*.7z" {
-      $7z = "$($AppDL.libs)\7z.exe"
+      $wc = New-Object System.Net.WebClient
+      $7z_libs = '7z.exe', '7z.dll'
+      foreach ($7z_lib in $7z_libs) { $wc.DownloadFile("$repoURL/7z/$7z_lib", "$Env:TEMP\$7z_lib") }
+      $wc.Dispose()
+      $7z = "$assets\7z.exe"
       # $7z = '.\7z\7z.exe'
       if ($portapps) { $exe = "$program".ToLower() + '.exe' }
       Write-Title '7z file detected'
       if (Test-Path -Path "$p\$program\$folder") {
         Clear-Host
-        Write-Title "$program is available in $pName, so opening..."
+        Write-Title "$program is available in $path, so opening..."
         Open-Extracted
       
       }
@@ -202,7 +206,8 @@ function Open-App {
   }
 }
 function Reset-App {
+  Clear-Host
   Write-Title 'Leaving session...'
-  powershell.exe -command Invoke-Expression '.\app-dl.ps1'
-  # powershell.exe -command "Invoke-RestMethod "https://raw.githubusercontent.com/psfer07/App-DL/$branch/app-dl.ps1" | Invoke-Expression"
+  # powershell.exe -command Invoke-Expression '.\app-dl.ps1'
+  powershell.exe -command "Invoke-RestMethod '$repoURL/app-dl.ps1' | Invoke-Expression"
 }
