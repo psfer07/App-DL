@@ -25,19 +25,15 @@ function Write-Point {
   param(
     [Parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true)]
     [string]$t,
-
-    [Parameter(Position = 1)]
-    [int]$pad = 2,
     
     [switch]$NoNewLine = $false
   )
-  $b = "=" * $pad
   if ($NoNewLine) {
-    Write-Host "$b> " -NoNewline -ForegroundColor Magenta
+    Write-Host '==> ' -NoNewline -ForegroundColor Magenta
     Write-Host "$t" -NoNewline -ForegroundColor White
   }
   else {
-    Write-Host "$b> " -NoNewline -ForegroundColor Magenta
+    Write-Host '==> ' -NoNewline -ForegroundColor Magenta
     Write-Host "$t" -ForegroundColor White
   }
 }
@@ -191,10 +187,8 @@ function Open-App {
       }
     }
     default {
-      if ($o -like "*.msix" -or $o -like "*.msixbundle" -or $o -like "*.appx" -or $o -like "*.appxbundle") {
-        Write-Title 'Bundle Microsoft app detected'
-        Add-AppPackage -Path "$p\$o"
-      }
+      Write-Title 'Bundle Microsoft app detected'
+      Add-AppPackage -Path "$p\$o" else 
     }
   }
 }
