@@ -1,11 +1,16 @@
-function Write-Title($t) {
+function Write-Title {
+  param (
+    [string]$t,
+    [switch]$warn
+  )
+  if ($warn) { $bColor = "Red"} else { $bColor = "Blue"}
   if ($t.Length % 2 -ne 0, 1) { [string]$extra = 'o' }
   $b = "o" * (4 + $t.Length)
-  Write-Host "`n`nooo$b$extra" -ForegroundColor DarkBlue
-  Write-Host "oo$extra " -NoNewline -ForegroundColor DarkBlue
+  Write-Host "`n`nooo$b$extra" -ForegroundColor Dark$bColor
+  Write-Host "oo$extra " -NoNewline -ForegroundColor Dark$bColor
   Write-Host "$t" -NoNewline -ForegroundColor White
-  Write-Host " oo$extra" -ForegroundColor DarkBlue
-  Write-Host "ooo$b$extra" -ForegroundColor DarkBlue
+  Write-Host " oo$extra" -ForegroundColor Dark$bColor
+  Write-Host "ooo$b$extra" -ForegroundColor Dark$bColor
 }
 function Write-Subtitle {
   param (
@@ -37,15 +42,6 @@ function Write-Point {
     Write-Host "$t" -ForegroundColor White
   }
 }
-function Write-Warning($t) {
-  if ($t.Length % 2 -ne 0, 1) { [string]$extra = 'o' }
-  $b = "o" * (4 + $t.Length)
-  Write-Host "`n`nooo$b$extra" -ForegroundColor DarkRed
-  Write-Host "oo$extra " -NoNewline -ForegroundColor DarkRed
-  Write-Host "$t" -NoNewline -ForegroundColor White
-  Write-Host " oo$extra" -ForegroundColor DarkRed
-  Write-Host "ooo$b$extra" -ForegroundColor DarkRed
-}
 function Get-AppSize($size) {
   $suffixes = "B", "kB", "MB", "GB"
   for ($i = 0; $i -lt $suffixes.Length; $i++) {
@@ -55,7 +51,7 @@ function Get-AppSize($size) {
   return [string]::Format("{0:0.00} {1}", $size, $suffixes[-1])
 }
 function Revoke-Path {
-  Write-Warning "It seems that $app is currently allocated in this path"
+  Write-Title -warn "It seems that $app is currently allocated in this path"
   do { $reset = Read-Host "You can (r)estart, (o)pen, or (e)xit the app" } while ($reset -ne 'r' -and $reset -ne 'o' -and $reset -ne 'e')
 
   switch ($reset) {
@@ -99,7 +95,7 @@ function Open-App {
           Write-Title 'Package successfully extracted...'
         }
         else {
-          Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"
+          Write-Title -warn "Failed to extract package. Error: $($_.Exception.Message)"
           Read-Host "Press any key to continue..."
         }
         Write-Subtitle "Running $app directly"
@@ -130,7 +126,7 @@ function Open-App {
           Write-Title 'Package successfully extracted...'
         }
         else {
-          Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"
+          Write-Title -warn "Failed to extract package. Error: $($_.Exception.Message)"
           Read-Host 'Press any key to continue...'
         }
         Clear-Host
