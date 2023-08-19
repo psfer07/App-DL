@@ -3,7 +3,7 @@ function Write-Title {
     [string]$t,
     [switch]$warn
   )
-  if ($warn) { $bColor = "Red"} else { $bColor = "Blue"}
+  if ($warn) { $bColor = "Red" } else { $bColor = "Blue" }
   if ($t.Length % 2 -ne 0, 1) { [string]$extra = 'o' }
   $b = "o" * (4 + $t.Length)
   Write-Host "`n`nooo$b$extra" -ForegroundColor Dark$bColor
@@ -44,8 +44,8 @@ function Write-Point {
 }
 function Invoke-WhenAllParams {
   param (
-      [Parameter(Mandatory, ValueFromPipeline)]
-      [scriptblock]$action
+    [Parameter(Mandatory, ValueFromPipeline)]
+    [scriptblock]$action
   )
   if (!($isAppValid.IsInstance -and $null -ne $portable -and $null -ne $path -and $null -ne $open)) { Invoke-Command -ScriptBlock $action }
 }
@@ -63,11 +63,12 @@ function Revoke-Path {
 
   switch ($reset) {
     'r' { Start-Main }
-    'o' { Open-App }
+    'o' { Open-App $o }
     'e' { Write-Title 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
   }
 }
 function Open-App {
+  param ([Parameter(Mandatory)][string]$o)
   function Open-Extracted {
     if ($cmd) {
       Write-Point "There is a preset for running $app $($cmd_syn). Launch it with presets?" 
@@ -98,11 +99,9 @@ function Open-App {
         Write-Title 'Zip file detected'
         Write-Point "$app is saved as a zip file, so uncompressing..."
         Expand-Archive -Literalpath "$p\$o" -DestinationPath "$p\$app" -Force
-        if ($?) {
-          Write-Title 'Package successfully extracted...'
-        }
+        if ($?) { Write-Title 'Package successfully extracted...' }
         else {
-          Write-Title -warn "Failed to extract package. Error: $($_.Exception.Message)"
+          Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"
           Read-Host "Press any key to continue..."
         }
         Write-Subtitle "Running $app directly"
@@ -129,11 +128,9 @@ function Open-App {
         Write-Title '7z file detected'
         Write-Point "$app is saved as a 7z file, so uncompressing..."
         Start-Process $7z -ArgumentList "x `"$p\$o`" -o`"$p\$app`"" -Wait -NoNewWindow
-        if ($?) {
-          Write-Title 'Package successfully extracted...'
-        }
+        if ($?) { Write-Title 'Package successfully extracted...' }
         else {
-          Write-Title -warn "Failed to extract package. Error: $($_.Exception.Message)"
+          Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"
           Read-Host 'Press any key to continue...'
         }
         Clear-Host
