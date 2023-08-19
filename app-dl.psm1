@@ -184,7 +184,7 @@ function Open-App {
     }
     default {
       Write-Title 'Bundle Microsoft app detected'
-      Add-AppPackage -Path "$p\$o" else 
+      Add-AppPackage -Path "$p\$o" -ForceApplicationShutdown -SkipLicense -Confirm:$false
     }
   }
 }
