@@ -42,6 +42,13 @@ function Write-Point {
     Write-Host "$t" -ForegroundColor White
   }
 }
+function Invoke-WhenAllParams {
+  param (
+      [Parameter(Mandatory, ValueFromPipeline)]
+      [scriptblock]$action
+  )
+  if (!($isAppValid.IsInstance -and $null -ne $portable -and $null -ne $path -and $null -ne $open)) { Invoke-Command -ScriptBlock $action }
+}
 function Get-AppSize($size) {
   $suffixes = "B", "kB", "MB", "GB"
   for ($i = 0; $i -lt $suffixes.Length; $i++) {
