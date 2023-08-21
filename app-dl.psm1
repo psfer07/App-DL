@@ -1,8 +1,5 @@
 function Write-Title {
-  param (
-    [string]$t,
-    [switch]$warn
-  )
+  param ([string]$t,[switch]$warn)
   if ($warn) { $bColor = "Red" } else { $bColor = "Blue" }
   if ($t.Length % 2 -ne 0, 1) { [string]$extra = 'o' }
   $b = "o" * (4 + $t.Length)
@@ -13,13 +10,7 @@ function Write-Title {
   Write-Host "ooo$b$extra" -ForegroundColor Dark$bColor
 }
 function Write-Subtitle {
-  param (
-    [Parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true)]
-    [string]$t,
-
-    [Parameter(Position = 1)]
-    [int]$pad = 40
-  )
+  param ([string]$t,[int]$pad = 40)
   if ($t.Length % 2 -ne 0) { [string]$extra = 'o' }
   $b = "o" * (($pad - $t.Length - 3) / 2)
   Write-Host "`n<$b " -NoNewline -ForegroundColor DarkBlue
@@ -27,12 +18,7 @@ function Write-Subtitle {
   Write-Host " $b$extra>" -ForegroundColor DarkBlue
 }
 function Write-Point {
-  param(
-    [Parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true)]
-    [string]$t,
-    
-    [switch]$NoNewLine = $false
-  )
+  param([string]$t,[switch]$NoNewLine = $false)
   if ($NoNewLine) {
     Write-Host '==> ' -NoNewline -ForegroundColor Magenta
     Write-Host "$t" -NoNewline -ForegroundColor White
