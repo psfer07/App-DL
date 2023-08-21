@@ -44,8 +44,17 @@ function Write-Point {
 }
 function Invoke-WhenAllParams {
   param (
-    [Parameter(Mandatory, ValueFromPipeline)]
-    [scriptblock]$action
+    [Parameter(Position = 0, Mandatory, ValueFromPipeline)]
+    [scriptblock]$action,
+    
+    [Parameter(Position = 1)]
+    [string]$app,
+      
+    [Parameter(Position = 2)]
+    [string]$path,
+      
+    [string]$portable = $null,
+    [string]$open = $null
   )
   if (!($isAppValid.IsInstance -and $null -ne $portable -and $null -ne $path -and $null -ne $open)) { Invoke-Command -ScriptBlock $action }
 }
