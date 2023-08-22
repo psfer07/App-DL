@@ -40,10 +40,9 @@ function Revoke-Path {
   Write-Title -warn "It seems that $app is currently allocated in this path"
   do {
     Write-Host
-    Write-Point  -NoNewLine
+    Write-Point -NoNewLine
     $reset = Read-Host 'You can (r)estart, (o)pen, or (e)xit the app' 
   } while ($reset -ne 'r' -and $reset -ne 'o' -and $reset -ne 'e')
-
   switch ($reset) {
     'r' { Start-Main }
     'o' { Open-App $p $o $app $folder $exe $cmd $cmd_syn $portapps }
@@ -81,7 +80,7 @@ function Open-App {
       Write-Point "There is a preset for running $app $($cmd_syn). Launch it with presets?" 
       do {
         Write-Host
-        Write-Point  -NoNewLine
+        Write-Point -NoNewLine
         $runcmd = Read-Host 'y/n' 
       } while ($runcmd -ne 'y' -and $runcmd -ne 'n')
       if ($runcmd -eq 'n') {
@@ -152,7 +151,7 @@ function Open-App {
       Write-Point 'Do you want to launch it after installation?'
       do {
         Write-Host
-        Write-Point  -NoNewLine
+        Write-Point -NoNewLine
         $openInst = Read-Host '--> (y/n)' 
       } while ($openInst -ne 'y' -and $openInst -ne 'n')
       Start-Process -FilePath msiexec.exe -ArgumentList "/i `"$p\$o`" /passive /promptrestart" -Wait
