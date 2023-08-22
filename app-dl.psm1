@@ -37,6 +37,31 @@ function Get-AppSize($size) {
   return [string]::Format("{0:0.00} {1}", $size, $suffixes[-1])
 }
 function Revoke-Path {
+  param (
+    [Parameter(Position = 0)]
+    [string]$p,
+
+    [Parameter(Position = 1)]
+    [string]$o,
+
+    [Parameter(Position = 2)]
+    [string]$app,
+
+    [Parameter(Position = 3)]
+    [string]$folder,
+
+    [Parameter(Position = 4)]
+    [string]$exe,
+
+    [Parameter(Position = 5)]
+    [string]$cmd,
+
+    [Parameter(Position = 6)]
+    [string]$cmd_syn,
+
+    [Parameter(Position = 7)]
+    [string]$portapps
+  )
   Write-Title -warn "It seems that $app is currently allocated in this path"
   do {
     Write-Host
@@ -45,7 +70,7 @@ function Revoke-Path {
   } while ($reset -ne 'r' -and $reset -ne 'o' -and $reset -ne 'e')
   switch ($reset) {
     'r' { Start-Main }
-    'o' { Open-App $p $o $app $folder $exe $cmd $cmd_syn $portapps }
+    'o' { Open-App -p $p -o $o -app $app -folder $folder -exe $exe -cmd $cmd -cmd_syn $cmd_syn -portapps $portapps }
     'e' { Write-Title 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
   }
 }
@@ -122,7 +147,6 @@ function Open-App {
       $7z_libs = '7z.exe', '7z.dll'
       foreach ($7z_lib in $7z_libs) { $wc.DownloadFile("https://raw.githubusercontent.com/psfer07/App-DL/$branch/7z/$7z_lib", "$Env:TEMP\$7z_lib") }
       $wc.Dispose()
-      $7z = "$assets\7z.exe" <# '.\7z\7z.exe' #>
       if ($portapps) { $exe = "$app".ToLower() + '.exe' }
       Write-Title '7z file detected'
       if (Test-Path -Path "$p\$app\$folder") {
@@ -131,7 +155,7 @@ function Open-App {
       }
       elseif (Test-Path -Path "$p\$o") {
         Write-Point "$app is saved as a 7z file, so uncompressing..."
-        Start-Process $7z -ArgumentList "x `"$p\$o`" -o`"$p\$app`"" -Wait -NoNewWindow
+        Start-Process <# "$assets\7z.exe" #> '.\7z\7z.exe' -ArgumentList "x `"$p\$o`" -o`"$p\$app`"" -Wait -NoNewWindow
         if ($?) { Write-Title 'Package successfully extracted...' }
         else {
           Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"
