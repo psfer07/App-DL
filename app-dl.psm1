@@ -3,19 +3,19 @@ function Write-Title {
   if ($warn) { $bColor = "Red" } else { $bColor = "Blue" }
   if ($t.Length % 2 -ne 0, 1) { [string]$extra = 'o' }
   $b = "o" * (4 + $t.Length)
-  Write-Host "`n`nooo$b$extra" -ForegroundColor Dark$bColor
-  Write-Host "oo$extra " -NoNewline -ForegroundColor Dark$bColor
+  Write-Host "`n`nooo$b$extra" -ForegroundColor $bColor
+  Write-Host "oo$extra " -NoNewline -ForegroundColor $bColor
   Write-Host "$t" -NoNewline -ForegroundColor White
-  Write-Host " oo$extra" -ForegroundColor Dark$bColor
-  Write-Host "ooo$b$extra" -ForegroundColor Dark$bColor
+  Write-Host " oo$extra" -ForegroundColor $bColor
+  Write-Host "ooo$b$extra" -ForegroundColor $bColor
 }
 function Write-Subtitle {
   param ([string]$t, [int]$pad = 40)
   if ($t.Length % 2 -ne 0) { [string]$extra = 'o' }
   $b = "o" * (($pad - $t.Length - 3) / 2)
-  Write-Host "`n<$b " -NoNewline -ForegroundColor DarkBlue
+  Write-Host "`n<$b " -NoNewline -ForegroundColor Blue
   Write-Host "$t" -NoNewline -ForegroundColor White
-  Write-Host " $b$extra>" -ForegroundColor DarkBlue
+  Write-Host " $b$extra>" -ForegroundColor Blue
 }
 function Write-Point {
   param([string]$t, [switch]$NoNewLine = $false)
