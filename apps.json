@@ -8,7 +8,7 @@
             "exe": "7zFM.exe",
             "details": [
                 "",
-                "auto/installer"
+                "both"
             ],
             "versions": "PI",
             "cmd": [
@@ -40,7 +40,7 @@
             ],
             "exe": "DiskGenius.exe",
             "details": [
-                "auto/installer",
+                "both",
                 ""
             ],
             "versions": "PI",
@@ -80,7 +80,7 @@
             "folder": "BleachBit-Portable",
             "exe": "bleachbit.exe",
             "details": [
-                "auto/installer",
+                "both",
                 ""
             ],
             "versions": "PI",
@@ -121,7 +121,7 @@
                 "https://netcologne.dl.sourceforge.net/project/nikkhokkho/FileOptimizer/16.30.2781/FileOptimizerSetup.exe",
                 "https://netcologne.dl.sourceforge.net/project/nikkhokkho/FileOptimizer/16.30.2781/FileOptimizerFull.7z.exe"
             ],
-            "details": "auto/installer",
+            "details": "both",
             "versions": "PI",
             "cmd": [
                 "/S",
@@ -197,7 +197,7 @@
             "url": "https://www.torproject.org/dist/torbrowser/12.5.3/torbrowser-install-win64-12.5.3_ALL.exe",
             "folder": "Tor Browser",
             "exe": "Start Tor Browser.lnk",
-            "details": "auto/installer",
+            "details": "both",
             "versions": "P",
             "syn": "the best privacy-care browser, based on Firefox",
             "cmd": "/S",
@@ -250,7 +250,7 @@
             ],
             "exe": "Everything.exe",
             "details": [
-                "auto/installer",
+                "both",
                 ""
             ],
             "versions": "PI",
@@ -280,7 +280,7 @@
                 "https://github.com/portapps/qbittorrent-portable/releases/download/4.5.0-19/qbittorrent-portable-win64-4.5.0-19.7z"
             ],
             "details": [
-                "auto/installer",
+                "both",
                 "portapps"
             ],
             "versions": "PI",
@@ -304,7 +304,7 @@
                 "https://github.com/portapps/vlc-portable/releases/download/3.0.16-11/vlc-portable-win64-3.0.16-11.7z"
             ],
             "details": [
-                "auto/installer",
+                "both",
                 "portapps"
             ],
             "versions": "PI",
@@ -361,7 +361,7 @@
         },
         "Portmaster": {
             "url": "https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.exe",
-            "details": "auto/installer",
+            "details": "both",
             "versions": "I",
             "syn": "a privacy suite for your desktop OS",
             "cmd": "/S",
@@ -374,7 +374,7 @@
                 "https://2.na.dl.wireshark.org/win64/WiresharkPortable64_latest.paf.exe"
             ],
             "details": [
-                "auto/installer",
+                "both",
                 "installer"
             ],
             "versions": "PI",
