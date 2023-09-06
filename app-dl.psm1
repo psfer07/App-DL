@@ -18,14 +18,14 @@ function Write-Subtitle {
   Write-Host " $b$extra>" -ForegroundColor Blue
 }
 function Write-Point {
-  param([string]$t, [switch]$NoNewLine = $false)
+  param([string]$t, [string]$ForegroundColor = 'White', [switch]$NoNewLine = $false)
   if ($NoNewLine) {
     Write-Host '==> ' -NoNewline -ForegroundColor Magenta
-    Write-Host "$t" -NoNewline -ForegroundColor White
+    Write-Host "$t" -NoNewline -ForegroundColor $ForegroundColor
   }
   else {
     Write-Host '==> ' -NoNewline -ForegroundColor Magenta
-    Write-Host "$t" -ForegroundColor White
+    Write-Host "$t" -ForegroundColor $ForegroundColor
   }
 }
 function Get-AppSize($size) {
@@ -37,100 +37,50 @@ function Get-AppSize($size) {
   return [string]::Format("{0:0.00} {1}", $size, $suffixes[-1])
 }
 function Revoke-Path {
-  param (
-    [Parameter(Position = 0)]
-    [string]$p,
-
-    [Parameter(Position = 1)]
-    [string]$o,
-
-    [Parameter(Position = 2)]
-    [string]$app,
-
-    [Parameter(Position = 3)]
-    [string]$folder,
-
-    [Parameter(Position = 4)]
-    [string]$exe,
-
-    [Parameter(Position = 5)]
-    [string]$cmd,
-
-    [Parameter(Position = 6)]
-    [string]$cmd_syn,
-
-    [Parameter(Position = 7)]
-    [string]$portapps
-  )
+  param ([string]$p, [string]$o, [string]$app, [string]$folder, [string]$exe, [string]$details, [string]$cmd, [string]$cmd_syn)
   Write-Title -warn "It seems that $app is currently allocated in this path"
   do {
     Write-Host
     Write-Point -NoNewLine
-    $reset = Read-Host 'You can (r)estart, (o)pen, or (e)xit the app' 
+    $reset = Read-Host 'You can (r)estart, (o)pen, or (e)xit the app'
   } while ($reset -ne 'r' -and $reset -ne 'o' -and $reset -ne 'e')
   switch ($reset) {
     'r' { Start-Main }
-    'o' { Open-App -p $p -o $o -app $app -folder $folder -exe $exe -cmd $cmd -cmd_syn $cmd_syn -portapps $portapps }
+    'o' { Open-App -p $p -o $o -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn }
     'e' { Write-Title 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
   }
 }
 function Open-App {
-  param (
-    [Parameter(Position = 0)]
-    [string]$p,
-
-    [Parameter(Position = 1)]
-    [string]$o,
-
-    [Parameter(Position = 2)]
-    [string]$app,
-
-    [Parameter(Position = 3)]
-    [string]$folder,
-
-    [Parameter(Position = 4)]
-    [string]$exe,
-
-    [Parameter(Position = 5)]
-    [string]$cmd,
-
-    [Parameter(Position = 6)]
-    [string]$cmd_syn,
-
-    [Parameter(Position = 7)]
-    [string]$portapps
-  )
+  param ([string]$p, [string]$o, [string]$app, [string]$folder, [string]$exe, [string]$details, [string]$cmd, [string]$cmd_syn)
   function Open-Extracted {
+    param ([string]$p, [string]$app, [string]$folder, [string]$exe, [string]$details, [string]$cmd, [string]$cmd_syn)
+    $exePath = "$p\$app\$folder\$exe"
     if ($cmd) {
-      Write-Point "There is a preset for running $app $($cmd_syn). Launch it with presets?" 
+      Write-Point "There is a preset for running this program $cmd_syn. Launch it with presets?" 
       do {
-        Write-Host
-        Write-Point -NoNewLine
-        $runcmd = Read-Host 'y/n' 
+        Write-Host; Write-Point -NoNewLine; $runcmd = Read-Host 'y/n' 
       } while ($runcmd -ne 'y' -and $runcmd -ne 'n')
       if ($runcmd -eq 'n') {
-        Write-Title "Running $app..."
-        Start-Process -FilePath "$p\$app\$folder\$exe" -ErrorAction SilentlyContinue
+        Write-Title "Launching $app..."
+        Start-Process -FilePath $exePath -ErrorAction SilentlyContinue
       }
       else {    
-        Write-Title "Running $app $($cmd_syn)"
-        Start-Process -FilePath "$p\$app\$folder\$exe" -ArgumentList $($cmd) -ErrorAction SilentlyContinue
+        Write-Title "Running this program $cmd_syn"
+        Start-Process -FilePath $exePath -ArgumentList $($cmd) -ErrorAction SilentlyContinue
       }
     }
-    else {
-      Write-Title "Running $app..."
-      Start-Process -FilePath "$p\$app\$folder\$exe" -ErrorAction SilentlyContinue
-    }
+    else { Write-Host "Path is $exePath"; pause; Start-Process -FilePath "$exePath" -ErrorAction SilentlyContinue }
   }
+  $folder = $ExecutionContext.InvokeCommand.ExpandString($folder)
+  $cmd = $ExecutionContext.InvokeCommand.ExpandString($cmd)
   switch -Wildcard ($o) {
     "*.zip" {
-      Write-Title 'Zip file detected'
-      if (Test-Path -Path "$p\$app\$folder") {
+      if (Test-Path -Path "$p\$app\$folder\$exe") {
         Write-Title "$app is Available in $path, so opening..."
-        Open-Extracted
+        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn
       }
-      # Expand and open the app
-      elseif (Test-Path -LiteralPath "$p\$o") {
+      if (Test-Path -LiteralPath "$p\$o") {
+        Write-Title 'Zip file detected'
         Write-Point "$app is saved as a zip file, so uncompressing..."
         Expand-Archive -Literalpath "$p\$o" -DestinationPath "$p\$app" -Force
         if ($?) { Write-Title 'Package successfully extracted...' }
@@ -139,35 +89,50 @@ function Open-App {
           Read-Host "Press any key to continue..."
         }
         Write-Subtitle "Launching $app..."
-        Open-Extracted
-       
+        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn
       }
     }
     "*.7z" {
-      $7z_libs = '7z.exe', '7z.dll'
-      foreach ($7z_lib in $7z_libs) { $wc.DownloadFile("https://raw.githubusercontent.com/psfer07/App-DL/$branch/7z/$7z_lib", "$Env:TEMP\$7z_lib") }
+      foreach ($lib in '7z.exe', '7z.dll') { $wc.DownloadFile("https://raw.githubusercontent.com/psfer07/App-DL/$branch/7z/$lib", "$Env:TEMP\$lib") }
       $wc.Dispose()
-      if ($portapps) { $exe = "$app".ToLower() + '.exe' }
+      if ($portapps) { $exe = $app.ToLower() + '-portable.exe' }
       Write-Title '7z file detected'
-      if (Test-Path -Path "$p\$app\$folder") {
+      if (Test-Path -Path "$p\$app\$folder\$exe") {
         Write-Title "$app is available in $path, so opening..."
-        Open-Extracted
+        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn
       }
       elseif (Test-Path -Path "$p\$o") {
         Write-Point "$app is saved as a 7z file, so uncompressing..."
         Start-Process <# "$assets\7z.exe" #> '.\7z\7z.exe' -ArgumentList "x `"$p\$o`" -o`"$p\$app`"" -Wait -NoNewWindow
         if ($?) { Write-Title 'Package successfully extracted...' }
         else {
-          Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"
+          Write-Warning "Failed to extract package. $($_.Exception)"
           Read-Host 'Press any key to continue...'
         }
         Clear-Host
-        Open-Extracted
+        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn
       }
     }
     "*.exe" {
       Write-Title 'Exe file detected'
-      Open-Extracted
+      Write-Subtitle 'Attempting to launch the program...' -pad 50
+      if ($cmd) {
+        Write-Point "There is a preset for running this program $cmd_syn. Launch it with presets?" 
+        do {
+          Write-Host; Write-Point -NoNewLine; $runcmd = Read-Host 'y/n' 
+        } while ($runcmd -ne 'y' -and $runcmd -ne 'n')
+        $exePath = "$p\$app\$folder\$exe"
+        if ($runcmd -eq 'n') {
+          Write-Title "Launching $app..."
+          Start-Process -FilePath $exePath -ErrorAction SilentlyContinue
+        }
+        else {    
+          Write-Title "Running this program $cmd_syn"
+          Start-Process -FilePath $exePath -ArgumentList $($cmd) -ErrorAction SilentlyContinue
+        }
+      }
+      else { Start-Process -FilePath $exePath -ErrorAction SilentlyContinue }
+      Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn
     }
     "*.msi" {
       Write-Title 'Microsoft installer detected'
