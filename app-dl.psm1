@@ -54,6 +54,7 @@ function Open-App {
   param ([string]$p, [string]$o, [string]$app, [string]$folder, [string]$exe, [string]$details, [string]$cmd, [string]$cmd_syn, [switch]$launch)
   function Open-Extracted {
     param ([string]$p, [string]$app, [string]$folder, [string]$exe, [string]$details, [string]$cmd, [string]$cmd_syn, [switch]$launch)
+    Clear-Host
     $exePath = "$p\$app\$folder\$exe"
     if ($cmd) {
       Write-Point "There is a preset for running this program $cmd_syn. Launch it with presets?" 
@@ -88,8 +89,6 @@ function Open-App {
           Write-Warning "Failed to extract package. Error: $($_.Exception.Message)"
           Read-Host "Press any key to continue..."
         }
-        Write-Subtitle "Launching $app..."
-        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch
       }
     }
     "*.7z" {
@@ -109,8 +108,6 @@ function Open-App {
           Write-Warning "Failed to extract package. $($_.Exception)"
           Read-Host 'Press any key to continue...'
         }
-        Clear-Host
-        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch
       }
     }
     "*.exe" {
@@ -132,7 +129,6 @@ function Open-App {
         }
       }
       else { Start-Process -FilePath $exePath -ErrorAction SilentlyContinue }
-      Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch
     }
     "*.msi" {
       Write-Title 'Microsoft installer detected'
@@ -148,7 +144,6 @@ function Open-App {
       Start-Process -FilePath msiexec.exe -ArgumentList "/i `"$p\$o`" /passive /promptrestart" -Wait
       Write-Title "$app successfully installed"
       if ($openInst -eq 'y') {
-        Write-Title "Launching $app..."
         $windowsInstaller = New-Object -ComObject WindowsInstaller.Installer
         $database = $windowsInstaller.GetType().InvokeMember("OpenDatabase", 'InvokeMethod', $Null, $windowsInstaller, @("$p\$o", 0))
         $view = $database.GetType().InvokeMember("OpenView", 'InvokeMethod', $Null, $database, ("SELECT Value FROM Property WHERE Property='ProductName'"))
@@ -163,4 +158,6 @@ function Open-App {
       Add-AppPackage -Path "$p\$o" -ForceApplicationShutdown -Confirm:$false
     }
   }
+  Write-Subtitle "Launching $app..."
+  Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch
 }
