@@ -1,10 +1,9 @@
 param (
-  [Parameter(Position = 0)]
-  [string]$app,
-  [Parameter(Position = 1)]
-  [string]$path,
+  [Parameter(Position = 0)] [string]$app,
+  [Parameter(Position = 1)] [string]$path,
   [string]$portable = $null,
-  [string]$open = $null
+  [string]$open = $null,
+  [switch]$launch
 )
 try {
   # Bypass any execution policy
@@ -14,12 +13,11 @@ try {
   Clear-Host
   function Start-Main {
     param (
-      [Parameter(Position = 0)]
-      [string]$app,
-      [Parameter(Position = 1)]
-      [string]$path,
+      [Parameter(Position = 0)] [string]$app,
+      [Parameter(Position = 1)] [string]$path,
       [string]$portable = $null,
-      [string]$open = $null
+      [string]$open = $null,
+      [switch]$launch
     )
     $wc = New-Object System.Net.WebClient
     $branch = 'dev'
@@ -66,23 +64,29 @@ try {
           $details = $program.value.details
           $spaces = " " * (30 - $name.Length)
 
+          if ('both' -in $details -and 'installer' -notin $details <# -and 'installer' -notin @($details) #>) { $color = 'DarkCyan' } # Autoinstall
+          elseif ('installer' -in $details -and 'auto' -notin $details <# $details -contains 'installer' -and $details -notcontains 'auto' #>) { $color = 'DarkYellow' } # Manual installation
+          else { $color = 'White' } # Both available
           if ($versions -match 'PI') {
-            Write-Point "$name" -NoNewline
+            Write-Point "$name" -NoNewline -ForegroundColor $color
             Write-Host "$spaces[PORTABLE]" -NoNewLine -ForegroundColor Green
             Write-Host ' & ' -NoNewLine
             Write-Host '[INSTALLS] ' -ForegroundColor Red
           }
           elseif ($versions -match 'P') {
-            Write-Point "$name" -NoNewline
+            Write-Point "$name" -NoNewline -ForegroundColor $color
             Write-Host "$spaces[PORTABLE]              " -ForegroundColor Green
           }
           elseif ($versions -match 'I') {
-            Write-Point "$name" -NoNewline
+            Write-Point "$name" -NoNewline -ForegroundColor $color
             Write-Host "$spaces             [INSTALLS]" -ForegroundColor Red
           }
         }
 
         Write-Subtitle "0. Return to categories"
+        Write-Host '[Autoinstall] ' -NoNewline -ForegroundColor DarkCyan
+        Write-Host '[Manual installation] ' -NoNewline -ForegroundColor DarkYellow
+        Write-Host '[Both versions available]'
         do {
           Write-Host
           Write-Point -NoNewLine
@@ -239,7 +243,7 @@ try {
     }
   
     $o = $uri.Segments[-1]
-    if ((Test-Path "$p\$o") -or (Test-Path "$p\$app\$folder\$exe")) { Revoke-Path -p $p -o $o -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn; break }
+    if ((Test-Path "$p\$o") -or (Test-Path "$p\$app\$folder\$exe")) { Revoke-Path -p $p -o $o -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch; break }
     if (!($matchedAppKey -and $portable -and $path -and $open)) { Write-Subtitle "$app will be saved in $path" -pad 70 }
   
     switch ($open) {
@@ -283,13 +287,13 @@ try {
     }
 
     if ($o -notlike "*.7z") { $wc.Dispose | Out-Null }
-    if ($opens -eq $true) { Clear-Host; Open-App -p $p -o $o -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn }
+    if ($opens -eq $true) { Clear-Host; Open-App -p $p -o $o -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch }
     Write-Subtitle 'Continue downloading?'
     $repeat = Read-Host '==> (y/n)'
     if ($repeat -eq 'y') { Clear-Host; Start-Main }
     else { Clear-Host; Exit }
   
   }
-  Start-Main -app $app -path $path -portable $portable -open $open 
+  Start-Main -app $app -path $path -portable $portable -open $open -launch:$launch
 }
 finally { Remove-Item "$Env:TEMP\AppDL" -Recurse -Force | Out-Null }
