@@ -37,7 +37,7 @@ function Get-AppSize($size) {
   return [string]::Format("{0:0.00} {1}", $size, $suffixes[-1])
 }
 function Revoke-Path {
-  param ([string]$p, [string]$o, [string]$app, [string]$folder, [string]$exe, [string]$details, [string]$cmd, [string]$cmd_syn)
+  param ([string]$p, [string]$o, [string]$app, [string]$folder, [string]$exe, [string]$details, [string]$cmd, [string]$cmd_syn, [switch]$launch)
   Write-Title -warn "It seems that $app is currently allocated in this path"
   do {
     Write-Host
@@ -46,14 +46,14 @@ function Revoke-Path {
   } while ($reset -ne 'r' -and $reset -ne 'o' -and $reset -ne 'e')
   switch ($reset) {
     'r' { Start-Main }
-    'o' { Open-App -p $p -o $o -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn }
+    'o' { Open-App -p $p -o $o -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch }
     'e' { Write-Title 'Closing this terminal...'; Start-Sleep -Milliseconds 500; exit }
   }
 }
 function Open-App {
-  param ([string]$p, [string]$o, [string]$app, [string]$folder, [string]$exe, [string]$details, [string]$cmd, [string]$cmd_syn)
+  param ([string]$p, [string]$o, [string]$app, [string]$folder, [string]$exe, [string]$details, [string]$cmd, [string]$cmd_syn, [switch]$launch)
   function Open-Extracted {
-    param ([string]$p, [string]$app, [string]$folder, [string]$exe, [string]$details, [string]$cmd, [string]$cmd_syn)
+    param ([string]$p, [string]$app, [string]$folder, [string]$exe, [string]$details, [string]$cmd, [string]$cmd_syn, [switch]$launch)
     $exePath = "$p\$app\$folder\$exe"
     if ($cmd) {
       Write-Point "There is a preset for running this program $cmd_syn. Launch it with presets?" 
@@ -77,7 +77,7 @@ function Open-App {
     "*.zip" {
       if (Test-Path -Path "$p\$app\$folder\$exe") {
         Write-Title "$app is Available in $path, so opening..."
-        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn
+        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch
       }
       if (Test-Path -LiteralPath "$p\$o") {
         Write-Title 'Zip file detected'
@@ -89,17 +89,17 @@ function Open-App {
           Read-Host "Press any key to continue..."
         }
         Write-Subtitle "Launching $app..."
-        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn
+        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch
       }
     }
     "*.7z" {
       foreach ($lib in '7z.exe', '7z.dll') { $wc.DownloadFile("https://raw.githubusercontent.com/psfer07/App-DL/$branch/7z/$lib", "$Env:TEMP\$lib") }
       $wc.Dispose()
-      if ($portapps) { $exe = $app.ToLower() + '-portable.exe' }
+      if ($details -eq 'portapps') { $exe = $app.ToLower() + '-portable.exe' }
       Write-Title '7z file detected'
       if (Test-Path -Path "$p\$app\$folder\$exe") {
         Write-Title "$app is available in $path, so opening..."
-        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn
+        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch
       }
       elseif (Test-Path -Path "$p\$o") {
         Write-Point "$app is saved as a 7z file, so uncompressing..."
@@ -110,7 +110,7 @@ function Open-App {
           Read-Host 'Press any key to continue...'
         }
         Clear-Host
-        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn
+        Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch
       }
     }
     "*.exe" {
@@ -132,41 +132,29 @@ function Open-App {
         }
       }
       else { Start-Process -FilePath $exePath -ErrorAction SilentlyContinue }
-      Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn
+      Open-Extracted -p $p -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch
     }
     "*.msi" {
       Write-Title 'Microsoft installer detected'
       Write-Title "Installing $app automatically"
       Write-Point 'Do you want to launch it after installation?'
+      Write-Host $details
+      pause
       do {
         Write-Host
         Write-Point -NoNewLine
-        $openInst = Read-Host '--> (y/n)' 
+        $openInst = Read-Host 'y/n' 
       } while ($openInst -ne 'y' -and $openInst -ne 'n')
       Start-Process -FilePath msiexec.exe -ArgumentList "/i `"$p\$o`" /passive /promptrestart" -Wait
       Write-Title "$app successfully installed"
       if ($openInst -eq 'y') {
         Write-Title "Launching $app..."
-        function Show-Progress {
-          param (
-            [int]$Current,
-            [int]$Total
-          )
-          $PercentComplete = ($Current / $Total) * 100
-          Write-Progress -Activity "Processing actions" -Status "Action $Current of $Total" -PercentComplete $PercentComplete
-        }
         $windowsInstaller = New-Object -ComObject WindowsInstaller.Installer
-        Show-Progress -Current 1 -Total 6
         $database = $windowsInstaller.GetType().InvokeMember("OpenDatabase", 'InvokeMethod', $Null, $windowsInstaller, @("$p\$o", 0))
-        Show-Progress -Current 2 -Total 6
         $view = $database.GetType().InvokeMember("OpenView", 'InvokeMethod', $Null, $database, ("SELECT Value FROM Property WHERE Property='ProductName'"))
-        Show-Progress -Current 3 -Total 6
         $view.GetType().InvokeMember("Execute", 'InvokeMethod', $Null, $view, $Null)
-        Show-Progress -Current 4 -Total 6
         $record = $view.GetType().InvokeMember("Fetch", 'InvokeMethod', $Null, $view, $Null)
-        Show-Progress -Current 5 -Total 6
-        $prod = Get-WmiObject -Class Win32_Product | Where-Object { $_.Name -eq ($record.GetType().InvokeMember("StringData", 'GetProperty', $Null, $record, 1)) }
-        Show-Progress -Current 6 -Total 6
+        $prod = $record.GetType().InvokeMember("StringData", 'GetProperty', $Null, $record, 1)
         Start-Process -FilePath "$($prod.InstallLocation)\$folder\$exe"
       }
     }
