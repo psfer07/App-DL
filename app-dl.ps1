@@ -62,31 +62,28 @@ try {
           $name = $program.Name
           $versions = $program.value.versions
           $details = $program.value.details
-          $spaces = " " * (30 - $name.Length)
+          $spaces = " " * (28 - $name.Length)
+          
+          if ($details -eq 'i') { $pin = '(!)' } else { $pin = '   ' }
 
-          if ('both' -in $details -and 'installer' -notin $details <# -and 'installer' -notin @($details) #>) { $color = 'DarkCyan' } # Autoinstall
-          elseif ('installer' -in $details -and 'auto' -notin $details <# $details -contains 'installer' -and $details -notcontains 'auto' #>) { $color = 'DarkYellow' } # Manual installation
-          else { $color = 'White' } # Both available
           if ($versions -match 'PI') {
-            Write-Point "$name" -NoNewline -ForegroundColor $color
+            Write-Point "$name $pin" -NoNewline
             Write-Host "$spaces[PORTABLE]" -NoNewLine -ForegroundColor Green
             Write-Host ' & ' -NoNewLine
             Write-Host '[INSTALLS] ' -ForegroundColor Red
           }
           elseif ($versions -match 'P') {
-            Write-Point "$name" -NoNewline -ForegroundColor $color
+            Write-Point "$name $pin" -NoNewline
             Write-Host "$spaces[PORTABLE]              " -ForegroundColor Green
           }
           elseif ($versions -match 'I') {
-            Write-Point "$name" -NoNewline -ForegroundColor $color
+            Write-Point "$name $pin" -NoNewline
             Write-Host "$spaces             [INSTALLS]" -ForegroundColor Red
           }
         }
 
-        Write-Subtitle "0. Return to categories"
-        Write-Host '[Autoinstall] ' -NoNewline -ForegroundColor DarkCyan
-        Write-Host '[Manual installation] ' -NoNewline -ForegroundColor DarkYellow
-        Write-Host '[Both versions available]'
+        Write-Subtitle '0. Return to categories'
+        Write-Host '(!) --> Only manual installation supported'
         do {
           Write-Host
           Write-Point -NoNewLine
@@ -126,11 +123,13 @@ try {
     }
     
     Write-Title 'Importing data...'
-    $properties = 'app', 'url', 'folder', 'details', 'versions', 'exe', 'size', 'syn', 'cmd', 'cmd_syn'
+    $properties = 'app', 'url', 'folder', 'versions', 'exe', 'details', 'size', 'syn', 'cmd', 'cmd_syn'
     foreach ($property in $properties) {
       if ($appProperties.$property -is [array]) { $value = $appProperties.$property[$ver] } else { $value = $appProperties.$property }
+      if ($property -eq 'details' -and ($ver -eq 0 -or $ver -eq 1)) { $value = $value.Substring($ver, 1) }
       New-Variable -Name $property -Value $value -ErrorAction SilentlyContinue
     }
+    Write-Subtitle 'Verifying access to host...'
     $uri = [System.Uri]$url
     $reachable = Test-Connection -ComputerName $uri.Host -Count 1 -ErrorAction SilentlyContinue
 
