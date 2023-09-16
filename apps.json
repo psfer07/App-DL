@@ -5,6 +5,10 @@
         "https://www.7-zip.org/a/7z2301-x64.exe",
         "https://download2.portableapps.com/portableapps/7-ZipPortable/7-ZipPortable_23.01.paf.exe"
       ],
+      "folder": [
+        "$Env:PROGRAMFILES\\7-Zip",
+        ""
+      ],
       "exe": "7zFM.exe",
       "details": "bi",
       "versions": "PI",
@@ -33,7 +37,7 @@
         "https://engdownload.geniusite.com/winpe/DGEng5511508_x64.zip"
       ],
       "folder": [
-        "$Env:ProgramFiles\\DiskGenius",
+        "$Env:PROGRAMFILES\\DiskGenius",
         "DiskGenius"
       ],
       "exe": "DiskGenius.exe",
@@ -74,13 +78,16 @@
         "https://download.bleachbit.org/BleachBit-4.4.2-setup.exe",
         "https://download.bleachbit.org/BleachBit-4.4.2-portable.zip"
       ],
-      "folder": "BleachBit-Portable",
+      "folder": [
+        "${Env:PROGRAMFILES(x86)}\\BleachBit",
+        "BleachBit-Portable"
+      ],
       "exe": "bleachbit.exe",
       "details": "bA",
       "versions": "PI",
       "syn": "a very well-known app and system cleaner with a bunch of possible configurations",
       "cmd": [
-        "/S",
+        "/allusers /S",
         ""
       ],
       "cmd_syn": [
@@ -120,6 +127,11 @@
       ],
       "details": "b",
       "versions": "PI",
+      "folder": [
+        "$Env:PROGRAMFILES\\FileOptimizer",
+        "FileOptimizer"
+      ],
+      "exe": "FileOptimizer64.exe",
       "cmd": [
         "/S",
         "-o'FileOptimizer' -y"
@@ -162,6 +174,10 @@
         "https://referrals.brave.com/latest/BraveBrowserSetup-BRV010.exe",
         "https://github.com/portapps/brave-portable/releases/download/1.52.129-87/brave-portable-win64-1.52.129-87.7z"
       ],
+      "folder": [
+        "$Env:PROGRAMFILES\\BraveSoftware\\Brave-Browser\\Application",
+        ""
+      ],
       "exe": "brave.exe",
       "details": "Ap",
       "versions": "PI",
@@ -176,7 +192,10 @@
         "https://download-installer.cdn.mozilla.net/pub/firefox/releases/116.0.3/win32/es-ES/Firefox%20Installer.exe",
         "https://download2.portableapps.com/portableapps/FirefoxPortable/FirefoxPortable_116.0.3_English.paf.exe"
       ],
-      "folder": "Mozilla Firefox",
+      "folder": [
+        "$Env:PROGRAMFILES\\Mozilla Firefox",
+        "Mozilla Firefox"
+      ],
       "exe": "firefox.exe",
       "details": "Ai",
       "versions": "PI",
@@ -187,7 +206,7 @@
       ]
     },
     "TorBrowser": {
-      "url": "https://www.torproject.org/dist/torbrowser/12.5.3/torbrowser-install-win64-12.5.3_ALL.exe",
+      "url": "https://www.torproject.org/dist/torbrowser/12.5.4/torbrowser-install-win64-12.5.4_ALL.exe",
       "folder": "Tor Browser",
       "exe": "Start Tor Browser.lnk",
       "details": "b",
@@ -222,6 +241,11 @@
         "https://dl.discordapp.net/distro/app/stable/win/x86/1.0.9016/DiscordSetup.exe",
         "https://github.com/portapps/discord-portable/releases/download/1.0.9010-15/discord-portable-win32-1.0.9010-15.7z"
       ],
+      "folder": [
+        "$Env:LOCALAPPDATA\\Discord\\app-1.0.9017",
+        ""
+      ],
+      "exe": "discord.exe",
       "details": "Ap",
       "versions": "PI",
       "syn": "a famous gamer-focused social media",
@@ -234,6 +258,10 @@
       "url": [
         "https://www.voidtools.com/Everything-1.4.1.1024.x64-Setup.exe",
         "https://www.voidtools.com/Everything-1.4.1.1024.x64.zip"
+      ],
+      "folder": [
+        "$Env:PROGRAMFILES\\Everything",
+        ""
       ],
       "exe": "Everything.exe",
       "details": "bA",
@@ -251,7 +279,7 @@
     },
     "LibreOffice": {
       "url": "https://www.mirrorservice.org/sites/download.documentfoundation.org/tdf/libreoffice/stable/7.6.0/win/x86_64/LibreOffice_7.6.0_Win_x86-64.msi",
-      "folder": "program",
+      "folder": "$Env:PROGRAMFILES\\LibreOffice\\program",
       "exe": "soffice.exe",
       "details": "i",
       "versions": "I",
@@ -259,7 +287,7 @@
       "size": "668MB"
     },
     "PortableApps": {
-      "url": "https://download2.portableapps.com/portableapps/FileOptimizerPortable/FileOptimizerPortable_16.30.2781.paf.exe",
+      "url": "https://download2.portableapps.com/portableapps/PortableApps.comPlatform/PortableApps.com_Platform_Setup_26.1.paf.exe",
       "details": "i",
       "versions": "PI",
       "syn": "a suite for portable apps",
@@ -267,9 +295,14 @@
     },
     "qBittorrent": {
       "url": [
-        "https://deac-fra.dl.sourceforge.net/project/qbittorrent/qbittorrent-win32/qbittorrent-4.5.4/qbittorrent_4.5.4_x64_setup.exe",
+        "https://deac-fra.dl.sourceforge.net/project/qbittorrent/qbittorrent-win32/qbittorrent-4.5.5/qbittorrent_4.5.5_x64_setup.exe",
         "https://github.com/portapps/qbittorrent-portable/releases/download/4.5.0-19/qbittorrent-portable-win64-4.5.0-19.7z"
       ],
+      "folder": [
+        "$Env:PROGRAMFILES\\qBittorrent",
+        ""
+      ],
+      "exe": "qbittorrent.exe",
       "details": "bp",
       "versions": "PI",
       "syn": "A free and open-source software alternative to uTorrent",
@@ -291,6 +324,11 @@
         "https://get.videolan.org/vlc/3.0.18/win64/vlc-3.0.18-win64.exe",
         "https://github.com/portapps/vlc-portable/releases/download/3.0.16-11/vlc-portable-win64-3.0.16-11.7z"
       ],
+      "folder": [
+        "$Env:PROGRAMFILES\\VideoLAN\\VLC",
+        ""
+      ],
+      "exe": "vlc.exe",
       "details": "bp",
       "versions": "PI",
       "syn": "an open-source media player",
@@ -347,6 +385,8 @@
     },
     "Portmaster": {
       "url": "https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.exe",
+      "folder": "$Env:PROGRAMDATA\\Safing\\PortMaster",
+      "exe": "portmaster-start.exe",
       "details": "b",
       "versions": "I",
       "syn": "a privacy suite for your desktop OS",
@@ -359,6 +399,11 @@
         "https://2.na.dl.wireshark.org/win64/Wireshark-win64-latest.exe",
         "https://2.na.dl.wireshark.org/win64/WiresharkPortable64_latest.paf.exe"
       ],
+      "folder": [
+        "$Env:PROGRAMFILES\\Wireshark",
+        ""
+      ],
+      "exe": "Wireshark.exe",
       "details": "bi",
       "versions": "PI",
       "syn": "a network package analyzer tool",
@@ -444,9 +489,11 @@
     },
     "Winget": {
       "url": "https://github.com/microsoft/winget-cli/releases/download/v1.5.2201/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle",
-      "details": "A",
+      "details": "i",
       "versions": "I",
-      "syn": "the official CLI Windows Package manager (some desktops don't have it by default)"
+      "syn": "the official CLI Windows Package manager (some desktops don't have it by default)",
+      "cmd": "Start-Process cmd.exe -ArgumentList '/k winget'",
+      "cmd_syn": "opening winget in a terminal"
     },
     "0install": {
       "url": "https://get.0install.net/0install.exe",
