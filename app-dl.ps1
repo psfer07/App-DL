@@ -58,32 +58,39 @@ try {
         $programs = $json.$category.psobject.Properties
         Write-Title "Available apps in $($category.ToLower())"
         
+        $i = 1
+
         foreach ($program in $programs) {
-          $name = $program.Name
-          $versions = $program.value.versions
-          $details = $program.value.details
-          $spaces = " " * (28 - $name.Length)
-          
-          if ($details -eq 'i') { $pin = '(!)' } else { $pin = '   ' }
-
-          if ($versions -match 'PI') {
-            Write-Point "$name $pin" -NoNewline
-            Write-Host "$spaces[PORTABLE]" -NoNewLine -ForegroundColor Green
-            Write-Host ' & ' -NoNewLine
-            Write-Host '[INSTALLS] ' -ForegroundColor Red
-          }
-          elseif ($versions -match 'P') {
-            Write-Point "$name $pin" -NoNewline
-            Write-Host "$spaces[PORTABLE]              " -ForegroundColor Green
-          }
-          elseif ($versions -match 'I') {
-            Write-Point "$name $pin" -NoNewline
-            Write-Host "$spaces             [INSTALLS]" -ForegroundColor Red
-          }
+            $name = $program.Name
+            $versions = $program.value.versions
+            $details = $program.value.details
+            if ($details -eq 'i') { $indicator = '(!)' } else { $indicator = '   ' }
+            $outputString = "$i. $name $indicator"
+            $spaces = " " * (28 - $name.Length)
+        
+        
+        
+            if ($versions -match 'PI') {
+                Write-Point $outputString -NoNewline
+                Write-Host "$spaces[PORTABLE]" -NoNewLine -ForegroundColor Green
+                Write-Host ' & ' -NoNewLine
+                Write-Host '[INSTALLS] ' -ForegroundColor Red
+            }
+            elseif ($versions -match 'P') {
+                Write-Point $outputString -NoNewline
+                Write-Host "$spaces[PORTABLE]              " -ForegroundColor Green
+            }
+            elseif ($versions -match 'I') {
+                Write-Point $outputString -NoNewline
+                Write-Host "$spaces             [INSTALLS]" -ForegroundColor Red
+            }
+        
+            $i++
         }
-
+        
         Write-Subtitle '0. Return to categories'
         Write-Host '(!) --> Only manual installation supported'
+        
         do {
           Write-Host
           Write-Point -NoNewLine
@@ -240,7 +247,7 @@ try {
         }
       }
     }
-  
+
     $o = $uri.Segments[-1]
     if ((Test-Path "$p\$o") -or (Test-Path "$p\$app\$folder\$exe")) { Revoke-Path -p $p -o $o -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch; break }
     if (!($matchedAppKey -and $portable -and $path -and $open)) { Write-Subtitle "$app will be saved in $path" -pad 70 }
@@ -272,7 +279,7 @@ try {
       $confirm = Read-Host 'Confirmation press any key or go to the (R)estart menu'
       if ($confirm -eq 'r') { Start-Main }
     }
-
+    
     # Update progress bar
     $wc.DownloadFileAsync($uri, "$p\$o")
     while ($wc.IsBusy) {
