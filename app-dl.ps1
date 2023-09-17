@@ -61,31 +61,29 @@ try {
         $i = 1
 
         foreach ($program in $programs) {
-            $name = $program.Name
-            $versions = $program.value.versions
-            $details = $program.value.details
-            if ($details -eq 'i') { $indicator = '(!)' } else { $indicator = '   ' }
-            $outputString = "$i. $name $indicator"
-            $spaces = " " * (28 - $name.Length)
+          $name = $program.Name
+          $versions = $program.value.versions
+          $details = $program.value.details
+          if ($details -eq 'i') { $indicator = '(!)' } else { $indicator = '   ' }
+          $outputString = "$i. $name $indicator"
+          $spaces = " " * (28 - $name.Length)
         
+          if ($versions -match 'PI') {
+            Write-Point $outputString -NoNewline
+            Write-Host "$spaces[PORTABLE]" -NoNewLine -ForegroundColor Green
+            Write-Host ' & ' -NoNewLine
+            Write-Host '[INSTALLS] ' -ForegroundColor Red
+          }
+          elseif ($versions -match 'P') {
+            Write-Point $outputString -NoNewline
+            Write-Host "$spaces[PORTABLE]              " -ForegroundColor Green
+          }
+          elseif ($versions -match 'I') {
+            Write-Point $outputString -NoNewline
+            Write-Host "$spaces             [INSTALLS]" -ForegroundColor Red
+          }
         
-        
-            if ($versions -match 'PI') {
-                Write-Point $outputString -NoNewline
-                Write-Host "$spaces[PORTABLE]" -NoNewLine -ForegroundColor Green
-                Write-Host ' & ' -NoNewLine
-                Write-Host '[INSTALLS] ' -ForegroundColor Red
-            }
-            elseif ($versions -match 'P') {
-                Write-Point $outputString -NoNewline
-                Write-Host "$spaces[PORTABLE]              " -ForegroundColor Green
-            }
-            elseif ($versions -match 'I') {
-                Write-Point $outputString -NoNewline
-                Write-Host "$spaces             [INSTALLS]" -ForegroundColor Red
-            }
-        
-            $i++
+          $i++
         }
         
         Write-Subtitle '0. Return to categories'

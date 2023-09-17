@@ -426,7 +426,7 @@
       "versions": "P",
       "syn": "a component for the Android SDK. Contains adb and fastboot",
       "cmd": "Start-Process cmd.exe /K 'cd $p\\$program\\$folder'",
-      "cmd_syn": "launching a terminal where the folder has been extracted",
+      "cmd_syn": "launching a explorer window where the folder has been extracted",
       "size": "12,4MB"
     },
     "Universal-Android-Debloater": {
