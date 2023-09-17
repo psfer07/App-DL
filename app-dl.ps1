@@ -35,7 +35,7 @@ param (
   [Alias("h")] [switch]$help
 )
 if ($help) {
-  Get-Help -Name $PSCommandPath
+  Get-Help -Name $PSCommandPath -detailed
   return
 }
 try {
