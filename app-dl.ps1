@@ -28,8 +28,8 @@
 param (
   [Parameter(Position = 0)] [string]$app,
   [Parameter(Position = 1)][Alias("p")] [string]$path,
-  [Alias("port")] [string]$portable = $null,
-  [string]$open = $null,
+  [Parameter(Position = 2)][Alias("port")] [string]$portable = $null,
+  [Parameter(Position = 3)][string]$open = $null,
   [Alias("l")] [switch]$launch,
   [switch]$usecmd,
   [Alias("h")] [switch]$help
