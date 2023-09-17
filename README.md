@@ -1,16 +1,107 @@
 # App-DL
 
-This program is an app downloader which downloads several apps from verified repositories.
+Easily grab and manage programs, choose apps from groups, control downloads, and set paths. User-friendly tool for smoother software handling.
 
-All you need to do is typing or copying this command in your powershell terminal. It will redirect you to the app.
+Use the command below in a powershell terminal to open the program:
 
 ```powershell
-irm bit.ly/psappdl | iex
+iex(irm bit.ly/psappdldev)
+```
+
+If you instead want to run it with parameters, use:
+
+```powershell
+irm bit.ly/psappdldev -Outfile .\app-dl.ps1; try { .\app-dl.ps1 [parameters go here] } finally {Remove-Item .\app-dl.ps1 -force}
+```
+
+## Command line usage
+
+You can use the program's parameters to automate the download, extraction or opening of the apps
+
+**Syntax**
+
+```powershell
+.\app-dl.ps1
+   [-app <String>]
+   [-path <String>]
+   [-portable <String>]
+   [-open <String>]
+   [-launch]
+   [-usecmd]
+   [-help]
+```
+
+**Examples**
+--------
+
+In the first case, it will be just a normal installation of the Brave browser, saving the installer into the desktop
+
+```powershell
+.\app-dl.ps1 -app brave -path desktop -portable n -open y
+
+.\app-dl.ps1 -app brave -p desktop -port n -open y
+
+.\app-dl.ps1 brave desktop n y
+```
+
+---
+
+In the second case, it will download, extract and open the portable version of VLC
+
+```powershell
+.\app-dl.ps1 -app vlc -path downloads -portable y -open y -usecmd
+
+.\app-dl.ps1 -app vlc -p downloads -port y -open y -usecmd
+
+.\app-dl.ps1 -vlc downloads y y -usecmd
+```
+
+---
+
+In the last case, it will install BleachBit in your pc using the presets, saving the installer in the app's temp folder, then the installed app it will open automatically.
+
+```powershell
+.\app-dl.ps1 -app bleachbit -path appdl -portable n -open y -launch -usecmd
+
+.\app-dl.ps1 -app bleachbit -p appdl -port n -open y -l -usecmd
+
+.\ app-dl .ps1 bleachbit appdl n y -l -usecmd
 ```
 
 ## Changelog
 
-### App-DL v1.3
+> ### App-DL v2.0
+
+* Added command line support
+* Added path aliasses for every path selection option
+* General program workflow improved
+* Added 7z file support
+* New UI design
+
+  * Apps now divided in categories
+  * Rebuild Write-X functions: added custom padding, colors, new types
+  * Changed UI colors
+  * Improved way of app displaying
+  * Apps tagged by supported versions (portables, installers or both)
+  * Removed useless information to display to the user
+* Improved stability
+* Improved automation tasks
+* Improved resource usage
+* Improved app files managing
+* Added 15 new apps
+* Fixed new and old bugs
+* Improved consistency of the program
+
+  ![Category selection](image/README/1694882353081.png "Category selection")
+  ![App selection](image/README/1694882474662.png "App selection")
+  ![Path selection](image/README/1694882507364.png "Path selection")
+  ![Confirmation](image/README/1694882571100.png "Confirmation")
+  ![Download bar](image/README/1694882617343.png "Download bar")
+  ![App opening](image/README/1694957454842.png "App opening")
+
+  ---
+
+> ### App-DL v1.3
 
 * Added app categories for the user to know what the app is related to
 * Released new progress bar, displaying percent completed, download speed and total downloaded
@@ -27,7 +118,7 @@ irm bit.ly/psappdl | iex
   ![Confirmation](image/README/1684076676273.png "Confirmation")
   ![Download bar](image/README/1684076802172.png "Download bar")
 
-### App-DL v1.2
+> ### App-DL v1.2
 
 ---
 
@@ -48,7 +139,7 @@ irm bit.ly/psappdl | iex
   * It only runs without problems in Powershell base, so it won't run for example in Powershell 7.
   * Confirmation line doesn't work at all yet, so if you need to restart the app, you have to restart it in other part
 
-### App-DL v1.1
+> ### App-DL v1.1
 
 ---
 
@@ -70,7 +161,7 @@ Known bugs:
 
 * When you run 7-zip with the recommended parameters, the path assigned is shown as $path\, and not as the actual path, but the user can browse to the wanted folder
 
-### App-DL v1.0 (First release)
+> ### App-DL v1.0 (First release)
 
 ---
 
