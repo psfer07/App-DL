@@ -334,7 +334,7 @@
       "syn": "an open-source media player",
       "cmd": [
         "/S",
-        "A"
+        ""
       ],
       "cmd_syn": [
         "installing it silently",
