@@ -52,6 +52,7 @@ function Revoke-Path {
 }
 function Open-App {
   param ([string]$p, [string]$o, [string]$app, [string]$folder, [string]$exe, [string]$details, [string]$cmd, [string]$cmd_syn, [switch]$launch, [switch]$usecmd)
+  Start-Sleep -Milliseconds 100
   Clear-Host
   $folder = $ExecutionContext.InvokeCommand.ExpandString($folder)
   $cmd = $ExecutionContext.InvokeCommand.ExpandString($cmd)
@@ -76,9 +77,9 @@ function Open-App {
       $wc = New-Object System.Net.WebClient
       foreach ($lib in '7z.exe', '7z.dll') { $wc.DownloadFile("https://raw.githubusercontent.com/psfer07/App-DL/$branch/7z/$lib", "$Env:TEMP\AppDL\assets\$lib") }
       $wc.Dispose()
-      if ($details -eq 'portapps') { $exe = $app.ToLower() + '-portable.exe' }
+      if ($details -eq 'p') { $exe = $app.ToLower() + '-portable.exe' }
       Write-Title '7z file detected'
-      Start-Sleep -Milliseconds 300
+      Start-Sleep -Milliseconds 100
       if (Test-Path -Path "$p\$app\$folder\$exe") { $openFlag = $true; break }
       if (Test-Path -Path "$p\$o") {
         Write-Point "$app is saved as a 7z file, so uncompressing..."
@@ -135,6 +136,7 @@ function Open-App {
       $openFlag = $true
     }
   }
-  if ($details -in @('b', 'i') -and $openFlag) { $exePath = "$folder\$exe" } else { $exePath = "$p\$app\$folder\$exe" }
-  Start-Process -FilePath "$exePath" -ErrorAction SilentlyContinue
+  if ($details -in @('b', 'i') -and $openFlag) { $exePath = "$folder\$exe" } else { if ($folder) { $exePath = "$p\$app\$folder\$exe" } else { $exePath = "$p\$app\$exe" } }
+  Write-Point "App available in: $exePath"
+  Start-Process -FilePath $exePath -ErrorAction SilentlyContinue
 }
