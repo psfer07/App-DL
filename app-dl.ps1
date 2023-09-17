@@ -1,11 +1,43 @@
+<#
+.SYNOPSIS
+    Easily grab and manage programs, choose apps from groups, control downloads, and set paths.
+
+.DESCRIPTION
+    This PowerShell script provides a user-friendly interface for downloading and managing various programs. It allows users to select applications from predefined categories, control the download process, and specify where the downloaded files should be saved.
+
+.PARAMETER app
+    Specifies the name of the application to be downloaded. This parameter allows users to directly request a specific application by name.
+
+.PARAMETER path
+    Specifies the directory where the downloaded application will be saved. This parameter allows users to define a custom location for storing downloaded files.
+
+.PARAMETER portable
+    Selects the app version. Only accepts 'y' or 'n'. If not provided, the program will prompt the user for input if needed.
+
+.PARAMETER open
+    Specifies whether to automatically open the downloaded package. Only accepts 'y' or 'n'. If not provided, the program will prompt the user for input if needed.
+
+.PARAMETER launch
+    Specifies whether to launch the application after downloading. This switch parameter does not require a value.
+
+.PARAMETER usecmd
+    Specifies whether to use command-line presets for the selected application. This switch parameter does not require a value.
+
+#>
+
 param (
   [Parameter(Position = 0)] [string]$app,
-  [Parameter(Position = 1)] [string]$path,
-  [string]$portable = $null,
+  [Parameter(Position = 1)][Alias("p")] [string]$path,
+  [Alias("port")] [string]$portable = $null,
   [string]$open = $null,
-  [switch]$launch,
-  [switch]$usecmd
+  [Alias("l")] [switch]$launch,
+  [switch]$usecmd,
+  [Alias("h")] [switch]$help
 )
+if ($help) {
+  Get-Help -Name $PSCommandPath
+  return
+}
 try {
   # Bypass any execution policy
   Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
@@ -27,8 +59,8 @@ try {
     $assets = Join-Path $tempFolder 'assets'
     if (!(Test-Path $assets -PathType Container)) { New-Item -ItemType Directory -Path $assets -Force | Out-Null }
     foreach ($lib in 'apps.json', 'app-dl.psm1') { $wc.DownloadFile("https://raw.githubusercontent.com/psfer07/App-DL/$branch/$lib", "$assets\$lib") }
-    Import-Module <# "$assets\app-dl.psm1" #> '.\app-dl.psm1' -DisableNameChecking -Force
-    $json = Get-Content <# "$assets\apps.json" #> '.\apps.json' -Raw | ConvertFrom-Json
+    Import-Module "$assets\app-dl.psm1" <# '.\app-dl.psm1' #> -DisableNameChecking -Force
+    $json = Get-Content "$assets\apps.json" <# '.\apps.json' #> -Raw | ConvertFrom-Json
 
     if ($app) {
       # Extracts the exact name from the JSON using the app parameter
