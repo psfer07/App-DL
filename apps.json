@@ -321,7 +321,7 @@
     },
     "VLC": {
       "url": [
-        "https://get.videolan.org/vlc/3.0.18/win64/vlc-3.0.18-win64.exe",
+        "https://ftp.rnl.tecnico.ulisboa.pt/pub/videolan/vlc/3.0.18/win64/vlc-3.0.18-win64.exe",
         "https://github.com/portapps/vlc-portable/releases/download/3.0.16-11/vlc-portable-win64-3.0.16-11.7z"
       ],
       "folder": [
