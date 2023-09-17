@@ -5,13 +5,13 @@ Easily grab and manage programs, choose apps from groups, control downloads, and
 Use the command below in a powershell terminal to open the program:
 
 ```powershell
-iex(irm bit.ly/psappdldev)
+iex(irm bit.ly/psappdl)
 ```
 
 If you instead want to run it with parameters, use:
 
 ```powershell
-irm bit.ly/psappdldev -Outfile .\app-dl.ps1; try { .\app-dl.ps1 [parameters go here] } finally {Remove-Item .\app-dl.ps1 -force}
+irm bit.ly/psappdl -Outfile .\app-dl.ps1; try { .\app-dl.ps1 [parameters go here] } finally {Remove-Item .\app-dl.ps1 -force}
 ```
 
 ## Command line usage
@@ -118,10 +118,10 @@ In the last case, it will install BleachBit in your pc using the presets, saving
   ![Confirmation](image/README/1684076676273.png "Confirmation")
   ![Download bar](image/README/1684076802172.png "Download bar")
 
-
 > ### App-DL v1.2
 
 ---
+
 * Added app details
 * Added accurate file sizes for each program
 * Rewrited descriptions for every program
@@ -138,7 +138,6 @@ In the last case, it will install BleachBit in your pc using the presets, saving
 
   * It only runs without problems in Powershell base, so it won't run for example in Powershell 7.
   * Confirmation line doesn't work at all yet, so if you need to restart the app, you have to restart it in other part
-
 
 ### App-DL v1.1
 
@@ -161,7 +160,6 @@ In the last case, it will install BleachBit in your pc using the presets, saving
 Known bugs:
 
 * When you run 7-zip with the recommended parameters, the path assigned is shown as $path\, and not as the actual path, but the user can browse to the wanted folder
-
 
 > ### App-DL v1.0 (First release)
 

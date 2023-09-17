@@ -54,7 +54,7 @@ try {
       [switch]$usecmd
     )
     $wc = New-Object System.Net.WebClient
-    $branch = 'dev'
+    $branch = 'main'
     $tempFolder = Join-Path $Env:TEMP 'AppDL'
     $assets = Join-Path $tempFolder 'assets'
     if (!(Test-Path $assets -PathType Container)) { New-Item -ItemType Directory -Path $assets -Force | Out-Null }

@@ -73,7 +73,7 @@ function Open-App {
       }
     }
     "*.7z" {
-      $branch = 'dev'
+      $branch = 'main'
       $wc = New-Object System.Net.WebClient
       foreach ($lib in '7z.exe', '7z.dll') { $wc.DownloadFile("https://raw.githubusercontent.com/psfer07/App-DL/$branch/7z/$lib", "$Env:TEMP\AppDL\assets\$lib") }
       $wc.Dispose()
