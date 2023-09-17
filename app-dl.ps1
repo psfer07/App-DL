@@ -159,6 +159,7 @@ try {
     if ($appProperties.versions -cnotmatch 'PI' -and $portable) {
       Write-Warning "$app does not support an alternative version"
       Start-Sleep -Milliseconds 1500
+      $ver = 0
     }
     
     Write-Title 'Importing data...'
