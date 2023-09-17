@@ -54,6 +54,17 @@
       "syn": "a full-featured partition manager, which is designed to optimize disk usage for Windows users",
       "size": "64MB"
     },
+    "Undelete360": {
+      "url": "https://undelete360.com/files/undelete-360-setup.exe",
+      "folder": "${Env:PROGRAMFILES(x86)}\\File Recovery\\undelete360",
+      "exe": "undelete-360.exe",
+      "details": "b",
+      "versions": "I",
+      "syn": "one of the best programs to use for restoring accidentally or unintentionally deleted files from your computer, regardless of storage medium",
+      "cmd": "/VERYSILENT",
+      "cmd_syn": "installing it silently",
+      "size": "8,76MB"
+    },
     "Ventoy": {
       "url": "https://github.com/ventoy/Ventoy/releases/download/v1.0.94/ventoy-1.0.94-windows.zip",
       "folder": "ventoy-1.0.94",
@@ -214,7 +225,7 @@
         "$Env:PROGRAMFILES\\$app",
         "librewolf-117.0.1-1"
       ],
-      "exe": "librewolf.exe",
+      "exe": ["librewolf.exe", "LibreWolf-portable.exe"],
       "details": "bA",
       "versions": "PI",
       "syn": "a custom version of Firefox, focused on privacy, security and freedom",
