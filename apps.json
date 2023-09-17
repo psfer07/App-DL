@@ -205,6 +205,38 @@
         "418MB"
       ]
     },
+    "LibreWolf": {
+      "url": [
+        "https://gitlab.com/api/v4/projects/44042130/packages/generic/librewolf/117.0.1-1/librewolf-117.0.1-1-windows-x86_64-setup.exe",
+        "https://gitlab.com/api/v4/projects/44042130/packages/generic/librewolf/117.0.1-1/librewolf-117.0.1-1-windows-x86_64-portable.zip"
+      ],
+      "folder": [
+        "$Env:PROGRAMFILES\\$app",
+        "librewolf-117.0.1-1"
+      ],
+      "exe": "librewolf.exe",
+      "details": "bA",
+      "versions": "PI",
+      "syn": "a custom version of Firefox, focused on privacy, security and freedom",
+      "cmd": "/S",
+      "cmd_syn": "installing it silently",
+      "size": [
+        "327MB",
+        "304MB"
+      ]
+    },
+    "OperaGX": {
+      "url": [
+        "https://net.geo.opera.com/opera_gx/stable/windows",
+        "https://download2.portableapps.com/portableapps/OperaGXPortable/OperaGXPortable_102.0.4880.55.paf.exe"
+      ],
+      "folder": "$Env:LOCALAPPDATA\\Programs\\Opera GX",
+      "exe": "opera.exe",
+      "details": "i",
+      "versions": "PI",
+      "syn": "a special version of the Opera browser built specifically for gamers",
+      "size": "340MB"
+    },
     "TorBrowser": {
       "url": "https://www.torproject.org/dist/torbrowser/12.5.4/torbrowser-install-win64-12.5.4_ALL.exe",
       "folder": "Tor Browser",
@@ -233,6 +265,15 @@
         "533MB",
         "256MB"
       ]
+    },
+    "Vivaldi": {
+      "url": "https://downloads.vivaldi.com/stable/Vivaldi.6.2.3105.48.x64.exe",
+      "folder": "$Env:LOCALAPPDATA\\Vivaldi\\Application",
+      "exe": "vivaldi.exe",
+      "details": "b",
+      "versions": "PI",
+      "syn": "a freeware, cross-platform web browser with a built-in email client focused on privacy",
+      "size": "733MB"
     }
   },
   "Basic apps": {
