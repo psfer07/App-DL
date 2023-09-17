@@ -3,7 +3,8 @@ param (
   [Parameter(Position = 1)] [string]$path,
   [string]$portable = $null,
   [string]$open = $null,
-  [switch]$launch
+  [switch]$launch,
+  [switch]$usecmd
 )
 try {
   # Bypass any execution policy
@@ -17,7 +18,8 @@ try {
       [Parameter(Position = 1)] [string]$path,
       [string]$portable = $null,
       [string]$open = $null,
-      [switch]$launch
+      [switch]$launch,
+      [switch]$usecmd
     )
     $wc = New-Object System.Net.WebClient
     $branch = 'dev'
@@ -247,7 +249,7 @@ try {
     }
 
     $o = $uri.Segments[-1]
-    if ((Test-Path "$p\$o") -or (Test-Path "$p\$app\$folder\$exe")) { Revoke-Path -p $p -o $o -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch; break }
+    if ((Test-Path "$p\$o") -or (Test-Path "$p\$app\$folder\$exe")) { Revoke-Path -p $p -o $o -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch -usecmd:$usecmd; break }
     if (!($matchedAppKey -and $portable -and $path -and $open)) { Write-Subtitle "$app will be saved in $path" -pad 70 }
   
     switch ($open) {
@@ -291,13 +293,13 @@ try {
     }
 
     if ($o -notlike "*.7z") { $wc.Dispose | Out-Null }
-    if ($opens -eq $true) { Clear-Host; Open-App -p $p -o $o -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch }
+    if ($opens -eq $true) { Clear-Host; Open-App -p $p -o $o -app $app -folder $folder -exe $exe -details $details -cmd $cmd -cmd_syn $cmd_syn -launch:$launch -usecmd:$usecmd }
     Write-Subtitle 'Continue downloading?'
     $repeat = Read-Host '==> (y/n)'
     if ($repeat -eq 'y') { Clear-Host; Start-Main }
     else { Clear-Host; Exit }
   
   }
-  Start-Main -app $app -path $path -portable $portable -open $open -launch:$launch
+  Start-Main -app $app -path $path -portable $portable -open $open -launch:$launch -usecmd:$usecmd
 }
 finally { Remove-Item "$Env:TEMP\AppDL" -Recurse -Force | Out-Null }
