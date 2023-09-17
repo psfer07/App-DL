@@ -270,7 +270,7 @@
       "url": "https://downloads.vivaldi.com/stable/Vivaldi.6.2.3105.48.x64.exe",
       "folder": "$Env:LOCALAPPDATA\\Vivaldi\\Application",
       "exe": "vivaldi.exe",
-      "details": "b",
+      "details": "i",
       "versions": "PI",
       "syn": "a freeware, cross-platform web browser with a built-in email client focused on privacy",
       "size": "733MB"
