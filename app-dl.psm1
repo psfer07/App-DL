@@ -138,5 +138,5 @@ function Open-App {
   }
   if ($details -in @('b', 'i') -and $openFlag) { $exePath = "$folder\$exe" } else { if ($folder) { $exePath = "$p\$app\$folder\$exe" } else { $exePath = "$p\$app\$exe" } }
   Write-Point "App available in: $exePath"
-  Start-Process -FilePath $exePath -ErrorAction SilentlyContinue
+  if ($launch) { Start-Process -FilePath $exePath -ErrorAction SilentlyContinue }
 }
