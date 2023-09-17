@@ -1,159 +1,560 @@
 {
+  "Data management": {
     "7-Zip": {
-        "URL": "https://www.7-zip.org/a/7z2201-x64.exe",
-        "exe": "7zFM.exe",
-        "syn": "a well known file archiver with the high compression algorithms",
-        "type": "various utilities"
-    },
-    "BCUninstaller": {
-        "URL": "https://github.com/Klocman/Bulk-Crap-Uninstaller/releases/download/v5.4/BCUninstaller_5.4_portable.zip",
-        "exe": "BCUninstaller.exe",
-        "syn": "an advanced app uninstaller that research in your system for any program leftover",
-        "type": "app and data management"
+      "url": [
+        "https://www.7-zip.org/a/7z2301-x64.exe",
+        "https://download2.portableapps.com/portableapps/7-ZipPortable/7-ZipPortable_23.01.paf.exe"
+      ],
+      "folder": [
+        "$Env:PROGRAMFILES\\7-Zip",
+        ""
+      ],
+      "exe": "7zFM.exe",
+      "details": "bi",
+      "versions": "PI",
+      "cmd": [
+        "/S",
+        ""
+      ],
+      "cmd_syn": [
+        "installing it silently",
+        ""
+      ],
+      "syn": "a well known file archiver with the high compression algorithms",
+      "size": "5,70MB"
     },
     "BlankAndSecure": {
-        "URL": "https://files1.majorgeeks.com/10afebdbffcd4742c81a3cb0f6ce4092156b4375/drives/BlankAndSecure.zip",
-        "syn": "an easy-to-use software utility that rewrites files and folders with zeros before permanently erasing them from your hard drive",
-        "exe": "BlankAndSecure.exe",
-        "type": "app and data management"
-    },
-    "Bleachbit": {
-        "URL": "https://download.bleachbit.org/BleachBit-4.4.2-portable.zip",
-        "exe": "bleachbit.exe",
-        "folder": "Bleachbit-Portable",
-        "syn": "a very well-known app and system cleaner with bunch of posible configurations",
-        "type": "app and data management"
-    },
-    "Brave-Portable": {
-        "URL": "https://github.com/portapps/brave-portable/releases/download/1.49.132-86/brave-portable-win64-1.49.132-86-setup.exe",
-        "folder": "brave-portable",
-        "exe": "brave-portable.exe",
-        "syn": "a portable version of the Brave browser",
-        "type": "browsers"
+      "url": "https://www.softwareok.com/Download/BlankAndSecure_x64.zip",
+      "exe": "BlankAndSecure.exe",
+      "details": "A",
+      "versions": "P",
+      "syn": "an easy-to-use software utility that rewrites files and folders with zeros before permanently erasing them from your hard drive",
+      "size": "175KB"
     },
     "DiskGenius": {
-        "URL": "https://engdownload.geniusite.com/winpe/DGEng5501488_x64.zip",
-        "syn": "a full-featured partition manager, which is designed to optimize disk usage for Windows users",
-        "folder": "DiskGenius",
-        "exe": "DiskGenius.exe",
-        "type": "various utilities"
+      "url": [
+        "https://engdownload.geniusite.com/DGEngSetup5511508.exe",
+        "https://engdownload.geniusite.com/winpe/DGEng5511508_x64.zip"
+      ],
+      "folder": [
+        "$Env:PROGRAMFILES\\DiskGenius",
+        "DiskGenius"
+      ],
+      "exe": "DiskGenius.exe",
+      "details": "bA",
+      "versions": "PI",
+      "cmd": [
+        "/VERYSILENT",
+        ""
+      ],
+      "cmd_syn": [
+        "installing it silently",
+        ""
+      ],
+      "syn": "a full-featured partition manager, which is designed to optimize disk usage for Windows users",
+      "size": "64MB"
     },
-    "Dism++": {
-        "URL": "https://github.com/Chuyu-Team/Dism-Multi-language/releases/download/v10.1.1002.1/Dism++10.1.1002.1.zip",
-        "exe": "Dism++x64.exe",
-        "syn": "a very efective app to clean almost all the unused system files and also can optimize",
-        "type": "app and data management"
-    },
-    "DNSJumper": {
-        "URL": "https://www.sordum.org/files/download/dns-jumper/DnsJumper.zip",
-        "exe": "DnsJumper.exe",
-        "syn": "a simple program that checks for the quickest DNS for you",
-        "type": "hardware information and monitoring"
-    },
-    "Everything": {
-        "URL": "https://www.voidtools.com/Everything-1.4.1.1023.x64.zip",
-        "syn": "a portable data indexer, much lighter and faster than Windows search",
-        "exe": "Everything.exe",
-        "type": "various utilities"
-    },
-    "FileOptimizer": {
-        "URL": "https://download2.portableapps.com/portableapps/FileOptimizerPortable/FileOptimizerPortable_16.30.2781.paf.exe",
-        "syn": "an advanced file optimizer featuring a lossless (no quality loss) file size reduction with high compatibility",
-        "type": "app and data management"
-    },
-    "KVRT": {
-        "URL": "https://devbuilds.s.kaspersky-labs.com/devbuilds/KVRT/latest/full/KVRT.exe",
-        "syn": "the Kaspersky Virus Removal Tool, a portable antivirus updated with the latest definitions",
-        "type": "security"
-    },
-    "LibreOffice": {
-        "URL": "https://tdf.jensgutermuth.de/libreoffice/stable/7.5.3/win/x86_64/LibreOffice_7.5.3_Win_x86-64.msi",
-        "syn": "the most efficient free and open office suite on the market",
-        "folder": "program",
-        "exe": "soffice.exe",
-        "type": "personal use"
-    },
-    "McAfee-Stinger": {
-        "URL": "https://downloadcenter.trellix.com/products/mcafee-avert/Stinger/stinger64.exe",
-        "exe": "stinger64.exe",
-        "cmd": "--GO --ADL --ROOTKIT --WMI",
-        "cmd_syn": "doing a full scan of all local drives",
-        "syn": "an advanced rootkit and threat remover",
-        "type": "security"
-    },
-    "OpenVPN": {
-        "URL": "https://github.com/portapps/openvpn-portable/releases/download/2.4.9-I601-8/openvpn-portable-win64-2.4.9-I601-8-setup.exe",
-        "folder": "openvpn-portable",
-        "exe": "openvpn-portable.exe",
-        "syn": "a portable VPN",
-        "type": "security"
-    },
-    "PortableApps": {
-        "URL": "https://download2.portableapps.com/portableapps/PortableApps.comPlatform/PortableApps.com_Platform_Setup_25.0.paf.exe",
-        "syn": "a suite for portable apps",
-        "type": "various utilities"
-    },
-    "RegistryLiveWatch": {
-        "URL": "https://files1.majorgeeks.com/10afebdbffcd4742c81a3cb0f6ce4092156b4375/registry/rgm.zip",
-        "syn": "a free, lightweight and portable tool to monitor activity on a registry key",
-        "exe": "rgm.exe",
-        "type": "hardware information and monitoring"
-    },
-    "ShutUp10++": {
-        "URL": "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
-        "exe": "OOSU10.exe",
-        "syn": "a pretty good Windows optimizer and privacy protector",
-        "type": "optimization"
-    },
-    "Sniffer": {
-        "URL": "https://files1.majorgeeks.com/10afebdbffcd4742c81a3cb0f6ce4092156b4375/networking/sniffer.zip",
-        "syn": "a suite of IP Tools built around a packet sniffer (needs wpcap.dll and a NDIS protocol). Used for network monitoring",
-        "exe": "iptools.exe",
-        "type": "hardware information and monitoring"
-    },
-    "ThisIsWindows11": {
-        "URL": "https://github.com/builtbybel/ThisIsWin11/releases/download/1.4.1/TIW11.zip",
-        "exe": "ThisIsWin11.exe",
-        "syn": "a useful app to customize and optimize almost every configuration in your PC",
-        "type": "optimization"
-    },
-    "TorBrowser": {
-        "URL": "https://dist.torproject.org/torbrowser/12.0.4/torbrowser-install-win64-12.0.4_ALL.exe",
-        "syn": "the best privacy-care browser, based on firefox",
-        "folder": "Tor Browser",
-        "exe": "firefox.exe",
-        "cmd": "/S",
-        "cmd_syn": "installing itself silently",
-        "type": "browsers"
-    },
-    "Ungoogled-Chromium": {
-        "URL": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/113.0.5672.93-1.1/ungoogled-chromium_113.0.5672.93-1.1_windows_x64.zip",
-        "folder": "ungoogled-chromium_113.0.5672.93-1.1_windows",
-        "exe": "chrome.exe",
-        "syn": "a full-debloated version of Google Chrome",
-        "type": "browsers"
+    "Undelete360": {
+      "url": "https://undelete360.com/files/undelete-360-setup.exe",
+      "folder": "${Env:PROGRAMFILES(x86)}\\File Recovery\\undelete360",
+      "exe": "undelete-360.exe",
+      "details": "b",
+      "versions": "I",
+      "syn": "one of the best programs to use for restoring accidentally or unintentionally deleted files from your computer, regardless of storage medium",
+      "cmd": "/VERYSILENT",
+      "cmd_syn": "installing it silently",
+      "size": "8,76MB"
     },
     "Ventoy": {
-        "URL": "https://github.com/ventoy/Ventoy/releases/download/v1.0.91/ventoy-1.0.91-windows.zip",
-        "folder": "ventoy-1.0.91",
-        "exe": "Ventoy2Disk.exe",
-        "syn": "an open source tool to create bootable USB drive for ISO/WIM/IMG/VHD(x)/EFI files",
-        "type": "various utilities"
+      "url": "https://github.com/ventoy/Ventoy/releases/download/v1.0.94/ventoy-1.0.94-windows.zip",
+      "folder": "ventoy-1.0.94",
+      "exe": "Ventoy2Disk.exe",
+      "details": "A",
+      "versions": "P",
+      "syn": "an open source tool to create bootable USB drive for ISO/WIM/IMG/VHD(x)/EFI files",
+      "size": "18MB"
+    }
+  },
+  "Utility software": {
+    "BCUninstaller": {
+      "url": "https://github.com/Klocman/Bulk-Crap-Uninstaller/releases/download/v5.6/BCUninstaller_5.6_portable.zip",
+      "exe": "BCUninstaller.exe",
+      "details": "A",
+      "versions": "P",
+      "syn": "an advanced app uninstaller that researches your system for any program leftovers",
+      "size": "358MB"
     },
-    "VitualBox-Portable": {
-        "URL": "https://www.vbox.me/files/Portable-VirtualBox_v5.1.22-Starter_v6.4.10-Win_all.exe",
-        "syn": "a free and open source software tool that lets you run any operating system from a usb stick without separate installation",
-        "exe": "Portable-VirtualBox.exe",
-        "type": "various utilities"
+    "Bleachbit": {
+      "url": [
+        "https://download.bleachbit.org/BleachBit-4.4.2-setup.exe",
+        "https://download.bleachbit.org/BleachBit-4.4.2-portable.zip"
+      ],
+      "folder": [
+        "${Env:PROGRAMFILES(x86)}\\BleachBit",
+        "BleachBit-Portable"
+      ],
+      "exe": "bleachbit.exe",
+      "details": "bA",
+      "versions": "PI",
+      "syn": "a very well-known app and system cleaner with a bunch of possible configurations",
+      "cmd": [
+        "/allusers /S",
+        ""
+      ],
+      "cmd_syn": [
+        "installing it silently",
+        ""
+      ],
+      "size": "16,4MB"
+    },
+    "BloatyNosy": {
+      "url": "https://github.com/builtbybel/BloatyNosy/releases/download/0.85.0/BloatyNosyApp.zip",
+      "exe": "BloatyNoisy.exe",
+      "details": "A",
+      "versions": "P",
+      "syn": "a universal debloater and PC Manager for JUST Windows 11",
+      "size": "200KB"
+    },
+    "Dism++": {
+      "url": "https://github.com/Chuyu-Team/Dism-Multi-language/releases/download/v10.1.1002.1/Dism++10.1.1002.1.zip",
+      "exe": "Dism++x64.exe",
+      "details": "A",
+      "versions": "P",
+      "syn": "a very effective app to clean almost all the unused system files and can also optimize",
+      "size": "7,5MB"
+    },
+    "DNSJumper": {
+      "url": "https://www.sordum.org/files/download/dns-jumper/DnsJumper.zip",
+      "exe": "DnsJumper.exe",
+      "details": "A",
+      "versions": "P",
+      "syn": "a simple program that checks for the quickest DNS for you",
+      "size": "1,08MB"
+    },
+    "FileOptimizer": {
+      "url": [
+        "https://netcologne.dl.sourceforge.net/project/nikkhokkho/FileOptimizer/16.30.2781/FileOptimizerSetup.exe",
+        "https://netcologne.dl.sourceforge.net/project/nikkhokkho/FileOptimizer/16.30.2781/FileOptimizerFull.7z.exe"
+      ],
+      "details": "b",
+      "versions": "PI",
+      "folder": [
+        "$Env:PROGRAMFILES\\FileOptimizer",
+        "FileOptimizer"
+      ],
+      "exe": "FileOptimizer64.exe",
+      "cmd": [
+        "/S",
+        "-o'FileOptimizer' -y"
+      ],
+      "cmd_syn": [
+        "installing it silently",
+        "automatically extracting itself"
+      ],
+      "syn": "an advanced file optimizer featuring lossless (no quality loss) file size reduction with high compatibility",
+      "size": "378MB"
+    },
+    "RegistryLiveWatch": {
+      "url": "https://files1.majorgeeks.com/10afebdbffcd4742c81a3cb0f6ce4092156b4375/registry/rgm.zip",
+      "exe": "rgm.exe",
+      "details": "A",
+      "versions": "P",
+      "syn": "a free, lightweight, and portable tool to monitor activity on a registry key",
+      "size": "725KB"
+    },
+    "ShutUp10++": {
+      "url": "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
+      "exe": "OOSU10.exe",
+      "details": "a",
+      "versions": "P",
+      "syn": "a pretty good Windows optimizer and privacy protector"
+    },
+    "UltimateWindowsTweaker": {
+      "url": "https://www.thewindowsclub.com/downloads/UWT4.zip",
+      "folder": "Ultimate Windows Tweaker 4.8",
+      "exe": "Ultimate Windows Tweaker 4.8.exe",
+      "details": "A",
+      "versions": "P",
+      "syn": "a user-friendly utility by The Windows Club, enabling users to completely tune and optimize their Windows experience",
+      "size": "700KB"
+    }
+  },
+  "Browsers": {
+    "Brave": {
+      "url": [
+        "https://referrals.brave.com/latest/BraveBrowserSetup-BRV010.exe",
+        "https://github.com/portapps/brave-portable/releases/download/1.52.129-87/brave-portable-win64-1.52.129-87.7z"
+      ],
+      "folder": [
+        "$Env:PROGRAMFILES\\BraveSoftware\\Brave-Browser\\Application",
+        ""
+      ],
+      "exe": "brave.exe",
+      "details": "Ap",
+      "versions": "PI",
+      "syn": "a quick, private and safe browser for PC, Mac and mobile devices",
+      "size": [
+        "658MB",
+        "327MB"
+      ]
+    },
+    "Firefox": {
+      "url": [
+        "https://download-installer.cdn.mozilla.net/pub/firefox/releases/116.0.3/win32/es-ES/Firefox%20Installer.exe",
+        "https://download2.portableapps.com/portableapps/FirefoxPortable/FirefoxPortable_116.0.3_English.paf.exe"
+      ],
+      "folder": [
+        "$Env:PROGRAMFILES\\Mozilla Firefox",
+        "Mozilla Firefox"
+      ],
+      "exe": "firefox.exe",
+      "details": "Ai",
+      "versions": "PI",
+      "syn": "a fast, full-featured web browser that's easy to use",
+      "size": [
+        "220MB",
+        "418MB"
+      ]
+    },
+    "LibreWolf": {
+      "url": [
+        "https://gitlab.com/api/v4/projects/44042130/packages/generic/librewolf/117.0.1-1/librewolf-117.0.1-1-windows-x86_64-setup.exe",
+        "https://gitlab.com/api/v4/projects/44042130/packages/generic/librewolf/117.0.1-1/librewolf-117.0.1-1-windows-x86_64-portable.zip"
+      ],
+      "folder": [
+        "$Env:PROGRAMFILES\\$app",
+        "librewolf-117.0.1-1"
+      ],
+      "exe": ["librewolf.exe", "LibreWolf-portable.exe"],
+      "details": "bA",
+      "versions": "PI",
+      "syn": "a custom version of Firefox, focused on privacy, security and freedom",
+      "cmd": "/S",
+      "cmd_syn": "installing it silently",
+      "size": [
+        "327MB",
+        "304MB"
+      ]
+    },
+    "OperaGX": {
+      "url": [
+        "https://net.geo.opera.com/opera_gx/stable/windows",
+        "https://download2.portableapps.com/portableapps/OperaGXPortable/OperaGXPortable_102.0.4880.55.paf.exe"
+      ],
+      "folder": "$Env:LOCALAPPDATA\\Programs\\Opera GX",
+      "exe": "opera.exe",
+      "details": "i",
+      "versions": "PI",
+      "syn": "a special version of the Opera browser built specifically for gamers",
+      "size": "340MB"
+    },
+    "TorBrowser": {
+      "url": "https://www.torproject.org/dist/torbrowser/12.5.4/torbrowser-install-win64-12.5.4_ALL.exe",
+      "folder": "Tor Browser",
+      "exe": "Start Tor Browser.lnk",
+      "details": "b",
+      "versions": "P",
+      "syn": "the best privacy-care browser, based on Firefox",
+      "cmd": "/S",
+      "cmd_syn": "installing it silently",
+      "size": "252MB"
+    },
+    "Ungoogled-Chromium": {
+      "url": [
+        "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/116.0.5845.111-1.1/ungoogled-chromium_116.0.5845.111-1.1_installer_x64.exe",
+        "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/116.0.5845.111-1.1/ungoogled-chromium_116.0.5845.111-1.1_windows_x64.zip"
+      ],
+      "folder": [
+        "$Env:LOCALAPPDATA\\Chromium\\Application",
+        "ungoogled-chromium_116.0.5845.111-1.1_windows"
+      ],
+      "exe": "chrome.exe",
+      "details": "A",
+      "versions": "PI",
+      "syn": "a full-debloated version of Google Chrome",
+      "size": [
+        "533MB",
+        "256MB"
+      ]
+    },
+    "Vivaldi": {
+      "url": "https://downloads.vivaldi.com/stable/Vivaldi.6.2.3105.48.x64.exe",
+      "folder": "$Env:LOCALAPPDATA\\Vivaldi\\Application",
+      "exe": "vivaldi.exe",
+      "details": "i",
+      "versions": "PI",
+      "syn": "a freeware, cross-platform web browser with a built-in email client focused on privacy",
+      "size": "733MB"
+    }
+  },
+  "Basic apps": {
+    "Discord": {
+      "url": [
+        "https://dl.discordapp.net/distro/app/stable/win/x86/1.0.9016/DiscordSetup.exe",
+        "https://github.com/portapps/discord-portable/releases/download/1.0.9010-15/discord-portable-win32-1.0.9010-15.7z"
+      ],
+      "folder": [
+        "$Env:LOCALAPPDATA\\Discord\\app-1.0.9017",
+        ""
+      ],
+      "exe": "discord.exe",
+      "details": "Ap",
+      "versions": "PI",
+      "syn": "a famous gamer-focused social media",
+      "size": [
+        "407MB",
+        "172MB"
+      ]
+    },
+    "Everything": {
+      "url": [
+        "https://www.voidtools.com/Everything-1.4.1.1024.x64-Setup.exe",
+        "https://www.voidtools.com/Everything-1.4.1.1024.x64.zip"
+      ],
+      "folder": [
+        "$Env:PROGRAMFILES\\Everything",
+        ""
+      ],
+      "exe": "Everything.exe",
+      "details": "bA",
+      "versions": "PI",
+      "syn": "a portable data indexer, much lighter and faster than Windows search",
+      "cmd": [
+        "/S",
+        ""
+      ],
+      "cmd_syn": [
+        "installing it silently",
+        ""
+      ],
+      "size": "3,2MB"
+    },
+    "LibreOffice": {
+      "url": "https://www.mirrorservice.org/sites/download.documentfoundation.org/tdf/libreoffice/stable/7.6.0/win/x86_64/LibreOffice_7.6.0_Win_x86-64.msi",
+      "folder": "$Env:PROGRAMFILES\\LibreOffice\\program",
+      "exe": "soffice.exe",
+      "details": "i",
+      "versions": "I",
+      "syn": "the most efficient free and open office suite on the market",
+      "size": "668MB"
+    },
+    "PortableApps": {
+      "url": "https://download2.portableapps.com/portableapps/PortableApps.comPlatform/PortableApps.com_Platform_Setup_26.1.paf.exe",
+      "details": "i",
+      "versions": "PI",
+      "syn": "a suite for portable apps",
+      "size": "16,9MB"
+    },
+    "qBittorrent": {
+      "url": [
+        "https://deac-fra.dl.sourceforge.net/project/qbittorrent/qbittorrent-win32/qbittorrent-4.5.5/qbittorrent_4.5.5_x64_setup.exe",
+        "https://github.com/portapps/qbittorrent-portable/releases/download/4.5.0-19/qbittorrent-portable-win64-4.5.0-19.7z"
+      ],
+      "folder": [
+        "$Env:PROGRAMFILES\\qBittorrent",
+        ""
+      ],
+      "exe": "qbittorrent.exe",
+      "details": "bp",
+      "versions": "PI",
+      "syn": "A free and open-source software alternative to uTorrent",
+      "cmd": [
+        "/S",
+        ""
+      ],
+      "cmd_syn": [
+        "installing it silently",
+        ""
+      ],
+      "size": [
+        "163MB",
+        "40MB"
+      ]
+    },
+    "VLC": {
+      "url": [
+        "https://ftp.rnl.tecnico.ulisboa.pt/pub/videolan/vlc/3.0.18/win64/vlc-3.0.18-win64.exe",
+        "https://github.com/portapps/vlc-portable/releases/download/3.0.16-11/vlc-portable-win64-3.0.16-11.7z"
+      ],
+      "folder": [
+        "$Env:PROGRAMFILES\\VideoLAN\\VLC",
+        ""
+      ],
+      "exe": "vlc.exe",
+      "details": "bp",
+      "versions": "PI",
+      "syn": "an open-source media player",
+      "cmd": [
+        "/S",
+        ""
+      ],
+      "cmd_syn": [
+        "installing it silently",
+        ""
+      ],
+      "size": "173MB"
+    },
+    "WhatsApp": {
+      "url": "https://github.com/portapps/whatsapp-portable/releases/download/2.2134.10-32/whatsapp-portable-win64-2.2134.10-32.7z",
+      "details": "p",
+      "versions": "P",
+      "syn": "a portable version of the instant messaging app",
+      "size": "391MB"
+    }
+  },
+  "Security & Privacy": {
+    "KVRT": {
+      "url": "https://devbuilds.s.kaspersky-labs.com/devbuilds/KVRT/latest/full/KVRT.exe",
+      "details": "a",
+      "versions": "P",
+      "cmd": "-accepteula -silent -details -allvolumes",
+      "cmd_syn": "scanning all existing drives by the command line (could last around an hour)",
+      "syn": "the Kaspersky Virus Removal Tool, a portable antivirus updated with the latest definitions"
+    },
+    "McAfee-Stinger": {
+      "url": "https://downloadcenter.trellix.com/products/mcafee-avert/Stinger/stinger64.exe",
+      "exe": "stinger64.exe",
+      "details": "a",
+      "versions": "P",
+      "syn": "an advanced rootkit and threat remover",
+      "cmd": "--GO --ADL --ROOTKIT --WMI",
+      "cmd_syn": "doing a full scan of all local drives"
+    },
+    "NextDNS": {
+      "url": "https://github.com/nextdns/nextdns/releases/download/v1.39.4/nextdns_1.39.4_windows_amd64.zip",
+      "exe": "nextdns.exe",
+      "details": "A",
+      "versions": "P",
+      "syn": "a command-line tool that allows you to use NextDNS's DNS-over-HTTPS (DoH) service with advanced capabilities",
+      "size": "5,89MB"
+    },
+    "OpenVPN": {
+      "url": "https://github.com/portapps/openvpn-portable/releases/download/2.4.9-I601-8/openvpn-portable-win64-2.4.9-I601-8.7z",
+      "details": "p",
+      "versions": "P",
+      "syn": "a well known open-source VPN",
+      "size": "21,5MB"
+    },
+    "Portmaster": {
+      "url": "https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.exe",
+      "folder": "$Env:PROGRAMDATA\\Safing\\PortMaster",
+      "exe": "portmaster-start.exe",
+      "details": "b",
+      "versions": "I",
+      "syn": "a privacy suite for your desktop OS",
+      "cmd": "/S",
+      "cmd_syn": "installing it silently",
+      "size": "429MB"
+    },
+    "Wireshark": {
+      "url": [
+        "https://2.na.dl.wireshark.org/win64/Wireshark-win64-latest.exe",
+        "https://2.na.dl.wireshark.org/win64/WiresharkPortable64_latest.paf.exe"
+      ],
+      "folder": [
+        "$Env:PROGRAMFILES\\Wireshark",
+        ""
+      ],
+      "exe": "Wireshark.exe",
+      "details": "bi",
+      "versions": "PI",
+      "syn": "a network package analyzer tool",
+      "cmd": [
+        "/S",
+        ""
+      ],
+      "cmd_syn": [
+        "installing it silently",
+        ""
+      ],
+      "size": "227MB"
+    }
+  },
+  "Development software": {
+    "Platform-tools": {
+      "url": "https://dl.google.com/android/repository/platform-tools_r34.0.4-windows.zip",
+      "folder": "platform-tools",
+      "details": "A",
+      "versions": "P",
+      "syn": "a component for the Android SDK. Contains adb and fastboot",
+      "cmd": "Start-Process cmd.exe /K 'cd $p\\$program\\$folder'",
+      "cmd_syn": "launching a explorer window where the folder has been extracted",
+      "size": "12,4MB"
+    },
+    "Universal-Android-Debloater": {
+      "url": "https://github.com/0x192/universal-android-debloater/releases/download/0.5.1/uad_gui-windows.exe",
+      "details": "a",
+      "versions": "P",
+      "syn": "a cross-platform GUI written in Rust using ADB to debloat non-rooted android devices"
+    },
+    "VirtualBox": {
+      "url": [
+        "https://download.virtualbox.org/virtualbox/7.0.10/VirtualBox-7.0.10-158379-Win.exe",
+        "https://www.vbox.me/files/Portable-VirtualBox_v5.1.22-Starter_v6.4.10-Win_all.exe"
+      ],
+      "folder": [
+        "$Env:PROGRAMFILES\\Oracle\\VirtualBox",
+        "Portable-VirtualBox"
+      ],
+      "exe": [
+        "VirtualBox.exe",
+        "Portable-VirtualBox.exe"
+      ],
+      "details": "b",
+      "versions": "PI",
+      "syn": "a free and open source software tool that lets you run any operating system from a usb stick",
+      "cmd": [
+        "--silent",
+        "-o'Portable-VirtualBox' -y"
+      ],
+      "cmd_syn": [
+        "installing it silently",
+        "automatically extracting itself"
+      ],
+      "size": [
+        "210MB",
+        "2,50MB"
+      ]
+    },
+    "VSCode": {
+      "url": [
+        "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64",
+        "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-archive"
+      ],
+      "folder": [
+        "$Env:LOCALAPPDATA\\Programs\\Microsoft VS Code",
+        ""
+      ],
+      "details": "bA",
+      "exe": "Code.exe",
+      "versions": "PI",
+      "syn": "a lightweight but powerful source code editor",
+      "cmd": [
+        "/VERYSILENT",
+        ""
+      ],
+      "cmd_syn": [
+        "installing it silently",
+        ""
+      ],
+      "size": "341MB"
     },
     "Winget": {
-        "URL": "https://github.com/microsoft/winget-cli/releases/download/v1.4.10173/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle",
-        "syn": "the official CLI Windows Package manager (some desktops doesn't have it by default)",
-        "type": "app and data management"
+      "url": "https://github.com/microsoft/winget-cli/releases/download/v1.5.2201/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle",
+      "details": "i",
+      "versions": "I",
+      "syn": "the official CLI Windows Package manager (some desktops don't have it by default)",
+      "cmd": "Start-Process cmd.exe -ArgumentList '/k winget'",
+      "cmd_syn": "opening winget in a terminal"
     },
-    "ZeroInstall": {
-        "URL": "https://get.0install.net/0install.exe",
-        "syn": "a decentralised cross-platform software installation system",
-        "type": "various utilities"
+    "0install": {
+      "url": "https://get.0install.net/0install.exe",
+      "details": "a",
+      "versions": "P",
+      "syn": "a decentralized cross-platform software installation system",
+      "cmd": "central",
+      "cmd_syn": "opening the GUI version",
+      "size": "4,04MB"
     }
+  }
 }
