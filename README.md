@@ -53,7 +53,7 @@ In the second case, it will download, extract and open the portable version of V
 
 .\app-dl.ps1 -app vlc -p downloads -port y -open y -usecmd
 
-.\app-dl.ps1 -vlc downloads y y -usecmd
+.\app-dl.ps1 vlc downloads y y -usecmd
 ```
 
 ---
@@ -65,7 +65,7 @@ In the last case, it will install BleachBit in your pc using the presets, saving
 
 .\app-dl.ps1 -app bleachbit -p appdl -port n -open y -l -usecmd
 
-.\ app-dl .ps1 bleachbit appdl n y -l -usecmd
+.\app-dl.ps1 bleachbit appdl n y -l -usecmd
 ```
 
 ## Changelog
