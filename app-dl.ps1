@@ -515,8 +515,6 @@ try
                      -Status "$downloadedString ($percentage%) complete" `
                      -PercentComplete $percentage
     }
-
-    if ($o -notlike "*.7z") { $wc.Dispose | Out-Null }
     
     if ($opens -eq $true)
     {

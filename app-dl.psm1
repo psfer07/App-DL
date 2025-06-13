@@ -169,45 +169,6 @@ function Open-App
         }
       }
     }
-    "*.7z"
-    {
-      $branch = 'main'
-      $repo_url = 'https://raw.githubusercontent.com/psfer07/App-DL'
-      $wc = New-Object System.Net.WebClient
-      foreach ($lib in '7z.exe', '7z.dll')
-      {
-        $wc.DownloadFile("$repo_url/$branch/7z/$lib", `
-        "$Env:TEMP\AppDL\assets\$lib")
-      }
-      
-      $wc.Dispose()
-      
-      if ($details -eq 'p') {
-        $exe = $app.ToLower() + '-portable.exe'
-      }
-      
-      Write-Title '7z file detected'
-      Start-Sleep -Milliseconds 100
-      
-      if (Test-Path -Path "$p\$app\$folder\$exe")
-      {
-        $openFlag = $true
-        break
-      }
-
-      if (Test-Path -Path "$p\$o")
-      {
-        Write-Point "$app is saved as a 7z file, so uncompressing..."
-        Start-Process '.\7z\7z.exe' -ArgumentList "x `"$p\$o`" -o`"$p\$app`"" `
-                      -Wait -NoNewWindow
-                      
-        if ($?) { Write-Title 'Package successfully extracted...' }
-        else {
-          Write-Warning "Failed to extract package. $($_.Exception)"
-          Read-Host 'Press any key to continue...'
-        }
-      }
-    }
     "*.exe"
     {
       Write-Title 'Exe file detected'
