@@ -516,7 +516,7 @@ try
                      -PercentComplete $percentage
     }
 
-    if ($o -notlike "*.7z") { $wc.Dispose | Out-Null }
+    # if ($o -notlike "*.7z") { $wc.Dispose | Out-Null }
     
     if ($opens -eq $true)
     {

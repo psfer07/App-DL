@@ -182,8 +182,7 @@
   "Browsers": {
     "Brave": {
       "url": [
-        "https://referrals.brave.com/latest/BraveBrowserSetup-BRV010.exe",
-        "https://github.com/portapps/brave-portable/releases/download/1.52.129-87/brave-portable-win64-1.52.129-87.7z"
+        "https://referrals.brave.com/latest/BraveBrowserSetup-BRV010.exe"
       ],
       "folder": [
         "$Env:PROGRAMFILES\\BraveSoftware\\Brave-Browser\\Application",
@@ -290,8 +289,8 @@
   "Basic apps": {
     "Discord": {
       "url": [
-        "https://dl.discordapp.net/distro/app/stable/win/x86/1.0.9016/DiscordSetup.exe",
-        "https://github.com/portapps/discord-portable/releases/download/1.0.9010-15/discord-portable-win32-1.0.9010-15.7z"
+        "https://dl.discordapp.net/distro/app/stable/win/x86/1.0.9016/DiscordSetup.exe"//,
+        //"https://github.com/portapps/discord-portable/releases/download/1.0.9010-15/discord-portable-win32-1.0.9010-15.7z"
       ],
       "folder": [
         "$Env:LOCALAPPDATA\\Discord\\app-1.0.9017",
@@ -347,8 +346,7 @@
     },
     "qBittorrent": {
       "url": [
-        "https://deac-fra.dl.sourceforge.net/project/qbittorrent/qbittorrent-win32/qbittorrent-4.5.5/qbittorrent_4.5.5_x64_setup.exe",
-        "https://github.com/portapps/qbittorrent-portable/releases/download/4.5.0-19/qbittorrent-portable-win64-4.5.0-19.7z"
+        "https://deac-fra.dl.sourceforge.net/project/qbittorrent/qbittorrent-win32/qbittorrent-4.5.5/qbittorrent_4.5.5_x64_setup.exe"
       ],
       "folder": [
         "$Env:PROGRAMFILES\\qBittorrent",
@@ -373,8 +371,7 @@
     },
     "VLC": {
       "url": [
-        "https://ftp.rnl.tecnico.ulisboa.pt/pub/videolan/vlc/3.0.18/win64/vlc-3.0.18-win64.exe",
-        "https://github.com/portapps/vlc-portable/releases/download/3.0.16-11/vlc-portable-win64-3.0.16-11.7z"
+        "https://ftp.rnl.tecnico.ulisboa.pt/pub/videolan/vlc/3.0.18/win64/vlc-3.0.18-win64.exe"
       ],
       "folder": [
         "$Env:PROGRAMFILES\\VideoLAN\\VLC",
@@ -393,13 +390,6 @@
         ""
       ],
       "size": "173MB"
-    },
-    "WhatsApp": {
-      "url": "https://github.com/portapps/whatsapp-portable/releases/download/2.2134.10-32/whatsapp-portable-win64-2.2134.10-32.7z",
-      "details": "p",
-      "versions": "P",
-      "syn": "a portable version of the instant messaging app",
-      "size": "391MB"
     }
   },
   "Security & Privacy": {
@@ -427,13 +417,6 @@
       "versions": "P",
       "syn": "a command-line tool that allows you to use NextDNS's DNS-over-HTTPS (DoH) service with advanced capabilities",
       "size": "5,89MB"
-    },
-    "OpenVPN": {
-      "url": "https://github.com/portapps/openvpn-portable/releases/download/2.4.9-I601-8/openvpn-portable-win64-2.4.9-I601-8.7z",
-      "details": "p",
-      "versions": "P",
-      "syn": "a well known open-source VPN",
-      "size": "21,5MB"
     },
     "Portmaster": {
       "url": "https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.exe",
