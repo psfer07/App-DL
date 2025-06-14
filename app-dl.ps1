@@ -22,16 +22,21 @@
 
 .PARAMETER usecmd
     Specifies whether to use command-line presets for the selected application. This switch parameter does not require a value.
-
+.PARAMETER noverbose
+    Ignore warnings and continues if no error is found.
+.PARAMETER selfdestruct
+    Removes the all the files created by the program (not the programs downloaded by the user unless specified).
 #>
 
 param (
-  [Parameter(Position = 0)] [string]$app,
-  [Parameter(Position = 1)][Alias("p")] [string]$path,
+  [Parameter(Position = 0)][string]$app,
+  [Parameter(Position = 1)][string]$path,
   [Parameter(Position = 2)][Alias("port")] [string]$portable = $null,
   [Parameter(Position = 3)][string]$open = $null,
   [Alias("l")] [switch]$launch,
   [switch]$usecmd,
+  [switch]$noverbose,
+  [switch]$selfdestruct,
   [Alias("h")] [switch]$help
 )
 if ($help)
@@ -91,7 +96,11 @@ try
       }
       if (-not $matchedAppKey)
       {
-        Write-Warning "No app recognized, starting App-DL by default"
+
+        if (!$noverbose)
+        {
+          Write-Warning "No app recognized, starting App-DL by default"
+        }
         Start-Sleep 1
         Start-Main
       }
@@ -191,7 +200,11 @@ try
       {
         if ($portable)
         {
-          Write-Warning "Non-valid entry for portable: $portable"
+
+          if (!$noverbose)
+          {
+            Write-Warning "Non-valid entry for portable: $portable"
+          }
           Start-Sleep 1
         }
         if ($appProperties.versions -match 'PI')
@@ -214,7 +227,11 @@ try
       }
     }
     if ($appProperties.versions -cnotmatch 'PI' -and $portable) {
-      Write-Warning "$app does not support an alternative version"
+
+      if (!$noverbose)
+      {
+        Write-Warning "$app does not support an alternative version"
+      }
       Start-Sleep -Milliseconds 1500
       $ver = 0
     }
@@ -260,7 +277,7 @@ try
     }
     else
     {
-      Write-Warning "Host is not reachable."
+      Write-Point "Host is not reachable." -ForegroundColor Red
       Write-Host "This may be because the url may be invalid."
       Write-Host "Or maybe it is just your internet connection."
       Start-Sleep 4
@@ -307,7 +324,7 @@ try
       $p = $paths["$inputPath"]
       if (!(Test-Path $p) -and $path -notlike 'appdl') {
       
-        while ((Test-Path $path) -ne $true)
+        while (!(Test-Path $path))
         {
           Write-Title -warn 'The provided path does not exist'
           Write-Host "Path: $p"
@@ -335,16 +352,16 @@ try
     }
     else {
       Write-Title 'Path selecting'
-      [string]$s = 'Save it'
+      [string]$s = 'Save it in'
       $pathOptions = @(
-          "$s in Desktop",
-          "$s in Documents",
-          "$s in Downloads",
-          "$s in C:",
-          "$s in Program Files",
-          "$s in the user profile",
-          "$s in the roaming folder`n",
-          "$s in App-DL's temp folder (opens the program automatically)`n"
+          "$s Desktop",
+          "$s Documents",
+          "$s Downloads",
+          "$s C:",
+          "$s Program Files",
+          "$s the user profile",
+          "$s the roaming folder`n",
+          "$s App-DL's temp folder (opens the program automatically)`n"
       )
     
       for ($i = 1; $i -le $pathOptions.Length; $i++)
@@ -356,9 +373,9 @@ try
       Write-Point "0. Resets the program to select another app`n"
     
       while ($pathN -notmatch '^\d+$' -or `
-            $pathN -lt 0 -or `
-            $pathN -gt $pathOptions.Count -and `
-            $pathN -ne 'x'
+             $pathN -lt 0 -or `
+             $pathN -gt $pathOptions.Count -and `
+             $pathN -ne 'x'
             )
       {
         Write-Host
@@ -465,7 +482,12 @@ try
       
         if ($open)
         {
-          Write-Warning "Non-valid entry in open: $open"
+
+          if (!noverbose)
+          {
+            Write-Warning "Non-valid entry in open: $open"
+            $open = "n"
+          }
           Start-Sleep 1
         }
         
@@ -551,5 +573,9 @@ try
     Start-Main @params
 }
 finally {
+    
+  if ($selfdestruct)
+  {
     Remove-Item "$Env:TEMP\AppDL" -Recurse -Force | Out-Null
+  }
 }
