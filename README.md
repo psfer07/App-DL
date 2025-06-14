@@ -28,13 +28,14 @@ You can use the program's parameters to automate the download, extraction or ope
 
 ```powershell
 .\app-dl.ps1
-   [-app <String>]
-   [-path <String>]
-   [-portable <String>]
-   [-open <String>]
-   [-launch]
-   [-usecmd]
-   [-help]
+   [-App, -n <String>]
+   [-Path -o <String>]
+   [-Portable, -p <String>]
+   [-Launch, -l <String>]
+   [-AutomaticInstallation, -a]
+   [-NoVerbose, -nv]
+   [-SelfDestruct, -d]
+   [-Help]
 ```
 
 **Examples**
@@ -43,9 +44,9 @@ You can use the program's parameters to automate the download, extraction or ope
 In the first case, it will be just a normal installation of the Brave browser, saving the installer into the desktop
 
 ```powershell
-.\app-dl.ps1 -app brave -path desktop -portable n -open y
+.\app-dl.ps1 -App brave -Path desktop -Portable n -Launch y
 
-.\app-dl.ps1 -app brave -p desktop -port n -open y
+.\app-dl.ps1 -n brave -o desktop -p n -l y
 
 .\app-dl.ps1 brave desktop n y
 ```
@@ -55,11 +56,11 @@ In the first case, it will be just a normal installation of the Brave browser, s
 In the second case, it will download, extract and open the portable version of VLC
 
 ```powershell
-.\app-dl.ps1 -app vlc -path downloads -portable y -open y -usecmd
+.\app-dl.ps1 -App vlc -Path downloads -Portable y -Launch y -AutomaticInstallation
 
-.\app-dl.ps1 -app vlc -p downloads -port y -open y -usecmd
+.\app-dl.ps1 -n vlc -o downloads -p y -l y -a
 
-.\app-dl.ps1 vlc downloads y y -usecmd
+.\app-dl.ps1 vlc downloads y y -a
 ```
 
 ---
@@ -67,11 +68,11 @@ In the second case, it will download, extract and open the portable version of V
 In the last case, it will install BleachBit in your pc using the presets, saving the installer in the app's temp folder, then the installed app it will open automatically.
 
 ```powershell
-.\app-dl.ps1 -app bleachbit -path appdl -portable n -open y -launch -usecmd
+.\app-dl.ps1 -app bleachbit -path appdl -portable n -open y -AutomaticInstallation
 
-.\app-dl.ps1 -app bleachbit -p appdl -port n -open y -l -usecmd
+.\app-dl.ps1 -n bleachbit -o appdl -p n -l y -a
 
-.\app-dl.ps1 bleachbit appdl n y -l -usecmd
+.\app-dl.ps1 bleachbit appdl n y -a
 ```
 
 ## Changelog
