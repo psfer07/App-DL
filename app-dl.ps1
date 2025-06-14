@@ -1,44 +1,68 @@
 <#
 .SYNOPSIS
-    Easily grab and manage programs, choose apps from groups, control downloads, and set paths.
+    Easily grab and manage programs, choose apps from groups,
+    control downloads, and set paths.
 
 .DESCRIPTION
-    This PowerShell script provides a user-friendly interface for downloading and managing various programs. It allows users to select applications from predefined categories, control the download process, and specify where the downloaded files should be saved.
+    This PowerShell script provides a user-friendly interface
+    for downloading and managing various programs. It allows
+    users to select applications from predefined categories,
+    control the download process, and specify where the
+    downloaded files should be saved.
 
-.PARAMETER app
-    Specifies the name of the application to be downloaded. This parameter allows users to directly request a specific application by name.
+    USAGE: app-dl.ps1 [PACKAGE] [PATH] [OTHER_FLAGS]
+    Launch app-dl.ps1 -h OR app-dl.ps1 -help for more details
 
-.PARAMETER path
-    Specifies the directory where the downloaded application will be saved. This parameter allows users to define a custom location for storing downloaded files.
+.PARAMETER App
+  -App, -n
+    Specifies the name of the application to be downloaded.
 
-.PARAMETER portable
-    Selects the app version. Only accepts 'y' or 'n'. If not provided, the program will prompt the user for input if needed.
+.PARAMETER Path
+  -Path, -o
+    Specifies the directory where the downloaded application
+    will be saved.
 
-.PARAMETER open
-    Specifies whether to automatically open the downloaded package. Only accepts 'y' or 'n'. If not provided, the program will prompt the user for input if needed.
+    This parameter can also use key names with the most common
+    folders such as 'desktop', 'documents', 'downloads', 'c',
+    'appdl' (the temporal folder on AppData), 'programfiles'
+    and 'userprofile'. The user can specify any other path if
+    desired.
 
-.PARAMETER launch
-    Specifies whether to launch the application after downloading. This switch parameter does not require a value.
+.PARAMETER Portable
+  -Portable, -p
+    Selects whether downloading the portable package or the
+    installation one. Only accepts 'y' or 'n'.
 
-.PARAMETER usecmd
-    Specifies whether to use command-line presets for the selected application. This switch parameter does not require a value.
-.PARAMETER noverbose
+.PARAMETER Launch
+  -Launch, -l
+    Specifies whether opening the app. Only accepts 'y' or 'n'.
+    If not provided, the program will prompt the user for input.
+
+.PARAMETER AutomaticInstallation
+  -AutomaticInstallation, -a
+    Tells the program to install the program without user's
+    intervention, using the defaults provided by the installer. 
+.PARAMETER NoVerbose
+  -NoVerbose, -nv
     Ignore warnings and continues if no error is found.
-.PARAMETER selfdestruct
-    Removes the all the files created by the program (not the programs downloaded by the user unless specified).
+.PARAMETER SelfDestruct
+  -SelfDestruct, -d
+    Removes the all the files created by the program, not the
+    programs downloaded by the user unless they were downloaded
+    in the 'appdl' folder.
 #>
 
 param (
-  [Parameter(Position = 0)][string]$app,
-  [Parameter(Position = 1)][string]$path,
-  [Parameter(Position = 2)][Alias("port")] [string]$portable = $null,
-  [Parameter(Position = 3)][string]$open = $null,
-  [Alias("l")] [switch]$launch,
-  [switch]$usecmd,
-  [switch]$noverbose,
-  [switch]$selfdestruct,
-  [Alias("h")] [switch]$help
+  [Parameter(Position = 0)][Alias("n")][string]$App,
+  [Parameter(Position = 1)][Alias("o")][string]$Path,
+  [Parameter(Position = 2)][Alias("p")][string]$Portable = $null,
+  [Parameter(Position = 3)][Alias("l")][string]$Launch   = $null,
+  [Alias("a")] [switch]$AutomaticInstallation = $false,
+  [Alias("nv")][switch]$NoVerbose            = $false,
+  [Alias("d")] [switch]$SelfDestruct         = $false,
+  [Alias("h")] [switch]$Help
 )
+
 if ($help)
 {
   Get-Help -Name $PSCommandPath -detailed
@@ -50,17 +74,16 @@ try
   Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
   $Host.UI.RawUI.BackGroundColor = 'Black'
   $Host.UI.RawUI.WindowTitle = 'App-DL'
-  Clear-Host
+  # Clear-Host
   
   function Start-Main
   {
     param (
-      [Parameter(Position = 0)] [string]$app,
-      [Parameter(Position = 1)] [string]$path,
-      [string]$portable = $null,
-      [string]$open = $null,
-      [switch]$launch,
-      [switch]$usecmd
+      [Parameter(Position = 0)] [string]$App,
+      [Parameter(Position = 1)] [string]$Path,
+      [string]$Portable = $null,
+      [string]$Launch = $null,
+      [switch]$AutomaticInstallation = $false
     )
     
     $wc = New-Object System.Net.WebClient
@@ -73,20 +96,19 @@ try
     {
         New-Item -ItemType Directory -Path $assets -Force | Out-Null
     }
-    foreach ($lib in 'apps.json', 'app-dl.psm1')
+    foreach ($lib in 'apps.json','app-dl.psm1')
     {
         $wc.DownloadFile("$repo_url/$branch/$lib", "$assets\$lib")
     }
-    
     Import-Module "$assets\app-dl.psm1" -DisableNameChecking -Force
     $json = Get-Content "$assets\apps.json" -Raw | ConvertFrom-Json
 
-    if ($app)
+    if ($App)
     {
       # Extracts the exact name from the JSON using the app parameter
       foreach ($category in $json.PSobject.Properties) {
         $appsInCategory = $category.Value.PSobject.Properties.Name
-        $matchedApp = $appsInCategory | Where-Object { $_ -ieq $app }
+        $matchedApp = $appsInCategory | Where-Object { $_ -ieq $App }
         
         if ($matchedApp)
         {
@@ -97,14 +119,14 @@ try
       if (-not $matchedAppKey)
       {
 
-        if (!$noverbose)
+        if (!$NoVerbose)
         {
           Write-Warning "No app recognized, starting App-DL by default"
         }
         Start-Sleep 1
         Start-Main
       }
-      $app = $matchedAppKey
+      $App = $matchedAppKey
     }
     else {
       while ($null -eq $appN -or $appN -eq 0)
@@ -184,32 +206,32 @@ try
           $appN = Read-Host "Write the number of the app you want to get"
         }
       }
-      $app = $programs.Name[$appN - 1]
+      $App = $programs.Name[$appN - 1]
     }
     
     $matchingProperties = $json.PSobject.Properties | Where-Object {
-        $_.Value.PSObject.Properties.Name -ieq $app
+        $_.Value.PSObject.Properties.Name -ieq $App
     }
     $appCategory = $matchingProperties | Select-Object -ExpandProperty Name   
-    $appProperties = $json.$appCategory.$app
-    switch ($portable)
+    $appProperties = $json.$appCategory.$App
+    switch ($Portable)
     {
       y { $ver = 1 }
       n { $ver = 0 }
       default
       {
-        if ($portable)
+        if ($Portable)
         {
 
-          if (!$noverbose)
+          if (!$NoVerbose)
           {
-            Write-Warning "Non-valid entry for portable: $portable"
+            Write-Warning "Non-valid entry for portable: $Portable"
           }
           Start-Sleep 1
         }
         if ($appProperties.versions -match 'PI')
         {
-          Write-Title "$app also has a portable version"
+          Write-Title "$App also has a portable version"
           Write-Point "Write (Y)es or (N)o to select the portable version`n"
           
           while ($selectPortable -ne 'y' -and $selectPortable -ne 'n')
@@ -226,11 +248,11 @@ try
         }
       }
     }
-    if ($appProperties.versions -cnotmatch 'PI' -and $portable) {
+    if ($appProperties.versions -cnotmatch 'PI' -and $Portable) {
 
-      if (!$noverbose)
+      if (!$NoVerbose)
       {
-        Write-Warning "$app does not support an alternative version"
+        Write-Warning "$App does not support an alternative version"
       }
       Start-Sleep -Milliseconds 1500
       $ver = 0
@@ -238,16 +260,8 @@ try
     
     Write-Title 'Importing data...'
     $properties = @(
-        'app',
-        'url',
-        'folder',
-        'versions',
-        'exe',
-        'details',
-        'size',
-        'syn',
-        'cmd',
-        'cmd_syn'
+        'app', 'url', 'folder', 'versions', 'exe',
+        'details', 'size', 'syn', 'cmd', 'cmd_syn'
     )
 
     foreach ($property in $properties)
@@ -278,18 +292,18 @@ try
     else
     {
       Write-Point "Host is not reachable." -ForegroundColor Red
-      Write-Host "This may be because the url may be invalid."
-      Write-Host "Or maybe it is just your internet connection."
+      Write-Host "This may be because the url may be invalid"
+      Write-Host "or maybe it is just your internet connection."
       Start-Sleep 4
       Clear-Host
       Start-Main
     }
     $filesize = Get-AppSize $length
     Clear-Host
-    if (!($matchedAppKey -and $portable -and $path -and $open))
+    if (!($matchedAppKey -and $Portable -and $Path -and $Launch))
     {
-      if ($ver -eq 1) { Write-Title "$app (portable version)" }
-      else { Write-Title $app }
+      if ($ver -eq 1) { Write-Title "$App (portable version)" }
+      else { Write-Title $App }
       
       if ($size)
       {
@@ -309,22 +323,58 @@ try
     }
 
     $paths = @{
-      'desktop'       = "$Env:USERPROFILE\Desktop" 
-      'documents'     = "$Env:USERPROFILE\Documents"
-      'downloads'     = "$Env:USERPROFILE\Downloads"
-      'c'             = $Env:SystemDrive
-      'programfiles'  = $Env:ProgramFiles
-      'program files' = $Env:ProgramFiles
-      'userprofile'   = $Env:HOMEPATH
-      'user profile'  = $Env:HOMEPATH
-      'appdl'         = "$tempFolder\Downloads"
+      'desktop' = @{
+        route = "$Env:USERPROFILE\Desktop"
+        aka   = 'Desktop'
+      }
+
+      'documents' = @{
+        route = "$Env:USERPROFILE\Documents"
+        aka   = 'Documents'
+      }
+
+      'downloads' = @{
+        route = "$Env:USERPROFILE\Downloads"
+        aka   = 'Downloads'
+      }
+
+      'c' = @{
+        route = $Env:SystemDrive
+        aka   = 'C:'
+      }
+
+      'programfiles' = @{
+        route = $Env:ProgramFiles
+        aka   = 'Program Files'
+      } 
+
+      'userprofile' = @{
+        route = $Env:HOMEPATH
+        aka   = 'the user profile'
+      }
+
+      'appdata' = @{
+        route = "$Env:LOCALAPPDATA"
+        aka   = "the local AppData folder`n"
+      }
+
+      'roaming' = @{
+        route = "$Env:APPDATA"
+        aka   = "the roaming folder`n"
+      }
+
+      'appdl' = @{
+        route = "$tempFolder\Downloads"
+        aka   = "App-DL's temp folder (opens the program automatically)`n"
+      }
     }
-    if ($path) {
-      $inputPath = $path.ToLower()
+
+    if ($Path) {
+      $inputPath = $Path.ToLower()
       $p = $paths["$inputPath"]
-      if (!(Test-Path $p) -and $path -notlike 'appdl') {
+      if (!(Test-Path $p) -and $Path -notlike 'appdl') {
       
-        while (!(Test-Path $path))
+        while (!(Test-Path $Path))
         {
           Write-Title -warn 'The provided path does not exist'
           Write-Host "Path: $p"
@@ -339,34 +389,23 @@ try
           
           if ($newPath -eq 'c')
           {
-              New-Item -ItemType Directory -Path $path -Force
+              New-Item -ItemType Directory -Path $Path -Force
           }
-          elseif ($newPath -eq 'a') { $path = Read-Host 'Write the full path' }
+          elseif ($newPath -eq 'a') { $Path = Read-Host 'Write the full path' }
         }
         
-        $p = $path
-        $path = 'a custom directory'
+        $p = $Path
+        $Path = 'a custom directory'
       }
-      elseif ($path -like 'appdl') { New-Item -ItemType $p -force | Out-Null }
-      else { $path = $inputPath }
+      elseif ($Path -like 'appdl') { New-Item -ItemType $p -force | Out-Null }
+      else { $Path = $inputPath }
     }
     else {
       Write-Title 'Path selecting'
-      [string]$s = 'Save it in'
-      $pathOptions = @(
-          "$s Desktop",
-          "$s Documents",
-          "$s Downloads",
-          "$s C:",
-          "$s Program Files",
-          "$s the user profile",
-          "$s the roaming folder`n",
-          "$s App-DL's temp folder (opens the program automatically)`n"
-      )
     
-      for ($i = 1; $i -le $pathOptions.Length; $i++)
+      for ($i = 1; $i -le $paths.Length; $i++)
       { 
-        Write-Point "$i. $($pathOptions[$i-1])" 
+        Write-Point "$i. Save it in $($paths[$i-1].aka)" 
       }
     
       Write-Point 'X. Introduce a custom path'
@@ -374,7 +413,7 @@ try
     
       while ($pathN -notmatch '^\d+$' -or `
              $pathN -lt 0 -or `
-             $pathN -gt $pathOptions.Count -and `
+             $pathN -gt $paths.Count -and `
              $pathN -ne 'x'
             )
       {
@@ -406,12 +445,12 @@ try
             $p = $Env:HOMEPATH
         }
         7 {
-            $p = "$Env:APPDATA\roaming"
+            $p = "$Env:APPDATA"
         }
         8 {
             $p = "$tempfolder\downloads"
             New-Item -ItemType Container -Path $p -Force | Out-Null
-            $opens = $true
+            $IsLaunched = $true
         }
         x {
             $p = Read-Host 'Set the whole custom path'
@@ -421,14 +460,14 @@ try
       $matchingPath = $paths.Keys | Where-Object {
           $paths[$_] -eq $p
       }
-      if ($matchingPath) { $path = $matchingPath }
+      if ($matchingPath) { $Path = $matchingPath }
       else {
         if (!(Test-Path $p)) {
         
-          while (!(Test-Path $path))
+          while (!(Test-Path $Path))
           {
             Write-Title -warn 'The provided path does not exist'
-            Write-Host $path
+            Write-Host $Path
             Write-Subtitle 'Do you want to (C)reate it now or use (A)nother path?' -pad 50
             
             while ($newPath -ne 'c' -or $newPath -ne 'a')
@@ -438,11 +477,11 @@ try
               $newPath = Read-Host 'Write a letter' 
             }
             
-            if ($newPath -eq 'c') { New-Item -ItemType Directory -Path $path -Force }
-            elseif ($newPath -eq 'a') { $path = Read-Host 'Write the full path' }
+            if ($newPath -eq 'c') { New-Item -ItemType Directory -Path $Path -Force }
+            elseif ($newPath -eq 'a') { $Path = Read-Host 'Write the full path' }
           }
           
-          $path = 'a custom directory'
+          $Path = 'a custom directory'
         }
       }
     }
@@ -450,43 +489,42 @@ try
     $o = $uri.Segments[-1]
     
     if ((Test-Path "$p\$o") -or `
-       (Test-Path "$p\$app\$folder\$exe")
+       (Test-Path "$p\$App\$folder\$exe")
        )
     {
         $params = @{
-            p        = $p
-            o        = $o
-            app      = $app
-            folder   = $folder
-            exe      = $exe
-            details  = $details
-            cmd      = $cmd
-            cmd_syn  = $cmd_syn
-            launch   = $launch
-            usecmd   = $usecmd
+            p                       = $p
+            o                       = $o
+            App                     = $App
+            folder                  = $folder
+            exe                     = $exe
+            details                 = $details
+            cmd                     = $cmd
+            cmd_syn                 = $cmd_syn
+            AutomaticInstallation   = $AutomaticInstallation
         }
         Revoke-Path @params
         break
     }
     
-    if (!($matchedAppKey -and $portable -and $path -and $open))
+    if (!($matchedAppKey -and $Portable -and $Path -and $Launch))
     {
-        Write-Subtitle "$app will be saved in $path" -pad 70
+        Write-Subtitle "$App will be saved in $Path" -pad 70
     }
   
-    switch ($open)
+    switch ($Launch)
     {
-      y { $opens = $true; $openString = ' and open' }
-      n { $opens = $false; $openString = $null }
+      y { $IsLaunched = $true; $openString = ' and open' }
+      n { $IsLaunched = $false; $openString = $null }
       default {
       
-        if ($open)
+        if ($Launch)
         {
 
           if (!noverbose)
           {
-            Write-Warning "Non-valid entry in open: $open"
-            $open = "n"
+            Write-Warning "Non-valid entry in open: $Launch"
+            $Launch = "n"
           }
           Start-Sleep 1
         }
@@ -503,15 +541,15 @@ try
         
         switch ($openAns)
         {
-          'y' { $opens = $true }
-          'n' { $opens = $false }
+          'y' { $IsLaunched = $true }
+          'n' { $IsLaunched = $false }
         }
       }
     }
 
-    if (!($matchedAppKey -and $portable -and $path -and $open))
+    if (!($matchedAppKey -and $Portable -and $Path -and $Launch))
     {
-      Write-Title "You are going to download$openString $app"
+      Write-Title "You are going to download$openString $App"
       $confirm = Read-Host "Confirmation press any key or 'r' to restart."
       if ($confirm -eq 'r') { Start-Main }
     }
@@ -533,25 +571,24 @@ try
       $formatString = "{0:N2} MB / {1:N2} MB at {2:N2} MB/s"
       $downloadedString = $formatString -f $downloadedMB, $totalLengthMB, $MBs
     
-      Write-Progress -Activity "Downloading $app..." `
+      Write-Progress -Activity "Downloading $App..." `
                      -Status "$downloadedString ($percentage%) complete" `
                      -PercentComplete $percentage
     }
     
-    if ($opens -eq $true)
+    if ($IsLaunched -eq $true)
     {
         Clear-Host
         $params = @{
-            p        = $p
-            o        = $o
-            app      = $app
-            folder   = $folder
-            exe      = $exe
-            details  = $details
-            cmd      = $cmd
-            cmd_syn  = $cmd_syn
-            launch   = $launch
-            usecmd   = $usecmd
+            p                       = $p
+            o                       = $o
+            app                     = $App
+            folder                  = $folder
+            exe                     = $exe
+            details                 = $details
+            cmd                     = $cmd
+            cmd_syn                 = $cmd_syn
+            AutomaticInstallation   = $AutomaticInstallation
         }
         Open-App @params    
     }
@@ -563,18 +600,17 @@ try
     }
     
     $params = @{
-        app      = $app
-        path     = $path
-        portable  = $portable
-        open     = $open
-        launch   = $launch
-        usecmd   = $usecmd
+        App                     = $App
+        Path                    = $Path
+        Portable                = $Portable
+        Launch                  = $Launch
+        AutomaticInstallation   = $AutomaticInstallation
     }
     Start-Main @params
 }
 finally {
     
-  if ($selfdestruct)
+  if ($SelfDestruct)
   {
     Remove-Item "$Env:TEMP\AppDL" -Recurse -Force | Out-Null
   }
