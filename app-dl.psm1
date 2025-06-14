@@ -75,17 +75,16 @@ function Revoke-Path
   param (
     [string]$p,
     [string]$o,
-    [string]$app,
+    [string]$App,
     [string]$folder,
     [string]$exe,
     [string]$details,
     [string]$cmd,
     [string]$cmd_syn,
-    [switch]$launch,
-    [switch]$usecmd
+    [switch]$AutomaticInstallation
   )
   
-  Write-Title -warn "It seems that $app is currently allocated in this path"
+  Write-Title -warn "It seems that $App is currently allocated in this path"
   
   while ($reset -ne 'r' -and $reset -ne 'o' -and $reset -ne 'e')
   {
@@ -105,14 +104,13 @@ function Revoke-Path
       $params = @{
         p         = $p
         o         = $o
-        app       = $app
+        app       = $App
         folder    = $folder
         exe       = $exe
         details   = $details
         cmd       = $cmd
         cmd_syn   = $cmd_syn
-        launch    = $launch
-        usecmd    = $usecmd
+        usecmd    = $AutomaticInstallation
       }
       Open-App @params
     }
@@ -131,14 +129,14 @@ function Open-App
   param (
     [string]$p,
     [string]$o,
-    [string]$app,
+    [string]$App,
     [string]$folder,
     [string]$exe,
     [string]$details,
     [string]$cmd,
     [string]$cmd_syn,
-    [switch]$launch,
-    [switch]$usecmd
+    [switch]$Launch,
+    [switch]$AutomaticInstallation
   )
   
   Start-Sleep -Milliseconds 100
@@ -150,13 +148,13 @@ function Open-App
   {
     "*.zip"
     {
-      if (Test-Path -Path "$p\$app\$folder\$exe") { $openFlag = $true }
+      if (Test-Path -Path "$p\$App\$folder\$exe") { $openFlag = $true }
       
       if (Test-Path -Path "$p\$o")
       {
         Write-Title 'Zip file detected'
-        Write-Point "$app is saved as a zip file, so uncompressing..."
-        Expand-Archive -Literalpath "$p\$o" -DestinationPath "$p\$app" -Force
+        Write-Point "$App is saved as a zip file, so uncompressing..."
+        Expand-Archive -Literalpath "$p\$o" -DestinationPath "$p\$App" -Force
         $openFlag = $true
         
         if ($?) { Write-Title 'Package successfully extracted...' }
@@ -181,7 +179,7 @@ function Open-App
         $isInstaller = "'s installer"
       }
 
-      if ($usecmd)
+      if ($AutomaticInstallation)
       {
         Write-Title "Running this program by $cmd_syn"
         Start-Process -FilePath "$p\$o" -ArgumentList $($cmd) `
@@ -204,7 +202,7 @@ function Open-App
           
           if ($runcmd -eq 'n')
           {
-            Write-Title "Launching $app$isInstaller..."
+            Write-Title "Launching $App$isInstaller..."
             Start-Process -FilePath "$p\$o" `
                           -ErrorAction SilentlyContinue -Wait
           }
@@ -224,9 +222,9 @@ function Open-App
     "*.msi"
     {
       Write-Title 'Microsoft installer detected'
-      Write-Title "Installing $app automatically"
+      Write-Title "Installing $App automatically"
       
-      if ($launch) { Start-Process -FilePath "$folder\$exe" }
+      if ($Launch) { Start-Process -FilePath "$folder\$exe" }
       else
       {
         Write-Point 'Do you want to launch it after installation?'
@@ -239,7 +237,7 @@ function Open-App
         
         Start-Process -FilePath msiexec.exe -Wait `
                       -ArgumentList "/i `"$p\$o`" /passive /promptrestart"
-        Write-Title "$app successfully installed"
+        Write-Title "$App successfully installed"
         
         if ($openInst -eq 'y') {
           Start-Process -FilePath "$folder\$exe"
@@ -263,16 +261,16 @@ function Open-App
   
     if ($folder)
     {
-      $exePath = "$p\$app\$folder\$exe"
+      $exePath = "$p\$App\$folder\$exe"
     }
     else
     {
-      $exePath = "$p\$app\$exe"
+      $exePath = "$p\$App\$exe"
     }
   }
   Write-Point "App available in: $exePath"
   
-  if ($launch)
+  if ($Launch)
   {
     Start-Process -FilePath $exePath -ErrorAction SilentlyContinue
   }

@@ -166,7 +166,7 @@ In the last case, it will install BleachBit in your pc using the presets, saving
 
 Known bugs:
 
-* When you run 7-zip with the recommended parameters, the path assigned is shown as $path\, and not as the actual path, but the user can browse to the wanted folder
+* When you run 7-zip with the recommended parameters, the path assigned is shown as $Path\, and not as the actual path, but the user can browse to the wanted folder
 
 > ### App-DL v1.0 (First release)
 
