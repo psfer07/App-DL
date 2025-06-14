@@ -1,11 +1,17 @@
 # App-DL
 
 Easily grab and manage programs, choose apps from groups, control downloads, and set paths. User-friendly tool for smoother software handling.
-
+Honestly, if you only want to install programs rather than having them in a portable version, I'd recommend using winget or [CTT's Winutil](https://github.com/ChrisTitusTech/winutil)
 Use the command below in a powershell terminal to open the program:
 
 ```powershell
-iex(irm bit.ly/psappdl)
+iex(irm https://raw.githubusercontent.com/psfer07/App-DL/refs/heads/main/app-dl.ps1)
+```
+
+If you can't paste the command and you are too lazy to type it manually, use this:
+
+```powershell
+iex(irm https://bit.ly/psappdl)
 ```
 
 If you instead want to run it with parameters, use:
