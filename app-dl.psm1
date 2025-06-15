@@ -74,7 +74,7 @@ function Revoke-Path
 {
   param (
     [string]$p,
-    [string]$o,
+    [string]$fileName,
     [string]$App,
     [string]$folder,
     [string]$exe,
@@ -103,7 +103,7 @@ function Revoke-Path
     {
       $params = @{
         p         = $p
-        o         = $o
+        fileName  = $fileName
         app       = $App
         folder    = $folder
         exe       = $exe
@@ -128,7 +128,7 @@ function Open-App
 {
   param (
     [string]$p,
-    [string]$o,
+    [string]$fileName,
     [string]$App,
     [string]$folder,
     [string]$exe,
@@ -144,17 +144,17 @@ function Open-App
   $folder = $ExecutionContext.InvokeCommand.ExpandString($folder)
   $cmd = $ExecutionContext.InvokeCommand.ExpandString($cmd)
   
-  switch -Wildcard ($o)
+  switch -Wildcard ($fileName)
   {
     "*.zip"
     {
       if (Test-Path -Path "$p\$App\$folder\$exe") { $openFlag = $true }
       
-      if (Test-Path -Path "$p\$o")
+      if (Test-Path -Path "$p\$fileName")
       {
         Write-Title 'Zip file detected'
         Write-Point "$App is saved as a zip file, so uncompressing..."
-        Expand-Archive -Literalpath "$p\$o" -DestinationPath "$p\$App" -Force
+        Expand-Archive -Literalpath "$p\$fileName" -DestinationPath "$p\$App" -Force
         $openFlag = $true
         
         if ($?) { Write-Title 'Package successfully extracted...' }
@@ -182,7 +182,7 @@ function Open-App
       if ($AutomaticInstallation)
       {
         Write-Title "Running this program by $cmd_syn"
-        Start-Process -FilePath "$p\$o" -ArgumentList $($cmd) `
+        Start-Process -FilePath "$p\$fileName" -ArgumentList $($cmd) `
                       -ErrorAction SilentlyContinue -Wait
       }
       else
@@ -203,19 +203,19 @@ function Open-App
           if ($runcmd -eq 'n')
           {
             Write-Title "Launching $App$isInstaller..."
-            Start-Process -FilePath "$p\$o" `
+            Start-Process -FilePath "$p\$fileName" `
                           -ErrorAction SilentlyContinue -Wait
           }
           else
           {
             Write-Title "Running this program by $cmd_syn"
-            Start-Process -FilePath "$p\$o" -ArgumentList $($cmd) `
+            Start-Process -FilePath "$p\$fileName" -ArgumentList $($cmd) `
                           -ErrorAction SilentlyContinue -Wait
           }
         }
         else
         {
-          Start-Process -FilePath "$p\$o" -ErrorAction SilentlyContinue
+          Start-Process -FilePath "$p\$fileName" -ErrorAction SilentlyContinue
         }
       }
     }
@@ -236,7 +236,7 @@ function Open-App
         }
         
         Start-Process -FilePath msiexec.exe -Wait `
-                      -ArgumentList "/i `"$p\$o`" /passive /promptrestart"
+                      -ArgumentList "/i `"$p\$fileName`" /passive /promptrestart"
         Write-Title "$App successfully installed"
         
         if ($openInst -eq 'y') {
@@ -249,7 +249,7 @@ function Open-App
     default
     {
       Write-Title 'Bundle Microsoft app detected'
-      Add-AppPackage -Path "$p\$o" -ForceApplicationShutdown -Confirm:$false
+      Add-AppPackage -Path "$p\$fileName" -ForceApplicationShutdown -Confirm:$false
       $openFlag = $true
     }
   }
