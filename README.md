@@ -33,7 +33,6 @@ You can use the program's parameters to automate the download, extraction or ope
    [-Portable, -p <String>]
    [-Launch, -l <String>]
    [-AutomaticInstallation, -a]
-   [-NoVerbose, -nv]
    [-SelfDestruct, -d]
    [-Help]
 ```
