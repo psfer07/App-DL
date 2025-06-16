@@ -74,7 +74,7 @@ try {
   $zip_url        = [System.Uri]"$repo_url/archive/refs/heads/main.zip"
   $zip_file       = Join-Path $preferred_path "$repo.zip"
   $temp_folder    = Join-Path $preferred_path "$repo-main"
-  $src            = "$Env:HOMEPATH\Documents\GitHub\App-DL\src"
+  $src            = Join-Path $temp_folder 'src'
 
   $Host.UI.RawUI.BackGroundColor = 'Black'
   $Host.UI.RawUI.WindowTitle     = $repo
@@ -420,7 +420,7 @@ try {
           $p = "$Env:APPDATA"
         }
         8 {
-          $p = "$tempfolder\downloads"
+          $p = "$temp_folder\downloads"
           New-Item -ItemType Container -Path $p -Force | Out-Null
           $IsLaunched = $true
         }
