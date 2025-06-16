@@ -67,37 +67,53 @@ if ($help) {
 try {
   # Bypass any execution policy
   Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
-  $author = 'psfer07'
-  $repo = 'App-DL'
+  $author         = 'psfer07'
+  $repo           = 'App-DL'
+  $preferred_path = $Env:TEMP
+  $repo_url       = [System.Uri]"https://github.com/$author/$repo"
+  $zip_url        = [System.Uri]"$repo_url/archive/refs/heads/main.zip"
+  $zip_file       = Join-Path $preferred_path "$repo.zip"
+  $temp_folder    = Join-Path $preferred_path "$repo-main"
+  $src            = "$Env:HOMEPATH\Documents\GitHub\App-DL\src"
+
   $Host.UI.RawUI.BackGroundColor = 'Black'
   $Host.UI.RawUI.WindowTitle     = $repo
+
+  # Create web client
+  $wc = New-Object System.Net.WebClient
+
+  # Force to download and use the latest version
+  try {
+
+    if (!(Test-Path $temp_folder))
+    {
+      if (!(Test-Path $zip_file))
+      {
+        $wc.DownloadFile($zip_url, $zip_file)
+      }
+      Expand-Archive $zip_file -DestinationPath $preferred_path
+    }
+  }
+  catch {
+    Write-Error "Exception happened: $_"
+    Exit 1
+  }
+
+
+  Import-Module "$src\app-dl.psm1" -DisableNameChecking -Force
+  $json = Get-Content "$src\apps.json" -Raw | ConvertFrom-Json
+
   Clear-Host
-  
   function Start-Main {
     param (
       [Parameter(Position = 0)] [string]$App,
       [Parameter(Position = 1)] [string]$Path,
-      [string]$Portable              = $null,
-      [string]$Launch                = $null,
-      [switch]$AutomaticInstallation = $false
+      [string]$Portable               = $null,
+      [string]$Launch                 = $null,
+      [switch]$AutomaticInstallation  = $false
     )
-    
-    $wc = New-Object System.Net.WebClient
-    $tempFolder = Join-Path $Env:TEMP $repo
-    $host_url = [System.Uri]"https://raw.githubusercontent.com"
-    $repo_url = [System.Uri]"$host_url/$author/$repo"
-    $assets = Join-Path $tempFolder 'assets'
-    
-    if (!(Test-Path $assets -PathType Container)) {
-      New-Item -ItemType Directory -Path $assets -Force | Out-Null
-    }
-    foreach ($lib in 'apps.json', 'app-dl.psm1') {
-      $wc.DownloadFile("$repo_url/main/$lib", "$assets\$lib")
-    }
-    Import-Module "$assets\app-dl.psm1" -DisableNameChecking -Force
-    $json = Get-Content "$assets\apps.json" -Raw | ConvertFrom-Json
 
-    if (!$App) 
+    if (!$App)
     {
       while ($null -eq $appN -or $appN -eq 0) {
         $categories = $json.psobject.Properties.Name
@@ -246,13 +262,10 @@ try {
     Write-Subtitle 'Verifying access to host...'
     $uri = [System.Uri]$url
     $reachable = Test-Connection -ComputerName $uri.Host -Count 1 `
-      -ErrorAction SilentlyContinue
+                                 -ErrorAction SilentlyContinue
 
-    if ($reachable) {
-      $request = Invoke-WebRequest $uri -Method Head -UseBasicParsing
-      $length = [int]$request.Headers['Content-Length']
-    }
-    else {
+    if (!$reachable)
+    {
       Write-Point "Host is not reachable." -ForegroundColor Red
       Write-Host "This may be because the url may be invalid"
       Write-Host "or maybe it is just your internet connection."
@@ -260,6 +273,11 @@ try {
       Clear-Host
       Start-Main
     }
+    else {
+      $request = Invoke-WebRequest $uri -Method Head -UseBasicParsing
+      $length = [int]$request.Headers['Content-Length']
+    }
+
     $filesize = Get-AppSize $length
     Clear-Host
     if (!($matchedAppKey -and $Portable -and $Path -and $Launch)) {
@@ -323,7 +341,7 @@ try {
       }
 
       'appdl'        = @{
-        route = "$tempFolder\Downloads"
+        route = "$temp_folder\Downloads"
         aka   = "App-DL's temp folder (opens the program automatically)`n"
       }
     }
@@ -440,9 +458,10 @@ try {
 
     $fileName = $uri.Segments[-1]
     
-    if ((Test-Path "$p\$fileName") -or `
-      (Test-Path "$p\$App\$folder\$exe")
-    ) {
+    if (Test-Path "$p\$fileName" -or `
+        Test-Path "$p\$App\$folder\$exe"
+    )
+    {
       $params = @{
         p                     = $p
         fileName                     = $fileName
@@ -493,28 +512,27 @@ try {
       $confirm = Read-Host "Confirmation press any key or 'r' to restart."
       if ($confirm -eq 'r') { Start-Main }
     }
-    
+
     # Update progress bar
     $wc.DownloadFileAsync($uri, "$p\$fileName")
-    
     while ($wc.IsBusy) {
       $downloadedOld = (Get-Item "$p\$fileName").Length
       Start-Sleep -Milliseconds 250
-      
+
       $Downloaded = (Get-Item "$p\$fileName").Length
       $MBs = [Math]::Round(($downloaded - $DownloadedOld) * 4) / 1MB
       $percentage = [Math]::Round(($downloaded / $length) * 100)
-      
+
       $downloadedMB = $downloaded / 1MB
       $totalLengthMB = $length / 1MB
       $formatString = "{0:N2} MB / {1:N2} MB at {2:N2} MB/s"
       $downloadedString = $formatString -f $downloadedMB, $totalLengthMB, $MBs
-    
+
       Write-Progress -Activity "Downloading $App..." `
         -Status "$downloadedString ($percentage%) complete" `
         -PercentComplete $percentage
     }
-    
+
     if ($IsLaunched -eq $true) {
       Clear-Host
       $params = @{
@@ -530,13 +548,13 @@ try {
       }
       Open-App @params    
     }
-    
+
     Write-Subtitle 'Continue downloading?'
     $repeat = Read-Host '==> (y/n)'
     if ($repeat -eq 'y') { Clear-Host; Start-Main }
     else { Clear-Host; Exit 0 }
   }
-    
+
   $params = @{
     App                   = $App
     Path                  = $Path
@@ -549,6 +567,10 @@ try {
 finally {
     
   if ($SelfDestruct) {
-    Remove-Item "$Env:TEMP\AppDL" -Recurse -Force | Out-Null
+    Remove-Item $zip_file,$temp_folder -Recurse -Force | Out-Null
   }
+  Clear-Host
+  Write-Title 'Sayonara, baby'
+  Start-Sleep 1
+  Exit 0
 }
