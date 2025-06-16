@@ -67,53 +67,38 @@ if ($help) {
 try {
   # Bypass any execution policy
   Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+  $author = 'psfer07'
+  $repo = 'App-DL'
   $Host.UI.RawUI.BackGroundColor = 'Black'
-  $Host.UI.RawUI.WindowTitle = 'App-DL'
-  # Clear-Host
+  $Host.UI.RawUI.WindowTitle     = $repo
+  Clear-Host
   
   function Start-Main {
     param (
       [Parameter(Position = 0)] [string]$App,
       [Parameter(Position = 1)] [string]$Path,
-      [string]$Portable = $null,
-      [string]$Launch = $null,
+      [string]$Portable              = $null,
+      [string]$Launch                = $null,
       [switch]$AutomaticInstallation = $false
     )
     
     $wc = New-Object System.Net.WebClient
-    $branch = 'main'
-    $repo_url = 'https://raw.githubusercontent.com/psfer07/App-DL'
-    $tempFolder = Join-Path $Env:TEMP 'AppDL'
+    $tempFolder = Join-Path $Env:TEMP $repo
+    $host_url = [System.Uri]"https://raw.githubusercontent.com"
+    $repo_url = [System.Uri]"$host_url/$author/$repo"
     $assets = Join-Path $tempFolder 'assets'
     
     if (!(Test-Path $assets -PathType Container)) {
       New-Item -ItemType Directory -Path $assets -Force | Out-Null
     }
     foreach ($lib in 'apps.json', 'app-dl.psm1') {
-      $wc.DownloadFile("$repo_url/$branch/$lib", "$assets\$lib")
+      $wc.DownloadFile("$repo_url/main/$lib", "$assets\$lib")
     }
     Import-Module "$assets\app-dl.psm1" -DisableNameChecking -Force
     $json = Get-Content "$assets\apps.json" -Raw | ConvertFrom-Json
 
-    if ($App) {
-      # Extracts the exact name from the JSON using the app parameter
-      foreach ($category in $json.PSobject.Properties) {
-        $appsInCategory = $category.Value.PSobject.Properties.Name
-        $matchedApp = $appsInCategory | Where-Object { $_ -ieq $App }
-        
-        if ($matchedApp) {
-          $matchedAppKey = $matchedApp
-          break
-        }
-      }
-      if (-not $matchedAppKey) {
-        Write-Warning "No app recognized, starting App-DL by default"
-        Start-Sleep 1
-        Start-Main
-      }
-      $App = $matchedAppKey
-    }
-    else {
+    if (!$App) 
+    {
       while ($null -eq $appN -or $appN -eq 0) {
         $categories = $json.psobject.Properties.Name
         Clear-Host
@@ -184,15 +169,34 @@ try {
       }
       $App = $programs.Name[$appN - 1]
     }
+    else {
+      # Extracts the exact name from the JSON using the app parameter
+      foreach ($category in $json.PSobject.Properties) {
+        $appsInCategory = $category.Value.PSobject.Properties.Name
+        $matchedApp = $appsInCategory | Where-Object { $_ -ieq $App }
+        
+        if ($matchedApp) {
+          $matchedAppKey = $matchedApp
+          break
+        }
+      }
+      if (-not $matchedAppKey) {
+        Write-Warning "No app recognized, starting App-DL by default"
+        Start-Sleep 1
+        Start-Main
+      }
+      $App = $matchedAppKey
+    }
     
     $matchingProperties = $json.PSobject.Properties | Where-Object {
       $_.Value.PSObject.Properties.Name -ieq $App
     }
     $appCategory = $matchingProperties | Select-Object -ExpandProperty Name   
     $appProperties = $json.$appCategory.$App
+    $ver = 0
     switch ($Portable) {
       y { $ver = 1 }
-      n { $ver = 0 }
+      n { break }
       default {
         if ($Portable) {
           Write-Warning "Non-valid entry for portable: $Portable"
@@ -221,11 +225,11 @@ try {
     }
     
     Write-Title 'Importing data...'
+
     $properties = @(
       'app', 'url', 'folder', 'versions', 'exe',
       'details', 'size', 'syn', 'cmd', 'cmd_syn'
     )
-
     foreach ($property in $properties) {
       if ($appProperties.$property -is [array]) {
         $value = $appProperties.$property[$ver]
@@ -434,14 +438,14 @@ try {
       }
     }
 
-    $o = $uri.Segments[-1]
+    $fileName = $uri.Segments[-1]
     
-    if ((Test-Path "$p\$o") -or `
+    if ((Test-Path "$p\$fileName") -or `
       (Test-Path "$p\$App\$folder\$exe")
     ) {
       $params = @{
         p                     = $p
-        o                     = $o
+        fileName                     = $fileName
         App                   = $App
         folder                = $folder
         exe                   = $exe
@@ -491,13 +495,13 @@ try {
     }
     
     # Update progress bar
-    $wc.DownloadFileAsync($uri, "$p\$o")
+    $wc.DownloadFileAsync($uri, "$p\$fileName")
     
     while ($wc.IsBusy) {
-      $downloadedOld = (Get-Item "$p\$o").Length
+      $downloadedOld = (Get-Item "$p\$fileName").Length
       Start-Sleep -Milliseconds 250
       
-      $Downloaded = (Get-Item "$p\$o").Length
+      $Downloaded = (Get-Item "$p\$fileName").Length
       $MBs = [Math]::Round(($downloaded - $DownloadedOld) * 4) / 1MB
       $percentage = [Math]::Round(($downloaded / $length) * 100)
       
@@ -515,7 +519,7 @@ try {
       Clear-Host
       $params = @{
         p                     = $p
-        o                     = $o
+        fileName              = $fileName
         app                   = $App
         folder                = $folder
         exe                   = $exe
@@ -530,7 +534,7 @@ try {
     Write-Subtitle 'Continue downloading?'
     $repeat = Read-Host '==> (y/n)'
     if ($repeat -eq 'y') { Clear-Host; Start-Main }
-    else { Clear-Host; Exit }
+    else { Clear-Host; Exit 0 }
   }
     
   $params = @{
